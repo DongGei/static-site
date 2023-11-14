@@ -1,0 +1,1432 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/><meta name="theme-color" content="#3b3e43"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"/><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="format-detection" content="telephone=no"/><title>java 函数式编程 - donggei 的个人博客</title><meta name="description" content="A small and beautiful blogging system. 一款小而美的博客系统。"/><meta property="og:description" content="A small and beautiful blogging system. 一款小而美的博客系统。"/>    <meta name="keywords" content="Solo,Java,博客,开源"/><link rel="dns-prefetch" href="https://blog.donggei.top"/><link rel="dns-prefetch" href="https://unpkg.com"/><link rel="preconnect" href="https://blog.donggei.top"><link rel="icon" type="image/png" href="https://b3log.org/images/brand/solo-128.png"/><link rel="apple-touch-icon" href="https://b3log.org/images/brand/solo-128.png"><link rel="shortcut icon" type="image/x-icon" href="https://b3log.org/images/brand/solo-128.png"><meta name="copyright" content="B3log"/><meta http-equiv="Window-target" content="_top"/><meta property="og:locale" content="zh_CN"/><meta property="og:title" content="java 函数式编程 - donggei 的个人博客"/><meta property="og:site_name" content="donggei 的个人博客"/><meta property="og:url"      content="https://blog.donggei.top/articles/2023/11/14/1699946312113.html?"/><meta property="og:image" content="https://b3log.org/images/brand/solo-128.png"/><link rel="search" type="application/opensearchdescription+xml" title="java 函数式编程 - donggei 的个人博客" href="/opensearch.xml"><link href="https://blog.donggei.top/rss.xml" title="RSS" type="application/rss+xml" rel="alternate"/><link rel="manifest" href="https://blog.donggei.top/manifest.json">        <link rel="canonical" href="https://blog.donggei.top/articles/2023/11/14/1699946312113.html">        <link rel="stylesheet"
+              href="https://blog.donggei.top/skins/Pinghsu/css/base.css?1699945763204"/>
+            <link rel="prev" title="世界，你好！" href="https://blog.donggei.top/hello-solo">
+    <script src="https://unpkg.com/vditor@3.8.15/dist/js/icons/ant.js" async="" id="vditorIconScript"></script></head>
+<body>
+<header class="header">
+    <div class="wrapper">
+        <a href="https://blog.donggei.top" rel="start" class="header__logo">
+            <img src="https://b3logfile.com/avatar/1699945842626_1699945899108.png?imageView2/1/w/128/h/128/interlace/0/q/100" alt="donggei 的个人博客"/>
+            donggei 的个人博客
+        </a>
+
+        <nav class="header__nav mobile__none">
+            <a href="https://blog.donggei.top/tags.html" rel="section">
+                Tags
+            </a>
+            <a href="https://blog.donggei.top/archives.html">
+                Archives
+            </a>
+            <a rel="archive" href="https://blog.donggei.top/links.html">
+                Links
+            </a>
+        </nav>
+
+        <div class="header__bar fn__none" onclick="$(this).next().slideToggle()">
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+                <path fill="#444" d="M0 3h20v2h-20v-2zM0 9h20v2h-20v-2zM0 15h20v2h-20v-2z"></path>
+            </svg>
+        </div>
+        <main class="header__menu fn__none">
+            <ul>
+                <li>
+                    <a href="https://blog.donggei.top/tags.html" rel="section">
+                        Tags
+                    </a>
+                </li>
+                <li>
+                    <a href="https://blog.donggei.top/archives.html">
+                        Archives
+                    </a>
+                </li>
+                <li>
+                    <a rel="archive" href="https://blog.donggei.top/links.html">
+                        Links
+                    </a>
+                </li>
+                <li>
+                    <a rel="alternate" href="https://blog.donggei.top/rss.xml" rel="section">
+                        RSS
+                    </a>
+                </li>
+            </ul>
+        </main>
+    </div>
+</header>
+<main id="pjax" class="fn__flex-1">
+    
+    <div class="post wrapper wrapper--miner">
+        <h2 class="item__title">
+            <a rel="bookmark" href="https://blog.donggei.top/articles/2023/11/14/1699946312113.html">
+                java 函数式编程
+            </a>
+        </h2>
+        <div class="ft__fade item__meta">
+                Published on
+            <time>
+                Nov 14, 2023
+            </time>
+            with <span data-uvstaturl="https://blog.donggei.top/articles/2023/11/14/1699946312113.html">0</span> views
+                and <a href="#b3logsolocomments"><span data-uvstatcmt="1699946312113">0</span> comments</a>
+        </div>
+        <div class="item__tags">
+                <a rel="tag" class="tag tag--0" href="https://blog.donggei.top/tags/java">
+                    <b># java</b>
+                </a>
+                <a rel="tag" class="tag tag--1" href="https://blog.donggei.top/tags/%E5%9F%BA%E7%A1%80">
+                    <b># 基础</b>
+                </a>
+        </div>
+        <div class="vditor-reset">
+            <h1 id="toc_h1_0">java 函数式编程</h1>
+<h2 id="toc_h2_1">1.为什么学</h2>
+<ol>
+<li>容于并发编程。可以使用并发 处理大数量集合，自动使用多线程去处理，而自己不用写线程有关代码。</li>
+<li>可以简化代码，解决嵌套。</li>
+</ol>
+<h2 id="toc_h2_2">2.Lambda表达式</h2>
+<p>Lambda是JDK8中一个语法糖。他可以对某些匿名内部类的写法进行简化。它是函数式编程思想的一个重要体现。让我们不用关注是什么对象。而是更关注我们对数据进行了什么操作。</p>
+<pre><code class="language-java">(参数列表)-&gt;{代码}  小括号 和 大括号 都还可以省略
+</code></pre>
+<blockquote>
+<p>语法糖：</p>
+<p>简单的说，语法糖就是一种便捷写法。就相当于汉语里的成语。</p>
+</blockquote>
+<blockquote>
+<p>tip:</p>
+<p>ctrl+p  查看传参提示</p>
+</blockquote>
+<pre><code class="language-java">public class LambdaDemo_01 {
+    public static void main(String[] args) {
+        new Thread(new Runnable() {
+            public void run() {
+     System.out.println("_____新线程中run方法____");
+            }
+        }).start();
+    }
+
+}
+</code></pre>
+<p>上面这个Thread构造需要一个实现了Runnable接口的对象</p>
+<p>我们使用了匿名内部类，并且重写了run方法，然后调用了start()。</p>
+<p>什么情况可以使用Lambda表达式：</p>
+<ul>
+<li>
+<p>上面这种 这个匿名内部类 是一个接口的匿名内部类，并且只需要实现（重写）一个抽象方法（可能接口中其他的是默认方法，就一个是抽象的  ）</p>
+<p><strong>Lambda表达式  不关注类名，方法名，关注的是方法的参数和方法体</strong></p>
+<pre><code class="language-java">public static void main(String[] args) {
+    new Thread(  () -&gt; {System.out.println("_____新线程中run方法____")
+    ;}).start();
+}
+</code></pre>
+<p>(参数列表)-&gt;{代码}  完成！</p>
+</li>
+</ul>
+<p>下面是几个循序渐进的案例：</p>
+<pre><code class="language-java">public static void main(String[] args) {
+    int num = calculateNum(new IntBinaryOperator() {
+        @Override
+        public int applyAsInt(int left, int right) {
+            return left + right;
+        }
+    });
+    System.out.println(num);
+}
+
+public static int calculateNum(IntBinaryOperator operator) {
+    int a = 10;
+    int b = 20;
+    return operator.applyAsInt(a, b);
+}
+</code></pre>
+<pre><code class="language-java">public static void main(String[] args) {
+    int num = calculateNum((a,b)-&gt;{return a+b ;});
+    System.out.println(num);
+}
+
+
+public static int calculateNum(IntBinaryOperator operator) {
+    int a = 10;
+    int b = 20;
+    return operator.applyAsInt(a, b);
+}
+public static void main(String[] args) {
+        int num = calculateNum((a,b)-&gt; a+b);
+        System.out.println(num);
+    }
+</code></pre>
+<blockquote>
+<p>tip: 使用idea alt+回车 可以转换匿名内部类到lambda表达式，也可以lambda表达式转换到匿名内部类。</p>
+<p>灰常方便</p>
+</blockquote>
+<pre><code class="language-java">public class LambdaDemo_03 {
+    public static void main(String[] args) {
+        printNum(new IntPredicate() {
+            @Override
+            public boolean test(int value) {
+                return value%2 == 0;
+            }
+        });
+    }
+  
+    public static void main(String[] args) {
+        printNum((a)-&gt;  a%2 == 0);
+    }
+  
+    public static void printNum(IntPredicate predicate){
+        int[] arr = {1,2,3,4,5,6,7,8,9,10};
+        for (int i : arr) {
+            if(predicate.test(i)){
+                System.out.println(i);
+            }
+        }
+    }
+
+}
+</code></pre>
+<pre><code class="language-java">public class LambdaDemo_04 {
+    public static void main(String[] args) {
+        Integer integer = typeConver(new Function&lt;String, Integer&gt;() {
+            @Override
+            public Integer apply(String s) {
+                return Integer.valueOf(s);
+            }
+        });
+
+        System.out.println(integer);
+    }
+  
+    public static void main(String[] args) {
+        //泛型都省略了
+        Integer integer = typeConver(s -&gt; Integer.valueOf(s));
+
+        System.out.println(integer);
+    }
+  
+    public static &lt;R&gt; R typeConver(Function&lt;String,R&gt; function){
+        String str = "1235";
+        R result = function.apply(str);
+        return result;
+    }
+
+}
+</code></pre>
+<pre><code class="language-java">public class LambdaDemo_04 {
+    public static void main(String[] args) {
+        String st = typeConver(new Function&lt;String, String&gt;() {
+            @Override
+            public String apply(String s) {
+                return s+"aaa";
+            }
+        });
+
+        System.out.println(st);
+    }
+  
+    public static &lt;R&gt; R typeConver(Function&lt;String,R&gt; function){
+        String str = "1235";
+        R result = function.apply(str);
+        return result;
+    }
+
+}
+
+   public static void main(String[] args) {
+       //泛型都可以省略了 
+       String st = typeConver(s -&gt; s+"aaa");
+        System.out.println(st);
+   }
+</code></pre>
+<p>心中目标 就是写一个 实现了哪个方法的，匿名内部类</p>
+<h3 id="toc_h3_3">省略规则</h3>
+<pre><code class="language-jav">(参数列表)-&gt;{代码} 
+</code></pre>
+<ul>
+<li>小括号里的 <code>参数类型</code>  可省略</li>
+<li>方法体里只有一句代码时 <code>大括号</code>,<code>return</code> 和 <code>最后的分号</code> 可省略</li>
+<li>方法只有 一个参数的时候  <code>小括号</code> 可省略</li>
+</ul>
+<h2 id="toc_h2_4">3.Stream流</h2>
+<pre><code>Java8的Stream使用的是函数式编程模式，如同它的名字一样，它可以被用来对集合或数组进行链状流式的操作。可以更方便的让我们对集合或数组操作。
+</code></pre>
+<h3 id="toc_h3_5">入门案例：</h3>
+<pre><code class="language-java">public class StreamDemo {
+    public static void main(String[] args) {
+       // System.out.println(getAuthors());
+        List&lt;Author&gt; authors = getAuthors();
+        authors.stream()
+                .distinct()
+                .filter(author -&gt; author.getAge()&lt;18)
+                .forEach(author -&gt; System.out.println(author.getName())); //必须要有终结操作
+    }
+</code></pre>
+<p><strong>idea 对debug对stream流的直观体现：</strong></p>
+<p><img src="C:\Users\DONG\AppData\Roaming\Typora\typora-user-images\image-20220527225905697.png" alt="image-20220527225905697"></p>
+<h3 id="toc_h3_6">创建流</h3>
+<p>单列集合： <code>集合对象.stream()</code></p>
+<p>数组：<code>Arrays.stream(数组)</code>或者使用<code>Stream.of(数组)</code>来创建</p>
+<p>双列集合：转换成单列集合后再创建</p>
+<pre><code>        Map&lt;String,Integer&gt; map = new HashMap&lt;&gt;();
+        map.put("蜡笔小新",19);
+        map.put("黑子",17);
+        map.put("日向翔阳",16);
+
+        Stream&lt;Map.Entry&lt;String, Integer&gt;&gt; stream = map.entrySet().stream();
+</code></pre>
+<h3 id="toc_h3_7">中间操作</h3>
+<ul>
+<li>
+<p>filter 	流中的元素进行条件过滤</p>
+</li>
+<li>
+<p>map 	可以把对流中的元素进行计算或转换。</p>
+<p>这个Map是映射的意思,映射成其他的元素</p>
+</li>
+</ul>
+<pre><code class="language-java">public void t1(){
+    getAuthors().stream()
+            .map(new Function&lt;Author, String&gt;() {
+                @Override
+                public String apply(Author author) {
+                    return author.getName();
+                 }
+            }).forEach(name-&gt; System.out.println(name));
+}
+</code></pre>
+<pre><code class="language-java">public void t1(){
+    getAuthors().stream()
+            .map(new Function&lt;Author, Author&gt;() {
+                @Override
+                public Author apply(Author author) {
+                   author.setAge(author.getAge()+10);
+                    return author;
+                }
+            }).forEach(author-&gt; System.out.println(author.getAge()));
+}
+</code></pre>
+<ul>
+<li>distinct 	可以去除流中的重复元素。</li>
+</ul>
+<p>distinct方法是依赖Object的equals方法来判断是否是相同对象的。所以需要注意重写equals方法</p>
+<ul>
+<li>
+<p>sorted  	可以对流中的元素进行排序。</p>
+<p>对象需要实现comparable接口 或者 传一个Comparator的匿名内部类</p>
+</li>
+</ul>
+<pre><code class="language-java">//author对象实现了omparable接口
+@Override
+    public int compareTo(Author o) {
+        //返回负整数、零或正整数，因为此对象小于、等于或大于指定对象
+        return o.getAge()-this.getAge();
+    }
+public void t2(){
+    getAuthors().stream()
+            .sorted()
+            .forEach(author -&gt; System.out.println(author.getName()+author.getAge()));
+}
+ @Test
+    public void t2(){
+        getAuthors().stream()
+                .sorted((o1, o2) -&gt; o1.getAge()-o2.getAge()) //o1 应该是当前项目
+                .forEach(author -&gt; System.out.println(author.getName()+author.getAge()));
+    }
+</code></pre>
+<ul>
+<li>limit</li>
+</ul>
+<p>可以设置流的最大长度，超出的部分将被抛弃。  limit 获取前N个元素</p>
+<pre><code class="language-java">public void t3(){
+    getAuthors().stream()
+            //年龄最小的前2个
+            .sorted((o1, o2) -&gt; o1.getAge() - o2.getAge())
+            .limit(2)
+            .forEach(author -&gt; System.out.println(author.getName()+author.getAge()));
+}
+</code></pre>
+<ul>
+<li>skip	 	跳过流中的前n个元素，返回剩下的元素</li>
+</ul>
+<pre><code class="language-java">@Test
+public void t4(){
+    getAuthors().stream()
+            //跳过前两个
+            .skip(2)
+            .forEach(author -&gt; System.out.println(author.getName()+author.getAge()));
+}
+</code></pre>
+<ul>
+<li>
+<p>flatMap</p>
+<p>map只能把一个对象转换成另一个对象来作为流中的元素。而flatMap可以把一个对象转换成多个对象作为流中的元素。</p>
+<pre><code class="language-java">public void t5(){
+    getAuthors().stream()
+            .flatMap(new Function&lt;Author, Stream&lt;?&gt;&gt;() {
+                @Override
+                public Stream&lt;?&gt; apply(Author author) {
+                    return author.getBooks().stream();
+                }
+            })
+            .forEach(book -&gt; System.out.println(book));
+}
+ public void t5(){
+        getAuthors().stream()
+                .flatMap(author -&gt; author.getBooks().stream())
+                .forEach(book -&gt; System.out.println(book));
+    }
+</code></pre>
+</li>
+</ul>
+<h3 id="toc_h3_8">终结操作</h3>
+<h5 id="toc_h5_9">forEach</h5>
+<pre><code>对流中的元素进行遍历操作，我们通过传入的参数去指定对遍历到的元素进行什么具体操作。
+</code></pre>
+<h5 id="toc_h5_10">count</h5>
+<pre><code>可以用来获取当前流中元素的个数。
+</code></pre>
+<pre><code class="language-java">@Test
+public void t7(){
+    List&lt;Author&gt; authors = getAuthors();
+    long count = authors.stream()
+            .distinct()
+            .count();
+    System.out.println(count);
+}
+</code></pre>
+<h5 id="toc_h5_11">max&amp;min</h5>
+<pre><code>可以用来或者流中的最值。
+</code></pre>
+<pre><code class="language-java">public void t7(){
+    // 分别获取这些作家的所出书籍的最高分和最低分并打印。
+    List&lt;Author&gt; authors = getAuthors();
+    Optional&lt;Integer&gt; max = authors.stream()
+            .flatMap(author -&gt; author.getBooks().stream())
+            .map(book -&gt; book.getScore())
+            .max((o1, o2) -&gt; o1 - o2);
+    Integer integer = max.get();
+    System.out.println(integer);
+  
+}
+</code></pre>
+<h5 id="toc_h5_12">collect</h5>
+<pre><code>把当前流转换成一个集合。
+</code></pre>
+<pre><code class="language-java">List&lt;Author&gt; authors = getAuthors();
+List&lt;String&gt; list = authors.stream()
+        .map(author -&gt; author.getName())
+        .collect(Collectors.toList()); //使用 java.util.stream.Collectors; 这个工具类
+System.out.println(list);
+</code></pre>
+<p>// set 一模一样</p>
+<p>map 需要注意的是 key 数据一定不能重复（下面用了distinct 其实是对author对象euaqls 去重，也没实际是对name去重）</p>
+<pre><code class="language-Java">List&lt;Author&gt; authors = getAuthors();
+Map&lt;String, List&lt;Book&gt;&gt; map = authors.stream()
+        .distinct()
+        .collect(Collectors.toMap(author -&gt; author.getName(), author -&gt; author.getBooks()));
+
+System.out.println(map);
+</code></pre>
+<h5 id="toc_h5_13">查找与匹配</h5>
+<h6 id="toc_h6_14">anyMatch</h6>
+<pre><code>可以用来判断是否有任意符合匹配条件的元素，结果为boolean类型。
+</code></pre>
+<h6 id="toc_h6_15">allMatch</h6>
+<pre><code>可以用来判断是否都符合匹配条件，结果为boolean类型。如果都符合结果为true，否则结果为false。
+</code></pre>
+<pre><code class="language-java">public void t10() {
+    List&lt;Author&gt; authors = getAuthors();
+    boolean b = authors.stream()
+            .anyMatch(author -&gt; author.getAge() &gt; 18);
+    System.out.println(b);
+}
+
+ public void t10() {
+        List&lt;Author&gt; authors = getAuthors();
+        boolean b = authors.stream()
+                .allMatch(author -&gt; author.getAge() &gt; 18);
+        System.out.println(b);
+    }
+</code></pre>
+<h6 id="toc_h6_16">noneMatch</h6>
+<pre><code>可以判断流中的元素是否都不符合匹配条件。如果都不符合结果为true，否则结果为false
+</code></pre>
+<pre><code class="language-java">//        判断作家是否都没有超过100岁的。
+        List&lt;Author&gt; authors = getAuthors();
+
+        boolean b = authors.stream()
+                .noneMatch(author -&gt; author.getAge() &gt; 100);
+
+        System.out.println(b); //true 就是都没有
+</code></pre>
+<h6 id="toc_h6_17">findAny</h6>
+<p>获取流中的任意一个元素。该方法没有办法保证获取的一定是流中的第一个元素。<br>
+例子：</p>
+<p>获取任意一个年龄大于18的作家，如果存在就输出他的名字</p>
+<pre><code class="language-java"> 
+        List&lt;Author&gt; authors = getAuthors();
+        Optional&lt;Author&gt; optionalAuthor = authors.stream()
+                .filter(author -&gt; author.getAge()&gt;18)
+                .findAny();
+
+        optionalAuthor.ifPresent(author -&gt; System.out.println(author.getName()));
+</code></pre>
+<h6 id="toc_h6_18">findFirst</h6>
+<p>获取流中的第一个元素。<br>
+例子：</p>
+<p>获取一个年龄最小的作家，并输出他的姓名。</p>
+<pre><code class="language-java">//        获取一个年龄最小的作家，并输出他的姓名。
+        List&lt;Author&gt; authors = getAuthors();
+        Optional&lt;Author&gt; first = authors.stream()
+                .sorted((o1, o2) -&gt; o1.getAge() - o2.getAge())
+                .findFirst();
+
+        first.ifPresent(author -&gt; System.out.println(author.getName()));
+</code></pre>
+<p>它俩区别的注意点~~</p>
+<blockquote>
+<p>返回的元素是不确定的，对于同一个列表多次调用findAny()有可能会返回不同的值。使用findAny()是为了更高效的性能。如果是数据较少，串行地情况下，一般会返回第一个结果，如果是并行的情况，那就不能确保是第一个。</p>
+<p>所以 你测试的时候可能发现 他俩结果一样  可能是因为数据量小</p>
+</blockquote>
+<h5 id="toc_h5_19">reduce归并</h5>
+<p>内部操作：<img src="https://s2.loli.net/2022/05/31/LdGtbhPmONWaAUE.png" alt="image-20220531202521234"></p>
+<p>发现 返回的值  是和元素的类型一样的  所以一般先进行map操作 连起来叫 map-reduce操作</p>
+<pre><code class="language-java">@Test
+    public void t12() {
+//        年龄和 
+        List&lt;Author&gt; authors = getAuthors();
+        Integer sum = authors.stream()
+                .map(author -&gt; author.getAge())
+                .reduce(0, new BinaryOperator&lt;Integer&gt;() {
+                    @Override
+                    public Integer apply(Integer re, Integer elem) {
+                        return re + elem;
+                    }
+                });
+        System.out.println(sum);
+    }
+</code></pre>
+<p>min 和 max 操作其实就是reduce</p>
+<p>使用reduce求所有作者中年龄的最大值</p>
+<pre><code class="language-java">//        使用reduce求所有作者中年龄的最大值
+        List&lt;Author&gt; authors = getAuthors();
+        Integer max = authors.stream()
+                .map(author -&gt; author.getAge())
+                .reduce(Integer.MIN_VALUE, (result, element) -&gt; result &lt; element ? element : result);
+
+        System.out.println(max);
+</code></pre>
+<p>使用reduce求所有作者中年龄的最小值</p>
+<pre><code class="language-java">//        使用reduce求所有作者中年龄的最小值
+        List&lt;Author&gt; authors = getAuthors();
+        Integer min = authors.stream()
+                .map(author -&gt; author.getAge())
+                .reduce(Integer.MAX_VALUE, (result, element) -&gt; result &gt; element ? element : result);
+        System.out.println(min);
+</code></pre>
+<h3 id="toc_h3_20">注意事项</h3>
+<ul>
+<li>惰性求值（如果没有终结操作，没有中间操作是不会得到执行的）</li>
+<li>流是一次性的。不是数据结构，不会保存数据。（一旦一个流对象经过一个终结操作后。这个流就不能再被使用）</li>
+<li>不会影响原数据（我们在流中可以多数据做很多处理。但是正常情况下是不会影响原来集合中的元素的。这往往也是我们期望的）</li>
+</ul>
+<p>特殊：影响原数据</p>
+<pre><code class="language-java">List&lt;Author&gt; authors = getAuthors();
+authors.stream().forEach(author -&gt; System.out.println("原数据"+author.getAge()));
+
+authors.stream()
+        .map(new Function&lt;Author, Author&gt;() {
+            @Override
+            public Author apply(Author author) {
+                 author.setAge(author.getAge() + 10);
+                return author;
+            }
+        })
+        .forEach(author -&gt; System.out.println(author.getAge()));
+
+
+authors.stream().forEach(author -&gt; System.out.println("原数据"+author.getAge()));
+//原数据都改变了
+原数据33
+原数据15
+原数据14
+原数据14
+43
+25
+24
+24
+原数据43
+原数据25
+原数据24
+原数据24
+
+Process finished with exit code 0
+
+</code></pre>
+<pre><code class="language-java">@Test
+    public void t13() {
+        List&lt;Author&gt; authors = getAuthors();
+        authors.stream().forEach(author -&gt; System.out.println("原数据"+author.getAge()));
+
+        authors.stream()
+                .map( author -&gt; author.getAge()+10)
+                .forEach(age -&gt; System.out.println(age));
+
+
+        authors.stream().forEach(author -&gt; System.out.println("原数据"+author.getAge()));
+
+
+    }
+原数据33
+原数据15
+原数据14
+原数据14
+43
+25
+24
+24
+原数据33
+原数据15
+原数据14
+原数据14
+
+Process finished with exit code 0
+
+</code></pre>
+<p>也就是不会影响集合内元素项的类型、个数、顺序。但由于值传递，可能改变元素项的属性</p>
+<h2 id="toc_h2_21">4. Optional</h2>
+<p>在JDK8中引入了Optional,养成使用Optional的习惯后你可以写出更优雅的代码来避免空指针异常。(比如mapper 查某个数据)</p>
+<blockquote>
+<p>在实际开发中我们的数据很多是从数据库获取的。Mybatis从3.5版本可以也已经支持Optional了。我们可以直接把dao方法的返回值类型定义成Optional类型，MyBastis会自己把数据封装成Optional对象返回。封装的过程也不需要我们自己操作。</p>
+</blockquote>
+<p>并且在很多函数式编程相关的API中也都用到了Optional。</p>
+<h3 id="toc_h3_22">使用</h3>
+<h4 id="toc_h4_23">创建</h4>
+<p>Optional就好像是包装类，可以把我们的具体数据封装Optional对象内部。然后我们去使用Optional中封装好的方法操作封装进去的数据就可以非常优雅的避免空指针异常。</p>
+<pre><code class="language-java">@Test
+    public void t1() {
+        Optional&lt;Author&gt; authorOptional = getAuthorOptional();
+        authorOptional.ifPresent(author -&gt; System.out.println(author)); //如果不是null （ifPresent）才去消费
+    }
+
+    private Optional&lt;Author&gt; getAuthorOptional() {
+        Author author = new Author(3L, "易", 14, "是这个世界在限制他的思维", null);
+        return Optional.ofNullable(author);//ofNullable创建
+    }
+</code></pre>
+<ul>
+<li>不经常用的两个创建方法：</li>
+</ul>
+<p>如果你<strong>确定一个对象不是空</strong>的则可以使用<strong>Optional</strong>的<strong>静态方法of</strong>来把数据封装成Optional对象。</p>
+<pre><code class="language-java">        Author author = new Author();
+        Optional&lt;Author&gt; authorOptional = Optional.of(author);
+</code></pre>
+<pre><code>但是一定要注意，如果使用of的时候传入的参数必须不为null。（尝试下传入null会出现什么结果）
+</code></pre>
+<pre><code>如果一个方法的返回值类型是Optional类型。而如果我们经判断发现某次计算得到的返回值为null，这个时候就需要把null封装成Optional对象返回。这时则可以使用
+</code></pre>
+<p><strong>Optional</strong>的<strong>静态方法empty</strong>来进行封装。</p>
+<pre><code class="language-java">		Optional.empty()
+</code></pre>
+<ul>
+<li>更多使用 更方便的应该是<code>ofNullable</code></li>
+</ul>
+<h4 id="toc_h4_24">安全消费值</h4>
+<pre><code>我们获取到一个Optional对象后肯定需要对其中的数据进行使用。这时候我们可以使用其
+</code></pre>
+<p><strong>ifPresent</strong>方法对来消费其中的值。</p>
+<pre><code>这个方法会判断其内封装的数据是否为空，不为空时才会执行具体的消费代码。这样使用起来就更加安全了。
+</code></pre>
+<pre><code>例如,以下写法就优雅的避免了空指针异常。
+</code></pre>
+<pre><code class="language-java">        Optional&lt;Author&gt; authorOptional = Optional.ofNullable(getAuthor());
+
+        authorOptional.ifPresent(author -&gt; System.out.println(author.getName()));
+</code></pre>
+<h4 id="toc_h4_25">获取值</h4>
+<pre><code>如果我们想获取值自己进行处理可以使用get方法获取，但是不推荐。因为当Optional内部的数据为空的时候会出现异常。
+</code></pre>
+<pre><code class="language-java">@Test
+public void t2() {
+    Optional&lt;Author&gt; authorOptional = getAuthorOptional();
+    Author author = authorOptional.get();  //如果下面 return Optional.ofNullable(null);  那么这一行会报错
+    System.out.println(author);
+    //Author(id=3, name=易, age=14, intro=是这个世界在限制他的思维, books=null)
+}
+
+private Optional&lt;Author&gt; getAuthorOptional() {
+    Author author = new Author(3L, "易", 14, "是这个世界在限制他的思维", null);
+    return Optional.ofNullable(author);
+}
+</code></pre>
+<h4 id="toc_h4_26">安全获取值</h4>
+<pre><code>如果我们期望安全的获取值。我们不推荐使用get方法，而是使用Optional提供的以下方法。
+</code></pre>
+<ul>
+<li>
+<p>orElseGet</p>
+<p>获取数据并且设置数据为空时的默认值。如果数据不为空就能获取到该数据。如果为空则根据你传入的参数来创建对象作为默认值返回。</p>
+<pre><code class="language-java">  public void t2() {
+        Optional&lt;Author&gt; authorOptional = getAuthorOptional();
+        Author author = authorOptional.orElseGet(() -&gt; new Author());//否则获取
+        System.out.println(author);
+        //Author(id=null, name=null, age=null, intro=null, books=null)
+    }
+
+    private Optional&lt;Author&gt; getAuthorOptional() {
+        Author author = new Author(3L, "易", 14, "是这个世界在限制他的思维", null);
+        return Optional.ofNullable(null);
+    }
+</code></pre>
+</li>
+</ul>
+<ul>
+<li>
+<p>orElseThrow</p>
+<p>获取数据，如果数据不为空就能获取到该数据。如果为空则根据你传入的参数来创建异常抛出。</p>
+<pre><code class="language-java">@Test
+    public void t3() {
+        Optional&lt;Author&gt; authorOptional = getAuthorOptional();
+        Author author = null;
+        try {
+            author = authorOptional.orElseThrow(() -&gt; new RuntimeException("数据为空"));
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+        System.out.println(author);
+    }
+
+    private Optional&lt;Author&gt; getAuthorOptional() {
+        Author author = new Author(3L, "易", 14, "是这个世界在限制他的思维", null);
+        return Optional.ofNullable(null);
+    }
+</code></pre>
+</li>
+</ul>
+<h4 id="toc_h4_27">过滤</h4>
+<pre><code>我们可以使用filter方法对数据进行过滤。如果原本是有数据的，但是不符合判断，也会变成一个无数据的Optional对象。
+</code></pre>
+<pre><code class="language-java">        Optional&lt;Author&gt; authorOptional = Optional.ofNullable(getAuthor());
+        authorOptional.filter(author -&gt; author.getAge()&gt;100).ifPresent(author -&gt; System.out.println(author.getName()));
+
+</code></pre>
+<h4 id="toc_h4_28">判断</h4>
+<p>我们可以使用isPresent方法进行是否存在数据的判断。如果为空返回值为false,如果不为空，返回值为true。但是这种方式并不能体现Optional的好处，<strong>更推荐使用ifPresent方法</strong>。</p>
+<pre><code class="language-java">      Optional&lt;Author&gt; authorOptional = Optional.ofNullable(getAuthor());
+        if (authorOptional.isPresent()) {
+            System.out.println(authorOptional.get().getName());
+        }
+</code></pre>
+<h4 id="toc_h4_29">数据转换</h4>
+<pre><code>Optional还提供了map可以让我们的对数据进行转换，并且转换得到的数据也还是被Optional包装好的，保证了我们的使用安全。
+</code></pre>
+<p>例如我们想获取作家的书籍集合。</p>
+<pre><code class="language-java">public void t4() {
+        Optional&lt;Author&gt; authorOptional = getAuthorOptional();
+        Optional&lt;List&lt;Book&gt;&gt; books = authorOptional.map(author -&gt; author.getBooks());
+        books.ifPresent(books1 -&gt; System.out.println(books1));
+    //[Book(id=1, name=刀的两侧是光明与黑暗, category=哲学,爱情, score=88, intro=用一把刀划分了爱恨), Book(id=2, name=一个人不能死在同一把刀下, category=个人成长,爱情, score=99, intro=讲述如何从失败中明悟真理)]
+    }
+
+    private Optional&lt;Author&gt; getAuthorOptional() {
+        Author author = new Author(3L, "易", 14, "是这个世界在限制他的思维", null);
+        List&lt;Book&gt; books1 = new ArrayList&lt;&gt;();
+        books1.add(new Book(1L, "刀的两侧是光明与黑暗", "哲学,爱情", 88, "用一把刀划分了爱恨"));
+        books1.add(new Book(2L, "一个人不能死在同一把刀下", "个人成长,爱情", 99, "讲述如何从失败中明悟真理"));
+        author.setBooks(books1);
+        return Optional.ofNullable(author);
+    }
+</code></pre>
+<h2 id="toc_h2_30">5. 函数式接口</h2>
+<h3 id="toc_h3_31">概述</h3>
+<pre><code></code></pre>
+<p><strong>只有一个抽象方法</strong>的接口我们称之为函数接口。</p>
+<pre><code>JDK的函数式接口都加上了**@FunctionalInterface** 注解进行标识。但是无论是否加上该注解只要接口中只有一个抽象方法，都是函数式接口。
+</code></pre>
+<h3 id="toc_h3_32">常见函数式接口</h3>
+<ul>
+<li>
+<pre><code>Consumer 消费接口
+</code></pre>
+<p>根据其中抽象方法的参数列表和返回值类型知道，我们可以在方法中对传入的参数进行消费。</p>
+<p><img src="https://s2.loli.net/2022/06/01/BE1V9joOS8t52zw.png" alt="image-20211028145622163"></p>
+</li>
+<li>
+<pre><code>Function 计算转换接口
+</code></pre>
+<p>根据其中抽象方法的参数列表和返回值类型知道，我们可以在方法中对传入的参数计算或转换，把结果返回</p>
+<p><img src="https://s2.loli.net/2022/06/01/KxAiqEe3Mwt1fU9.png" alt="image-20211028145707862"></p>
+</li>
+<li>
+<pre><code>Predicate 判断接口
+</code></pre>
+<p>根据其中抽象方法的参数列表和返回值类型知道，我们可以在方法中对传入的参数条件判断，返回判断结果</p>
+<p><img src="https://s2.loli.net/2022/06/01/tTHwCE69uQcNiO4.png" alt="image-20211028145818743"></p>
+</li>
+<li>
+<pre><code>Supplier 生产型接口
+</code></pre>
+<p>根据其中抽象方法的参数列表和返回值类型知道，我们可以在方法中创建对象，把创建好的对象返回</p>
+</li>
+</ul>
+<p><img src="https://s2.loli.net/2022/06/01/t541pK6lTm9VXBo.png" alt="image-20211028145843368"></p>
+<h3 id="toc_h3_33">常用的默认方法</h3>
+<p>以public interface Predicate<t> 为例</t></p>
+<p>使用了接口里面默认的实现了的方法 达到一种组合使用的效果</p>
+<p>每一个接口 中有许多默认方法，方便的是我们自定义函数式编程方法时用的</p>
+<p><img src="https://s2.loli.net/2022/06/01/CL1pt9oHweFgZVu.png" alt="image-20220601223437649"></p>
+<ul>
+<li>
+<p>and</p>
+<p>我们在使用Predicate接口时候可能需要进行判断条件的拼接。而and方法相当于是使用&amp;&amp;来拼接两个判断条件</p>
+<pre><code class="language-java">public void t14() {
+        List&lt;Author&gt; authors = getAuthors();
+        authors.stream().filter(new Predicate&lt;Author&gt;() {
+            @Override
+            public boolean test(Author author) {
+                return author.getAge() &gt; 18;
+            }
+        }.and(new Predicate&lt;Author&gt;() {
+            @Override
+            public boolean test(Author author) {
+                return author.getName().length()&gt;1;
+            }
+        })).forEach(author -&gt; System.out.println(author));
+    }
+//上面那种 主要是说明用法  下面也可以实现效果
+ public void t14() {
+        List&lt;Author&gt; authors = getAuthors();
+        authors.stream()
+                .filter((author -&gt; author.getAge() &gt; 18 &amp;&amp; author.getName().length() &gt; 1))
+                .forEach(author -&gt; System.out.println(author));
+    }
+</code></pre>
+</li>
+</ul>
+<ul>
+<li>
+<p>or</p>
+<p>我们在使用Predicate接口时候可能需要进行判断条件的拼接。而or方法相当于是使用||来拼接两个判断条件。</p>
+<pre><code class="language-java">@Test
+    public void t14() {
+        List&lt;Author&gt; authors = getAuthors();
+        authors.stream().filter(new Predicate&lt;Author&gt;() {
+            @Override
+            public boolean test(Author author) {
+                return author.getAge() &gt; 18;
+            }
+        }.or(new Predicate&lt;Author&gt;() {
+            @Override
+            public boolean test(Author author) {
+                return author.getName().length()&gt;1;
+            }
+        })).forEach(author -&gt; System.out.println(author));
+    }
+</code></pre>
+</li>
+</ul>
+<ul>
+<li>
+<p>negate</p>
+<p>Predicate接口中的方法。negate方法相当于是在判断添加前面加了个! 表示取反</p>
+<p>例如：</p>
+<p>打印作家中年龄不大于17的作家。</p>
+<pre><code class="language-java">//        打印作家中年龄不大于17的作家。
+        List&lt;Author&gt; authors = getAuthors();
+        authors.stream()
+                .filter(new Predicate&lt;Author&gt;() {
+                    @Override
+                    public boolean test(Author author) {
+                        return author.getAge()&gt;17;
+                    }
+                }.negate()).forEach(author -&gt; System.out.println(author.getAge()));
+</code></pre>
+<p>主要应用场景 是 在自己定义一下方法  比如：</p>
+<pre><code class="language-java">public static void main(String[] args) {
+    printNum(a-&gt;a%2 == 0,a-&gt;a!=2);
+}
+public static void printNum(IntPredicate predicate,IntPredicate predicate2){
+    int[] arr = {1,2,3,4,5,6,7,8,9,10};
+    for (int i : arr) {
+        if(predicate.and(predicate2).test(i)){
+            System.out.println(i);
+        }
+    }
+}
+</code></pre>
+</li>
+</ul>
+<h2 id="toc_h2_34">6. 方法引用</h2>
+<p>我们在使<strong>用lambda时</strong>，如果方法体中只有一个方法的调用的话（包括构造方法）,我们可以用方法引用进一步简化代码。</p>
+<p>也是一个语法糖</p>
+<p>写多了 也就熟练了 可以使用快捷键先生成 <del>面向快捷键开发</del></p>
+<h3 id="toc_h3_35">基本格式</h3>
+<pre><code>类名或者对象名::方法名
+</code></pre>
+<h3 id="toc_h3_36">1.引用类的静态方法</h3>
+<h5 id="toc_h5_37">格式</h5>
+<pre><code class="language-java">类名::方法名
+</code></pre>
+<h5 id="toc_h5_38">使用前提</h5>
+<pre><code>如果我们在重写方法的时候，方法体中
+</code></pre>
+<p><strong>只有一行代码</strong>，并且这行代码是<strong>调用了某个类的静态方法</strong>，并且我们把要重写的<strong>抽象方法中所有的参数都按照顺序传入了这个静态方法中</strong>，这个时候我们就可以引用类的静态方法。</p>
+<p>例如：</p>
+<p>如下代码就可以用方法引用进行简化</p>
+<pre><code class="language-java">        List&lt;Author&gt; authors = getAuthors();
+
+        Stream&lt;Author&gt; authorStream = authors.stream();
+      
+        authorStream.map(author -&gt; author.getAge())
+                .map(age-&gt;String.valueOf(age));
+</code></pre>
+<p>注意，如果我们所重写的方法是没有参数的，调用的方法也是没有参数的也相当于符合以上规则。</p>
+<p>优化后如下：</p>
+<pre><code class="language-java">        List&lt;Author&gt; authors = getAuthors();
+
+        Stream&lt;Author&gt; authorStream = authors.stream();
+
+        authorStream.map(author -&gt; author.getAge())
+                .map(String::valueOf);
+</code></pre>
+<h3 id="toc_h3_39">2.引用对象的实例方法</h3>
+<h5 id="toc_h5_40">格式</h5>
+<pre><code class="language-java">对象名::方法名
+</code></pre>
+<h5 id="toc_h5_41">使用前提</h5>
+<pre><code>如果我们在重写方法的时候，方法体中
+</code></pre>
+<p><strong>只有一行代码</strong>，并且这行代码是<strong>调用了某个对象的成员方法</strong>，并且我们把要重写的<strong>抽象方法中所有的参数都按照顺序传入了这个成员方法中</strong>，这个时候我们就可以引用对象的实例方法</p>
+<p>例如：</p>
+<pre><code class="language-java">        List&lt;Author&gt; authors = getAuthors();
+
+        Stream&lt;Author&gt; authorStream = authors.stream();
+        StringBuilder sb = new StringBuilder();
+        authorStream.map(author -&gt; author.getName()) //这里就不能使用 不满足：抽象方法中所有的参数都按照顺序传入了这个成员方法中
+                .forEach(name-&gt;sb.append(name));
+</code></pre>
+<p>优化后：</p>
+<pre><code class="language-java">        List&lt;Author&gt; authors = getAuthors();
+
+        Stream&lt;Author&gt; authorStream = authors.stream();
+        StringBuilder sb = new StringBuilder();
+        authorStream.map(author -&gt; author.getName())
+                .forEach(sb::append);
+</code></pre>
+<h3 id="toc_h3_42">3.引用类的实例方法</h3>
+<h5 id="toc_h5_43">格式</h5>
+<pre><code class="language-java">类名::方法名
+</code></pre>
+<h5 id="toc_h5_44">使用前提</h5>
+<pre><code>如果我们在重写方法的时候，方法体中
+</code></pre>
+<p><strong>只有一行代码</strong>，并且这行代码是<strong>调用了第一个参数的成员方法</strong>，并且我们把要<strong>重写的抽象方法中剩余的所有的参数都按照顺序传入了这个成员方法中</strong>，这个时候我们就可以引用类的实例方法。</p>
+<pre><code class="language-java">public class MethDemo {
+    interface UseString{
+        String use(String str,int start,int length);
+    }
+
+    public static String subAuthorName(String str, UseString useString){
+        int start = 0;
+        int length = 1;
+        return useString.use(str,start,length);
+    }
+
+    public static void main(String[] args) {
+        subAuthorName("三更草堂", new UseString() {
+            @Override
+            public String use(String str, int start, int length) {
+                return str.substring(start,length);
+            }
+        });
+
+        subAuthorName("三更草堂", String::substring);
+
+    }
+
+}
+</code></pre>
+<pre><code class="language-java">books.ifPresent(System.out::println);
+</code></pre>
+<h3 id="toc_h3_45">4.构造器引用</h3>
+<p>如果方法体中的一行代码是构造器的话就可以使用构造器引用。</p>
+<h5 id="toc_h5_46">格式</h5>
+<pre><code class="language-java">类名::new
+</code></pre>
+<h5 id="toc_h5_47">使用前提</h5>
+<pre><code>如果我们在重写方法的时候，方法体中
+</code></pre>
+<p><strong>只有一行代码</strong>，并且这行代码是<strong>调用了某个类的构造方法</strong>，并且我们把<strong>要重写的抽象方法中的所有的参数都按照顺序传入了这个构造方法中</strong>，这个时候我们就可以引用构造器。</p>
+<p>例如：</p>
+<pre><code class="language-java">        List&lt;Author&gt; authors = getAuthors();
+        authors.stream()
+                .map(author -&gt; author.getName())
+                .map(name-&gt;new StringBuilder(name))////
+                .map(sb-&gt;sb.append("-AAA").toString())
+                .forEach(str-&gt; System.out.println(str));
+</code></pre>
+<p>优化后：</p>
+<pre><code class="language-java">        List&lt;Author&gt; authors = getAuthors();
+        authors.stream()
+                .map(author -&gt; author.getName())
+                .map(StringBuilder::new)////
+                .map(sb-&gt;sb.append("-AAA").toString())
+                .forEach(str-&gt; System.out.println(str));
+</code></pre>
+<p>lambda是为了精简匿名内部类各种调用分不清的情况。而方法引用是为了对lambda进一步精简。所以可读性比较差</p>
+<h2 id="toc_h2_48">基本数据类型优化</h2>
+<pre><code>我们之前用到的很多Stream的方法由于都使用了泛型。所以涉及到的参数和返回值都是引用数据类型。
+</code></pre>
+<pre><code>即使我们操作的是整数小数，但是实际用的都是他们的包装类。JDK5中引入的自动装箱和自动拆箱让我们在使用对应的包装类时就好像使用基本数据类型一样方便。但是你一定要知道装箱和拆箱肯定是要消耗时间的。虽然这个时间消耗很下。但是在大量的数据不断的重复装箱拆箱的时候，你就不能无视这个时间损耗了。
+</code></pre>
+<pre><code>所以为了让我们能够对这部分的时间消耗进行优化。Stream还提供了很多专门针对基本数据类型的方法。
+</code></pre>
+<pre><code>例如：mapToInt,mapToLong,mapToDouble,flatMapToInt,flatMapToDouble等。
+</code></pre>
+<pre><code class="language-java"> private static void t6_高级用法() {
+
+        List&lt;Author&gt; authors = getAuthors();
+        authors.stream()
+                .map(author -&gt; author.getAge())
+                .map(age -&gt; age + 10)
+                .filter(age-&gt;age&gt;18)
+                .map(age-&gt;age+2)
+                .forEach(System.out::println);
+
+        authors.stream()
+                .mapToInt(author -&gt; author.getAge())
+                .map(age -&gt; age + 10)
+                .filter(age-&gt;age&gt;18)
+                .map(age-&gt;age+2)
+                .forEach(System.out::println);
+    }
+</code></pre>
+<pre><code class="language-java">@Test
+public void t6_高级用法() {
+    List&lt;Author&gt; authors = getAuthors();
+    authors.stream()
+            .map(new Function&lt;Author, Integer&gt;() {
+                @Override
+                public Integer apply(Author author) {
+                    return author.getAge();
+                }
+            })
+            .map(new Function&lt;Integer, Integer&gt;() {
+                @Override
+                public Integer apply(Integer age) {
+                    return age + 10; //拆箱装箱
+                }
+            })
+            .filter(new Predicate&lt;Integer&gt;() {
+                @Override
+                public boolean test(Integer age) {
+                    return age &gt; 18;//拆箱装箱
+                }
+            })
+            .map(age-&gt;age+2)//拆箱装箱
+            .forEach(System.out::println);
+  
+    //对上面原来的内容 转化成了 匿名内部类  可以看出mapToInt后其中都是int类型解决了重复拆箱装箱
+          authors.stream()
+                .mapToInt(new ToIntFunction&lt;Author&gt;() {
+                    @Override
+                    public int applyAsInt(Author author) {
+                        return author.getAge();
+                    }
+                })
+                .map(new IntUnaryOperator() {
+                    @Override
+                    public int applyAsInt(int age) {
+                        return age + 10;
+                    }
+                })
+                .filter(new IntPredicate() {
+                    @Override
+                    public boolean test(int age) {
+                        return age &gt; 18;
+                    }
+                })
+                .map(new IntUnaryOperator() {
+                    @Override
+                    public int applyAsInt(int age) {
+                        return age + 2;
+                    }
+                })
+                .forEach(new IntConsumer() {
+                    @Override
+                    public void accept(int x) {
+                        System.out.println(x);
+                    }
+                });
+}
+</code></pre>
+<h2 id="toc_h2_49">并行流</h2>
+<p>当流中有大量元素时，我们可以使用并行流去提高操作的效率。其实并行流就是把任务分配给多个线程去完全。如果我们自己去用代码实现的话其实会非常的复杂，并且要求你对并发编程有足够的理解和认识。而如果我们使用Stream的话，我们只需要修改一个方法的调用就可以使用并行流来帮我们实现，从而提高效率。</p>
+<pre><code>parallel方法可以把串行流转换成并行流。
+</code></pre>
+<p>原形式：</p>
+<pre><code class="language-java">public void t16() {
+        Stream&lt;Integer&gt; stream = Stream.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+        Integer reduce = stream.filter(integer -&gt; integer &gt; 5)
+                .reduce(0, (re, elem) -&gt; re + elem);
+        System.out.println(reduce);
+
+    }
+</code></pre>
+<p>并行流：</p>
+<pre><code class="language-java">public void t16() {
+    Stream&lt;Integer&gt; stream = Stream.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+    Integer reduce = stream
+            .parallel()
+            .filter(integer -&gt; integer &gt; 5)
+            .reduce(0, (re, elem) -&gt; re + elem);
+    System.out.println(reduce);
+
+}
+</code></pre>
+<p>测试说明：</p>
+<pre><code class="language-java">public void t16() {
+    Stream&lt;Integer&gt; stream = Stream.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+    Integer reduce = stream
+            .parallel()
+            //peek只应该用于debug作用，不应该有修改操作产生副作用
+            .peek(num -&gt; System.out.println(num+Thread.currentThread().getName()))
+            .filter(integer -&gt; integer &gt; 5)
+            .reduce(0, (re, elem) -&gt; re + elem);
+    System.out.println(reduce);
+  
+    //9ForkJoinPool.commonPool-worker-5
+    //3ForkJoinPool.commonPool-worker-19
+    //2ForkJoinPool.commonPool-worker-27
+    //1ForkJoinPool.commonPool-worker-31
+    //5ForkJoinPool.commonPool-worker-17
+    //10ForkJoinPool.commonPool-worker-13
+    //6ForkJoinPool.commonPool-worker-23
+    //8ForkJoinPool.commonPool-worker-9
+    //4ForkJoinPool.commonPool-worker-3
+    //7main
+    //40
+}
+</code></pre>
+                <div>
+                    <hr>
+
+标题：java 函数式编程<br>
+作者：<a href="https://blog.donggei.top" target="_blank">donggei</a><br>
+地址：<a href="https://blog.donggei.top/articles/2023/11/14/1699946312113.html" target="_blank">https://blog.donggei.top/articles/2023/11/14/1699946312113.html</a><br>
+
+<!-- 签名档内可使用 HTML、JavaScript -->
+<br>
+                </div>
+        </div>
+    </div>
+    <div class="post__toc">
+<ul class="article__toc">
+        <li class="toc__h1">
+            <a href="#toc_h1_0">java 函数式编程</a>
+        </li>
+        <li class="toc__h2">
+            <a href="#toc_h2_1">1.为什么学</a>
+        </li>
+        <li class="toc__h2">
+            <a href="#toc_h2_2">2.Lambda表达式</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_3">省略规则</a>
+        </li>
+        <li class="toc__h2">
+            <a href="#toc_h2_4">3.Stream流</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_5">入门案例：</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_6">创建流</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_7">中间操作</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_8">终结操作</a>
+        </li>
+        <li class="toc__h5">
+            <a href="#toc_h5_9">forEach</a>
+        </li>
+        <li class="toc__h5">
+            <a href="#toc_h5_10">count</a>
+        </li>
+        <li class="toc__h5">
+            <a href="#toc_h5_11">max&min</a>
+        </li>
+        <li class="toc__h5">
+            <a href="#toc_h5_12">collect</a>
+        </li>
+        <li class="toc__h5">
+            <a href="#toc_h5_13">查找与匹配</a>
+        </li>
+        <li class="toc__h6">
+            <a href="#toc_h6_14">anyMatch</a>
+        </li>
+        <li class="toc__h6">
+            <a href="#toc_h6_15">allMatch</a>
+        </li>
+        <li class="toc__h6">
+            <a href="#toc_h6_16">noneMatch</a>
+        </li>
+        <li class="toc__h6">
+            <a href="#toc_h6_17">findAny</a>
+        </li>
+        <li class="toc__h6">
+            <a href="#toc_h6_18">findFirst</a>
+        </li>
+        <li class="toc__h5">
+            <a href="#toc_h5_19">reduce归并</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_20">注意事项</a>
+        </li>
+        <li class="toc__h2">
+            <a href="#toc_h2_21">4. Optional</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_22">使用</a>
+        </li>
+        <li class="toc__h4">
+            <a href="#toc_h4_23">创建</a>
+        </li>
+        <li class="toc__h4">
+            <a href="#toc_h4_24">安全消费值</a>
+        </li>
+        <li class="toc__h4">
+            <a href="#toc_h4_25">获取值</a>
+        </li>
+        <li class="toc__h4">
+            <a href="#toc_h4_26">安全获取值</a>
+        </li>
+        <li class="toc__h4">
+            <a href="#toc_h4_27">过滤</a>
+        </li>
+        <li class="toc__h4">
+            <a href="#toc_h4_28">判断</a>
+        </li>
+        <li class="toc__h4">
+            <a href="#toc_h4_29">数据转换</a>
+        </li>
+        <li class="toc__h2">
+            <a href="#toc_h2_30">5. 函数式接口</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_31">概述</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_32">常见函数式接口</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_33">常用的默认方法</a>
+        </li>
+        <li class="toc__h2">
+            <a href="#toc_h2_34">6. 方法引用</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_35">基本格式</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_36">1.引用类的静态方法</a>
+        </li>
+        <li class="toc__h5">
+            <a href="#toc_h5_37">格式</a>
+        </li>
+        <li class="toc__h5">
+            <a href="#toc_h5_38">使用前提</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_39">2.引用对象的实例方法</a>
+        </li>
+        <li class="toc__h5">
+            <a href="#toc_h5_40">格式</a>
+        </li>
+        <li class="toc__h5">
+            <a href="#toc_h5_41">使用前提</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_42">3.引用类的实例方法</a>
+        </li>
+        <li class="toc__h5">
+            <a href="#toc_h5_43">格式</a>
+        </li>
+        <li class="toc__h5">
+            <a href="#toc_h5_44">使用前提</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_45">4.构造器引用</a>
+        </li>
+        <li class="toc__h5">
+            <a href="#toc_h5_46">格式</a>
+        </li>
+        <li class="toc__h5">
+            <a href="#toc_h5_47">使用前提</a>
+        </li>
+        <li class="toc__h2">
+            <a href="#toc_h2_48">基本数据类型优化</a>
+        </li>
+        <li class="toc__h2">
+            <a href="#toc_h2_49">并行流</a>
+        </li>
+</ul>    </div>
+    <div class="body--gray post__gray">
+        <div class="wrapper comment">
+                <div id="gitalk-container" style="padding: 30px 0;"></div>
+                <div id="b3logsolocomments"></div>
+                <div id="vcomment" style="padding: 30px 0;" data-name="donggei" data-postId="1699946312113"></div>
+
+            <div class="post__list fn__flex">
+                <div class="fn__flex-1">
+                    <div id="externalRelevantArticles"></div>
+                </div>
+                <div class="post__list-mid fn__flex-1">
+                    <div id="randomArticles"></div>
+                </div>
+                <div class="fn__flex-1">
+                    <div id="relevantArticles"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="post__fix">
+        <div class="wrapper">
+            <span class="post__share mobile__none">
+                Share
+                <span class="tag tag--4" data-type="weibo">WeiBo</span>
+                <span class="tag tag--5" data-type="twitter">Twitter</span>
+                <span class="tag tag--6" data-type="qqz">QZone</span>
+                <span class="post__code tag tag--7"
+                      data-type="wechat"
+                      data-title="java 函数式编程"
+                      data-blogtitle="donggei 的个人博客"
+                      data-url="https://blog.donggei.top/articles/2023/11/14/1699946312113.html"
+                      data-avatar="https://b3logfile.com/avatar/1699945842626_1699945899108.png?imageView2/1/w/128/h/128/interlace/0/q/100">
+                    WeChat
+                    <span class="qrcode"></span>
+                </span>
+            </span>
+            <span class="post__arrow">
+                    <a href="https://blog.donggei.top/hello-solo" rel="prev"
+                       class="vditor-tooltipped__n vditor-tooltipped"
+                       pjax-title="世界，你好！"
+                       aria-label="旧一篇: 世界，你好！">←</a>
+
+                <a href="javascript:Util.goTop()" class="vditor-tooltipped__n vditor-tooltipped"
+                   aria-label="移动到顶部">↑</a>
+                <a href="javascript:Util.goBottom()" class="vditor-tooltipped__n vditor-tooltipped"
+                   aria-label="移动到底部">↓</a>
+            </span>
+        </div>
+    </div>
+    
+</main>
+<footer class="footer">
+    <div class="ft__center">
+    </div>
+    <nav class="footer__nav mobile__none">
+        <a class="ft__link" rel="alternate" href="https://blog.donggei.top/rss.xml" rel="section">RSS</a>
+    </nav>
+    <div class="footer__border mobile__none"></div>
+    <div class="wrapper fn__flex">
+        <div class="fn__flex-1 mobile__none">
+            <div class="ft__fade">donggei - 记录精彩的程序人生</div>
+            <br>
+                Open Source, Open Mind, <br/>Open Sight, Open Future!
+
+<!-- 公告栏可使用 HTML、JavaScript，比如可以在此加入第三方统计 js -->
+        </div>
+
+
+        <div class="fn__flex-1 footer__copyright">
+            <a class="ft__link" href="https://blog.donggei.top/archives.html">
+                2
+                文章
+            </a>
+           <br>
+            <span data-uvstaturl="https://blog.donggei.top">0</span> <span class="ft-gray">浏览</span>
+ <br>
+            &copy; 2023
+            <a class="ft__link" href="https://blog.donggei.top">donggei 的个人博客</a>
+            
+        </div>
+    </div>
+</footer>
+<script>
+  var Label = {
+    speech: true,
+    servePath: "https://blog.donggei.top",
+    staticServePath: "https://blog.donggei.top",
+    luteAvailable: false,
+    hljsStyle: 'github',
+    langLabel: "zh_CN",
+    version: "4.4.0",
+    staticSite: true,
+    showCodeBlockLn: false,
+    articleId: "1699946312113",
+  }
+</script>
+<script type="text/javascript" src="https://blog.donggei.top/skins/Pinghsu/js/headroom.min.js"></script>
+<script type="text/javascript"
+        src="https://blog.donggei.top/skins/Pinghsu/js/common.min.js?1699945763204"
+        charset="utf-8"></script>
+<link type="text/css" rel="stylesheet" href="https://unpkg.com/kanbanniang@0.2.12/index.css"/>
+<script async src="https://unpkg.com/kanbanniang@0.2.12/index.js"></script>
+<div class="solo-kanbanniang">
+    <div class="solo-kanbanniang__tip"></div>
+    <canvas id="soloKanbanniang" width="280" height="250"></canvas>
+    <div class="solo-kanbanniang__tool">
+        <svg id="soloKanbanniangHome" viewBox="0 0 32 32" width="100%" height="100%">
+            <path d="M32 18.967l-16-12.42-16 12.42v-5.064l16-12.42 16 12.42zM28 18.516v12h-8v-8h-8v8h-8v-12l12-9z"></path>
+        </svg>
+        <svg id="soloKanbanniangRSS" viewBox="0 0 1024 1024" width="32" height="32">
+            <path d="M320.364 768q0 45.728-32 77.728t-77.728 32-77.728-32-32-77.728 32-77.728 77.728-32 77.728 32 32 77.728zM612.94 838.272q1.152 16-9.728 27.424-10.272 12-26.848 12h-77.152q-14.272 0-24.576-9.44t-11.424-23.712q-12.576-130.848-105.44-223.712t-223.712-105.44q-14.272-1.152-23.712-11.424t-9.44-24.576V402.24q0-16.576 12-26.848 9.728-9.728 24.576-9.728h2.848q91.424 7.424 174.848 46.016t148 103.712q65.152 64.576 103.712 148t46.016 174.848z m292.576 1.152q1.152 15.424-10.272 26.848-10.272 11.424-26.272 11.424h-81.728q-14.848 0-25.44-10.016t-11.136-24.288q-6.848-122.848-57.728-233.44t-132.288-192-192-132.288-233.44-58.272q-14.272-0.576-24.288-11.136t-10.016-24.864V109.664q0-16 11.424-26.272 10.272-10.272 25.152-10.272h1.728q149.728 7.424 286.56 68.576t243.136 168q106.848 106.272 168 243.136t68.576 286.56z"></path>
+        </svg>
+        <svg id="soloKanbanniangChat" viewBox="0 0 1024 1024" width="32" height="32">
+            <path d="M802.42709 96.163153H219.476155c-84.48109 0-154.896836 71.746044-154.896836 157.840888v393.119449c0 86.072331 70.415746 157.819398 154.896836 157.819399h214.038818V925.470963s22.526039 40.168862 64.767096 5.734608c30.965246-25.819039 126.721123-91.828428 171.775248-123.385145h132.369773c84.502579 0 154.896836-83.21526 154.896836-157.839865V251.125481c0-86.094844-70.394257-154.962328-154.896836-154.962328zM301.144176 518.002714c-39.427988 0-70.416769-31.576159-70.416769-71.746044 0-40.168862 30.988782-71.746044 70.416769-71.746044 39.426965 0 70.393233 31.577183 70.393234 71.746044 0 40.169885-30.966269 71.746044-70.393234 71.746044z m208.411657 0c-39.450501 0-70.415746-31.576159-70.415746-71.746044 0-40.168862 30.965246-71.746044 70.415746-71.746044 39.405475 0 70.394257 31.577183 70.394257 71.746044 0 40.169885-30.988782 71.746044-70.394257 71.746044z m211.203236 0c-39.426965 0-70.416769-31.576159-70.416769-71.746044 0-40.168862 30.988782-71.746044 70.416769-71.746044s70.415746 31.577183 70.415746 71.746044c-0.001023 40.169885-30.988782 71.746044-70.415746 71.746044z"></path>
+        </svg>
+        <svg id="soloKanbanniangChange" viewBox="0 0 1024 1024" width="32" height="32">
+            <path d="M936.672 193.216l-226.88-64c-8.704-2.528-18.112-1.12-25.824 3.776-7.68 4.864-12.896 12.736-14.432 21.728C655.712 236.928 595.328 288 512 288c-71.424 0-142.464-103.296-163.776-143.104-7.136-13.28-22.528-19.84-37.024-15.68l-224 64C73.472 197.152 64 209.728 64 224v256a31.93 31.93 0 0 0 11.712 24.736c7.392 6.08 17.152 8.512 26.56 6.624L224 487.04V832c0 52.928 43.072 96 96 96h384c52.928 0 96-43.072 96-96V519.04l121.728 24.352c9.44 1.92 19.2-0.544 26.56-6.624C955.68 530.656 960 521.6 960 512V224c0-14.336-9.536-26.912-23.328-30.784zM672 800H352c-17.664 0-32-14.304-32-32s14.336-32 32-32h320c17.696 0 32 14.304 32 32s-14.304 32-32 32z"></path>
+        </svg>
+        <svg id="soloKanbanniangPhoto" viewBox="0 0 1024 1024" width="32" height="32">
+            <path d="M898.048 258.048q23.552-1.024 46.592 9.216t40.96 27.136 28.672 39.424 10.752 46.08l0 390.144q0 24.576-10.752 47.104t-28.672 40.448-40.96 28.16-47.616 10.24l-697.344 0q-24.576 0-48.64-10.24t-42.496-27.648-29.696-40.448-11.264-48.64l0-381.952q0-22.528 10.752-45.568t28.672-41.472 39.936-30.208 44.544-11.776l63.488 0 13.312-83.968q3.072-20.48 18.432-32.768t34.816-12.288l456.704 0q19.456 0 34.304 10.752t16.896 34.304l14.336 83.968 54.272 0zM548.864 712.704q40.96 0 77.824-15.872t63.488-42.496 42.496-62.976 15.872-77.312-15.872-77.312-42.496-62.976-63.488-42.496-77.824-15.872-77.312 15.872-63.488 42.496-43.008 62.976-15.872 77.312 15.872 77.312 43.008 62.976 63.488 42.496 77.312 15.872z"></path>
+        </svg>
+        <svg id="soloKanbanniangGithub" viewBox="0 0 1024 1024" width="32" height="32">
+            <path d="M1024 524.8c0 114.346667-32.554667 217.216-97.706667 308.565333-65.066667 91.306667-149.162667 154.538667-252.288 189.610667-11.989333 2.304-20.778667 0.682667-26.325333-4.778667a27.605333 27.605333 0 0 1-8.362667-20.48v-144.213333c0-44.16-11.52-76.501333-34.645333-97.024 25.344-2.730667 48.085333-6.826667 68.309333-12.288a268.629333 268.629333 0 0 0 62.72-26.666667 187.434667 187.434667 0 0 0 53.973334-45.44c14.421333-18.005333 26.197333-41.898667 35.328-71.765333 9.088-29.824 13.653333-64.128 13.653333-102.826667 0-55.125333-17.536-102.058667-52.650667-140.8 16.426667-41.429333 14.677333-87.893333-5.333333-139.392-12.458667-4.096-30.464-1.578667-54.016 7.509334a355.328 355.328 0 0 0-61.312 30.08L640 271.274667a462.336 462.336 0 0 0-128-17.749334c-43.989333 0-86.656 5.930667-128 17.749334a589.824 589.824 0 0 0-28.330667-18.432c-11.776-7.253333-30.336-16.042667-55.68-26.325334-25.344-10.24-44.416-13.312-57.301333-9.216-19.584 51.498667-21.12 97.962667-4.693333 139.434667-35.114667 38.698667-52.650667 85.632-52.650667 140.757333 0 38.698667 4.565333 72.874667 13.653333 102.485334 9.130667 29.610667 20.778667 53.546667 34.986667 71.765333 14.250667 18.218667 32.128 33.493333 53.674667 45.781333 21.546667 12.288 42.453333 21.205333 62.677333 26.666667 20.224 5.461333 43.008 9.557333 68.309333 12.288-17.749333 16.384-28.629333 39.850667-32.64 70.4a130.005333 130.005333 0 0 1-29.994666 10.24c-10.666667 2.261333-23.338667 3.413333-37.973334 3.413333-14.72 0-29.269333-4.906667-43.690666-14.677333-14.464-9.813333-26.794667-24.064-36.992-42.709333a109.226667 109.226667 0 0 0-32.341334-35.541334c-13.141333-9.130667-24.106667-14.592-33.024-16.426666l-13.312-2.048c-9.344 0-15.786667 1.024-19.328 3.072-3.584 2.090667-4.693333 4.693333-3.328 7.893333 1.28 3.157333 3.328 6.4 5.973334 9.557333 2.688 3.2 5.546667 5.930667 8.661333 8.192l4.693333 3.413334c9.770667 4.565333 19.413333 13.226667 29.013334 25.984 9.514667 12.757333 16.512 24.362667 20.992 34.858666l6.656 15.701334c5.76 17.322667 15.530667 31.317333 29.312 42.026666 13.781333 10.666667 28.672 17.536 44.672 20.48 16 2.986667 31.445333 4.565333 46.336 4.821334 14.890667 0.213333 27.221333-0.597333 36.992-2.389334l15.36-2.730666c0 17.28 0.085333 37.546667 0.298666 60.8l0.341334 36.906666a27.050667 27.050667 0 0 1-8.661334 20.48c-5.76 5.461333-14.677333 7.082667-26.666666 4.778667-103.125333-35.072-187.221333-98.261333-252.330667-189.610667C32.554667 742.058667 0 639.146667 0 524.8c0-95.232 22.869333-183.04 68.693333-263.466667A516.266667 516.266667 0 0 1 254.976 70.4C333.44 23.466667 419.114667 0 512 0c92.885333 0 178.56 23.466667 256.981333 70.4a516.266667 516.266667 0 0 1 186.368 190.976C1001.130667 341.802667 1024 429.653333 1024 524.842667z"></path>
+        </svg>
+        <svg id="soloKanbanniangClose" viewBox="0 0 1024 1024" width="32" height="32">
+            <path d="M517.572566143763 1018.6748601482986C238.26554897656422 1018.6748601482986 11.897910175114305 792.2714997690043 11.897910175114305 513.0002041796496c0-279.3070171671984 226.36763880144977-505.71037754649296 505.6746559686481-505.71037754649296 279.2712955893538 0 505.6746559686481 226.40336037929444 505.6746559686481 505.71037754649296C1023.2472221124112 792.2714997690043 796.8795833109612 1018.6748601482986 517.572566143763 1018.6748601482986zM754.7281214542927 339.25044954334646c13.752807470184345-13.752807470184345 9.680547595895998-40.186775075214015-9.073280772537204-58.94060344364717l-2.143294670678079-2.1075730928334457c-18.7538283684332-18.7538283684332-45.15207439561819-22.861809820566194-58.90488186580257-9.073280772537204l-168.21291007038468 168.24863164822932-180.42968969324974-180.46541127109438c-13.967136937252159-13.967136937252159-40.72259874288353-9.823433907274534-59.72647815622916 9.216167083915742l-2.143294670678079 2.143294670678079c-19.039600991190277 19.003879413345654-23.111860865478626 45.75934121897699-9.180445506071107 59.655035000539876l180.42968969324974 180.46541127109438-176.07165719620428 176.03593561835962c-13.788529048028984 13.824250625873615-9.716269173740633 40.151053497369375 9.073280772537204 58.94060344364717l2.1075730928334457 2.1075730928334457c18.7538283684332 18.7538283684332 45.15207439561819 22.897531398410823 58.90488186580257 9.073280772537204l176.10737877404887-176.10737877404887 170.39192631890742 170.42764789675192c13.967136937252159 13.931415359407513 40.686877165038865 9.85915548511917 59.690756578384516-9.180445506071107l2.1790162485227142-2.1790162485227142c19.039600991190277-18.968157835501014 23.147582443323273-45.72361964113239 9.180445506071107-59.690756578384516l-170.39192631890742-170.42764789675192L754.7281214542927 339.25044954334646z"></path>
+        </svg>
+    </div>
+</div>
+
+
+
+<script type="text/javascript">
+    Util.addScript('https://blog.donggei.top/js/page.min.js?1699945763204', 'soloPageScript')
+    var page = new Page({
+        "commentContentCannotEmptyLabel": "评论不能为空",
+        "oId": "1699946312113",
+        "blogHost": "https://blog.donggei.top",
+        "randomArticles1Label": "随机阅读：",
+        "externalRelevantArticles1Label": "站外相关阅读："
+    });
+    $(document).ready(function () {
+        page.load();
+    page.tips.externalRelevantArticlesDisplayCount = "0";
+    page.loadRandomArticles('<h3>RECOMMEND POSTS</h3>');
+    page.loadRelevantArticles('1699946312113', '<h3>RELEVANT POSTS</h3>');
+Skin.initArticle()
+    });
+</script>
+
+</body>
+</html>
+
+<!-- Generated by Latke (https://github.com/88250/latke) in 117ms, 2023/11/14 15:21:38 -->
