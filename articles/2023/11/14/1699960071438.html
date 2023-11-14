@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/><meta name="theme-color" content="#3b3e43"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"/><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="format-detection" content="telephone=no"/><title>复习Docker - donggei 的个人博客</title><meta name="description" content="A small and beautiful blogging website. 一个小而美的博客。"/><meta property="og:description" content="A small and beautiful blogging website. 一个小而美的博客。"/>    <meta name="keywords" content="Java,博客,开源"/><link rel="dns-prefetch" href="https://blog.donggei.top"/><link rel="dns-prefetch" href="https://unpkg.com"/><link rel="preconnect" href="https://blog.donggei.top"><link rel="icon" type="image/png" href="https://b3log.org/images/brand/solo-128.png"/><link rel="apple-touch-icon" href="https://b3log.org/images/brand/solo-128.png"><link rel="shortcut icon" type="image/x-icon" href="https://b3log.org/images/brand/solo-128.png"><meta name="copyright" content="B3log"/><meta http-equiv="Window-target" content="_top"/><meta property="og:locale" content="zh_CN"/><meta property="og:title" content="复习Docker - donggei 的个人博客"/><meta property="og:site_name" content="donggei 的个人博客"/><meta property="og:url"      content="https://blog.donggei.top/articles/2023/11/14/1699960071438.html?"/><meta property="og:image" content="https://b3log.org/images/brand/solo-128.png"/><link rel="search" type="application/opensearchdescription+xml" title="复习Docker - donggei 的个人博客" href="/opensearch.xml"><link href="https://blog.donggei.top/rss.xml" title="RSS" type="application/rss+xml" rel="alternate"/><link rel="manifest" href="https://blog.donggei.top/manifest.json">        <link rel="canonical" href="https://blog.donggei.top/articles/2023/11/14/1699960071438.html">        <link rel="stylesheet"
+              href="https://blog.donggei.top/skins/Pinghsu/css/base.css?1699954326316"/>
+            <link rel="prev" title="java注解和反射" href="https://blog.donggei.top/articles/2023/11/14/1699959970120.html">
+            <link rel="next" title="elasticsearch基础" href="https://blog.donggei.top/articles/2023/11/14/1699960138443.html">
+    <script src="https://unpkg.com/vditor@3.8.15/dist/js/icons/ant.js" async="" id="vditorIconScript"></script></head>
+<body>
+<header class="header">
+    <div class="wrapper">
+        <a href="https://blog.donggei.top" rel="start" class="header__logo">
+            <img src="https://b3logfile.com/avatar/1699945842626_1699952075889.png?imageView2/1/w/128/h/128/interlace/0/q/100" alt="donggei 的个人博客"/>
+            donggei 的个人博客
+        </a>
+
+        <nav class="header__nav mobile__none">
+            <a href="https://blog.donggei.top/tags.html" rel="section">
+                Tags
+            </a>
+            <a href="https://blog.donggei.top/archives.html">
+                Archives
+            </a>
+            <a rel="archive" href="https://blog.donggei.top/links.html">
+                Links
+            </a>
+        </nav>
+
+        <div class="header__bar fn__none" onclick="$(this).next().slideToggle()">
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+                <path fill="#444" d="M0 3h20v2h-20v-2zM0 9h20v2h-20v-2zM0 15h20v2h-20v-2z"></path>
+            </svg>
+        </div>
+        <main class="header__menu fn__none">
+            <ul>
+                    <li>
+                        <a href="http://localhost:8080/tags/daily" target="_self" rel="section">
+                            daily
+                        </a>
+                    </li>
+                <li>
+                    <a href="https://blog.donggei.top/tags.html" rel="section">
+                        Tags
+                    </a>
+                </li>
+                <li>
+                    <a href="https://blog.donggei.top/archives.html">
+                        Archives
+                    </a>
+                </li>
+                <li>
+                    <a rel="archive" href="https://blog.donggei.top/links.html">
+                        Links
+                    </a>
+                </li>
+                <li>
+                    <a rel="alternate" href="https://blog.donggei.top/rss.xml" rel="section">
+                        RSS
+                    </a>
+                </li>
+            </ul>
+        </main>
+    </div>
+</header>
+<main id="pjax" class="fn__flex-1">
+    
+    <div class="post wrapper wrapper--miner">
+        <h2 class="item__title">
+            <a rel="bookmark" href="https://blog.donggei.top/articles/2023/11/14/1699960071438.html">
+                复习Docker
+            </a>
+        </h2>
+        <div class="ft__fade item__meta">
+                Published on
+            <time>
+                Nov 14, 2023
+            </time>
+            with <span data-uvstaturl="https://blog.donggei.top/articles/2023/11/14/1699960071438.html">0</span> views
+                and <a href="#b3logsolocomments"><span data-uvstatcmt="1699960071438">0</span> comments</a>
+        </div>
+        <div class="item__tags">
+                <a rel="tag" class="tag tag--0" href="https://blog.donggei.top/tags/docker">
+                    <b># docker</b>
+                </a>
+        </div>
+        <div class="vditor-reset">
+            <h1 id="toc_h1_0">复习Docker</h1>
+<hr>
+<p><strong>之前有过学习，没有及时复习和写笔记，忘记很多！做一个简单的复习</strong></p>
+<hr>
+<h3 id="toc_h3_1">docker有什么用？</h3>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-5845940816117993329-iP3vFHZ.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20230416200512345"></p>
+<p><strong>不同的组件的****依赖</strong>和<strong>库</strong>或者<strong>系统</strong>都不同，在同一个机器上发布困难</p>
+<ul>
+<li><strong>解决各个组件的兼容性</strong></li>
+<li><strong>开发 测试 生产环境都不同</strong></li>
+</ul>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-16224567251081276029-O6SH47i.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20230416200849123"></p>
+<p><strong>可以打包Ubuntu的到centos上跑</strong></p>
+<h3 id="toc_h3_2">怎么实现打包Ubuntu的到centos上跑的</h3>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-3424942943873164330-WIfsrIC.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20230416202110788"></p>
+<p><strong>ubuntu和centos的内核是一样的，docker直接打包了内核的命令</strong></p>
+<h3 id="toc_h3_3">是什么</h3>
+<p><strong>Docker是一个快速交付应用、运行应用的技术:</strong></p>
+<ol>
+<li><strong>可以将程序及其依赖、运行环境一起打包为一个镜像,</strong><br>
+<strong>可以迁移到任意Linux操作系统</strong></li>
+<li><strong>运行时利用沙箱机制形成隔离容器，各个应用互不干扰</strong></li>
+<li><strong>启动、移除都可以通过一行命令完成，方便快捷</strong></li>
+</ol>
+<h3 id="toc_h3_4">docker和虚拟机的区别</h3>
+<p><strong>虚拟机使用的是Hypervisor技术  hypervisor（又被称为virtual machine monitor，VMM，或virtualizer）是一种模拟器；它是创建或者运行虚拟机的软件、固件、或者硬件。</strong></p>
+<p><strong>Docker</strong>仅仅是封装函数库，并没有模拟完整的操作系统</p>
+<p><strong>区别：</strong><br>
+<strong>docker是一个系统进程；</strong><br>
+<strong>虚拟机是在操作系统中的操作系统；</strong></p>
+<p><strong>docker体积小、启动速度快、性能好；</strong><br>
+<strong>虚拟机体积大、启动速度慢、性能一般；</strong></p>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-15483851683234300853-jscsoCV.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20230416203555765"></p>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-14130840552023226738-4EJJJ07.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20230416204002275"></p>
+<h3 id="toc_h3_5">镜像和容器</h3>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-5030002106563207530-sUFiH5m.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20230416204931713"></p>
+<p><strong>镜像(Image) : Docker将 应用程序及其所需的依赖、函数库、环境、配置等文件打包在一起，称为镜像。</strong></p>
+<p><strong>镜像是只读的。</strong></p>
+<p><strong>容器(Container) :镜像中的应用程序运行后形成的进程就是容器，只是Docker会给容器做隔离，对外不可见。</strong></p>
+<p><strong>镜像</strong>，就是把一个应用在硬盘上的文件、及其运行环境、部分系统函数库文件一起打包形成的文件包。这个文件包是只读的。</p>
+<p><strong>容器</strong>，就是将这些文件中编写的程序、函数加载到内存中允许，形成进程，只不过要隔离起来。因此一个镜像可以启动多次，形成多个容器进程。</p>
+<p><strong>DockerHub: DockerHub是一个Docker镜像 的托管平台。这样的平台称为Docker Registry。</strong></p>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-3557507047160081673-pNuzmw7.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20230416205558719"></p>
+<h3 id="toc_h3_6">Docker架构</h3>
+<p><strong>Docker是一个CS架构的程序，由两部分组成：</strong></p>
+<ul>
+<li><strong>服务端(server)：Docker守护进程，负责处理Docker指令，管理镜像、容器等</strong></li>
+<li><strong>客户端(client)：通过命令或RestAPI向Docker服务端发送指令。可以在本地或远程向服务端发送指令。</strong></li>
+</ul>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-17549550464658381278-HwxiQbD.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20230416205657534"></p>
+<h3 id="toc_h3_7">基本操作</h3>
+<pre><code>systemctl start docker  # 启动docker服务
+systemctl stop docker  # 停止docker服务
+systemctl restart docker  # 重启docker服务
+systemctl status docker #查看docker状态
+docker search redis 搜索
+</code></pre>
+<p><strong>镜名称一般分两部分组成：****[repository]:[tag]</strong></p>
+<p><strong>tag默认是latest，代表最新版本的镜像</strong></p>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-15685570188888872510-NLkNBLg.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20230417183703522"></p>
+<pre><code>docker pull nginx 据查看到的镜像名称，拉取自己需要的镜像
+docker images 查看拉取到的镜像
+docker rmi nginx:latest 删除本地的nginx镜像
+docker save -o nginx.tar nginx:latest  导出镜像到磁盘
+docker load -i nginx.tar     加载本地文件
+</code></pre>
+<h3 id="toc_h3_8">容器的3个状态，docker常用命令</h3>
+<ul>
+<li><strong>运行：进程正常运行</strong></li>
+<li><strong>暂停：进程暂停，CPU不再运行，并不释放内存</strong></li>
+<li><strong>停止：进程终止，回收进程占用的内存、CPU等资源</strong></li>
+</ul>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-11395442280161830636-Za7stXK.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20230417184516894"></p>
+<p><strong>docker pause 与 docker stop 的区别</strong></p>
+<blockquote>
+<p><strong>docker pause 命令挂起指定容器中的所有进程</strong></p>
+<p><strong>docker stop 容器内主进程会在指定时间内被杀死，默认为10s</strong></p>
+</blockquote>
+<pre><code>docker run：创建并运行一个容器，处于运行状态
+
+docker pause：让一个运行的容器暂停
+
+docker unpause：让一个容器从暂停状态恢复运行
+
+docker stop：停止一个运行的容器
+
+docker start：让一个停止的容器再次运行
+
+docker rm：删除一个容器
+
+docker exec 进入容器执行命令
+
+docker logs 查看容器日志
+
+docker ps 列出运行的容器及状态
+</code></pre>
+<pre><code>[root@bogon ~]# docker run --name mn -p 80:80 -d nginx
+7d08b004125704210a5ebc33ad7143d78bd4d4bd690ac1a86115ccd77fc2bb9a
+返回的是容器的唯一ID
+docker run --name mn -p 80:80 -d nginx:latest
+</code></pre>
+<p>**docker run **</p>
+<ul>
+<li><strong>–name：指定容器名称</strong></li>
+<li><strong>-p：指定端口映射</strong></li>
+<li><strong>-d：让容器后台运行</strong></li>
+</ul>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-9071265795105774431-4pDZiD1.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20230417205125426"></p>
+<pre><code>docker exec -it mn bash   进入容器
+</code></pre>
+<p><strong>命令解读：</strong></p>
+<ul>
+<li><strong>docker exec ：进入容器内部，执行一个命令</strong></li>
+<li><strong>-it : 给当前进入的容器创建一个标准输入、输出终端，允许我们与容器交互</strong></li>
+<li><strong>mn ：要进入的容器的名称</strong></li>
+<li><strong>bash：进入容器后执行的命令，bash是一个linux终端交互命令</strong></li>
+</ul>
+<blockquote>
+<p><strong>注意:</strong></p>
+<p><strong>exec命令可以进入容器修改文件,但是****在容器内修改文件是不推荐的</strong></p>
+<p><strong>因为：1. 没有vi等命令，2.容器的操作没有记录（Linux用history查看历史命令</strong></p>
+</blockquote>
+<p><strong>查看容器日志的命令：</strong></p>
+<ul>
+<li><strong>docker logs</strong></li>
+<li><strong>添加 -f 参数可以持续查看日志</strong></li>
+</ul>
+<p><strong>查看容器状态：</strong></p>
+<ul>
+<li><strong>docker ps</strong></li>
+<li><strong>docker ps -a  查看所有容器，包括已经停止的</strong></li>
+</ul>
+<p><strong>停止容器命令:</strong></p>
+<ul>
+<li><strong>docker stop mn</strong></li>
+</ul>
+<p><strong>运行容器命令</strong></p>
+<ul>
+<li><strong>docker start mn</strong></li>
+</ul>
+<p><strong>删除容器命令</strong></p>
+<ul>
+<li><strong>docker rm mn  运行时的删不了</strong></li>
+<li><strong>docker rm -f mn  强制删除，</strong></li>
+</ul>
+<h3 id="toc_h3_9">为什么要整数据卷，有什么用？</h3>
+<p><strong>在之前的nginx案例中，修改nginx的html页面时，需要进入nginx内部。并且因为没有编辑器，修改文件也很麻烦。</strong></p>
+<p><strong>这就是因为容器与数据（容器内文件）耦合带来的后果。</strong></p>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-16312084393020176620-I7aZsSF.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20230418202315075"></p>
+<ul>
+<li><strong>进入容器修改文件不方便</strong></li>
+<li><strong>在容器中数据不能重复使用</strong></li>
+<li><strong>升级容器，数据丢失</strong></li>
+</ul>
+<h3 id="toc_h3_10">数据卷，操作命令</h3>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-1596394950775593154-Anucwzh.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20230418202846439"></p>
+<p><strong>这样，我们操作宿主机的/var/lib/docker/volumes/html目录，就等于操作容器内的/usr/share/nginx/html目录了</strong></p>
+<p><strong>多个容器可以使用同一个数据卷</strong></p>
+<p><strong>数据集操作命令</strong></p>
+<p><code>docker volume [COMMAND]</code></p>
+<ul>
+<li><strong>docker volume  create 创建一个volume</strong></li>
+<li><strong>docker volume  inspect 显示一个或多个volume的信息  挂载位置等信息</strong></li>
+<li><strong>docker volume  ls 列出所有的volume</strong></li>
+<li><strong>docker volume prune 删除未使用的volume</strong></li>
+<li><strong>docker volume rm 删除一个或多个指定的volume</strong></li>
+</ul>
+<pre><code>docker volume create html
+docker volume ls
+docker volume inspect html
+</code></pre>
+<p><strong>挂载数据卷</strong></p>
+<pre><code>docker run \
+  --name mn \
+  -v html:/root/html \
+  -p 8080:80  
+  -d nginx \
+</code></pre>
+<p><code>-v html:/root/htm</code> ：把html数据卷挂载到容器内的/root/html这个目录中</p>
+<p><strong>-p 8080:80：宿主机8080 容器内80</strong></p>
+<p>**  -d nginx：后台运行nginx镜像**</p>
+<p><strong>这个命令 如果你之前没创建数据卷，会帮你创建html这个数据卷</strong></p>
+<p>** 默认位置：/var/lib/docker/volumes/html/_data**</p>
+<h3 id="toc_h3_11">挂载本地目录</h3>
+<ul>
+<li><strong>带数据卷模式：宿主机目录—&gt; 数据卷 —&gt; 容器内目录</strong></li>
+<li><strong>直接挂载模式：宿主机目录 —&gt; 容器内目录</strong></li>
+</ul>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-14628537947673107669-LNLoxPw.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20230418205553604"></p>
+<p><strong>① 挂载/tmp/mysql/data到mysql容器内数据存储目录</strong></p>
+<p><strong>(容器内的位置可以到官网去看 dockerhub)</strong></p>
+<p><strong>② 挂载/tmp/mysql/conf/hmy.cnf到mysql容器的配置文件</strong></p>
+<p><strong>③ 设置MySQL密码</strong></p>
+<pre><code>docker run \
+ --name mysql \
+ -e MYSQL_ROOT_PASSWORD=root \
+ -p 3306:3306 \
+ -v /tmp/mysql/conf/hmy.cnf:/etc/mysql/conf.d/hmy.cnf \
+ -v /tmp/mysql/data:/var/lib/mysql \
+ -d \
+ mysql:5.7.25
+</code></pre>
+<p><strong>重要！！！！</strong></p>
+<p><strong>docker run的命令中通过 -v 参数挂载文件或目录到容器中：</strong></p>
+<ul>
+<li><strong>-v volume名称:容器内目录               通过数据卷</strong></li>
+<li><strong>-v 宿主机文件:容器内文                    直接挂载</strong></li>
+<li><strong>-v 宿主机目录:容器内目录                 直接挂载</strong></li>
+</ul>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-12312953576978143792-JxLIMrD.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20230418212533300"></p>
+<blockquote>
+<p><strong>扩展：</strong></p>
+<p><strong>当我们使用</strong><code>docker run -v /host/something:/container/something</code>尝试挂载默写目录到容器内时,期待的效果是容器内的文件和本地目录的文件相互<strong>映射</strong>,但实际效果宿主机目录会直接覆盖掉容器内的目录,但容器内文件并非被删除</p>
+<blockquote>
+<p><strong>容器内的文件被删除了吗?</strong></p>
+</blockquote>
+<p><strong>都按时否定的,容器的镜像自带的文件并没有被重写覆盖,而是被隐藏了,原理类似于</strong><code>linux mount</code>的挂载,所以与其说是覆盖,不如说是目录挂载会掩盖。</p>
+<blockquote>
+<p><strong>目前解决办法</strong></p>
+</blockquote>
+<p><strong>使用</strong><code>docker volume create</code>创建,这种方法创建的是<code>数据卷</code>,而通过在创建容器时将主机本地任意路径<strong>挂载</strong>到容器作为数据卷的方式称为<code>绑定数据卷</code>。**<br>
+** 当我们需要将容器内文件映射，或</p>
+</blockquote>
+<h3 id="toc_h3_12">自定义dockerfile</h3>
+<p><strong>镜像是将应用程序及其需要的系统函数库、环境、配置、依赖打包而成。</strong></p>
+<p><img src="http://bijioss.donggei.top/image-20230419201526609.png" alt="image-20230419201526609"></p>
+<p><strong>镜像的结构：</strong></p>
+<p><strong>逐层构建</strong></p>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-8510027658243128041-QOXPOfB.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20230419201630536"></p>
+<p><strong>BaseImage,Entrypoint两个是确定的，其他的不确定。</strong></p>
+<hr>
+<p><strong>Dockerfile就是一个文本文件，其中包含一个个的指令(Instruction)，用指令来说明要执行什么操作来构建镜像。每一个指令都会形成一层Layer。</strong><br>
+** 常见指令：**</p>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-16225089948247730049-U2IeenS.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20230419202258919"></p>
+<p><strong>下面是一个dockerfile:</strong></p>
+<p><strong>他打包的是一个java项目</strong></p>
+<pre><code># 指定基础镜像
+FROM ubuntu:16.04
+# 配置环境变量，JDK的安装目录
+ENV JAVA_DIR=/usr/local
+
+# 拷贝jdk和java项目的包  当前目录拷贝到配置目录
+COPY ./jdk8.tar.gz $JAVA_DIR/
+COPY ./docker-demo.jar /tmp/app.jar
+
+# 安装JDK
+RUN cd $JAVA_DIR \
+ &amp;&amp; tar -xf ./jdk8.tar.gz \
+ &amp;&amp; mv ./jdk1.8.0_144 ./java8
+
+# 配置环境变量
+ENV JAVA_HOME=$JAVA_DIR/java8
+ENV PATH=$PATH:$JAVA_HOME/bin
+
+# 暴露端口
+EXPOSE 8090
+# 入口，java项目的启动命令
+ENTRYPOINT java -jar /tmp/app.jar
+</code></pre>
+<p><strong>创建一个目录：里面是这些文件</strong></p>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-9693423463722640400-Gndb1yz.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20230419203022582"></p>
+<p><strong>然后执行这个命令，最后一个点" . " ,代表的是Dockerfile所在的目录。</strong></p>
+<h4 id="toc_h4_13">第二种：基于java8构建Java项目（其实都一样）</h4>
+<p><strong>都是基于其他镜像构建</strong></p>
+<p><strong>虽然我们可以基于Ubuntu基础镜像，添加任意自己需要的安装包，构建镜像，但是却比较麻烦。所以大多数情况下，我们都可以在一些安装了部分软件的基础镜像上做改造。</strong></p>
+<pre><code># 指定基础镜像
+FROM java:8-alpine
+COPY ./app.jar /tmp/app.jar
+EXPOSE 8090
+ENTRYPOINT java -jar /tmp/app.jar
+</code></pre>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-16240080497167008874-7rjKVtf.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20230419204516913"></p>
+<h3 id="toc_h3_14">dockerCompose</h3>
+<p><strong>Docker Compose 是一个编排多容器分布式部署的工具，提供命令集管理容器化应用的完整开发周期，包括服务构建，启动和停止。</strong></p>
+<p><strong>帮助我们快速部署分布式应用，无需一个一个微服务去构建镜像和部署。</strong></p>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-13220784008709391591-z3H79Dd.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20230419211405715"></p>
+<p><strong>yaml格式：</strong></p>
+<p><img src="http://bijioss.donggei.top/image-20230419211124603.png" alt="image-20230419211124603"></p>
+<p><strong>上面是两种</strong></p>
+<p><strong>上面是基于镜像去配置</strong></p>
+<p><strong>下面是先build再运行容器《临时构建镜像 然后运行'</strong></p>
+<h3 id="toc_h3_15">微服务集群利用DockerCompose部署</h3>
+<p><strong>cloud-demo:</strong></p>
+<ol>
+<li><strong>使用maven打包工具，将项目中的每个微服务都打包为app.jar</strong></li>
+<li><strong>将打包好的app.jar拷贝到cloud-demo中的每一个对应的子目录中,写好Dockerfile</strong></li>
+</ol>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-17447952090597631062-RyrUVuW.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20230420190312322"></p>
+<p><strong>比如：order-service中放进去</strong><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-12872665606729001159-LQmp9SQ.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20230420190519416"></p>
+<p><strong>Dockerfile中的</strong></p>
+<pre><code>FROM java:8-alpine
+COPY ./app.jar /tmp/app.jar
+ENTRYPOINT java -jar /tmp/app.jar
+</code></pre>
+<ol start="3">
+<li><strong>然后目录外的docker-compose.yml</strong></li>
+</ol>
+<pre><code>version: "3.2"
+
+services:
+  nacos:
+    image: nacos/nacos-server
+    environment:
+      MODE: standalone
+    ports:
+      - "8848:8848"
+  mysql:
+    image: mysql:5.7.25
+    environment:
+      MYSQL_ROOT_PASSWORD: 123
+    volumes:
+      - "$PWD/mysql/data:/var/lib/mysql"
+      - "$PWD/mysql/conf:/etc/mysql/conf.d/"
+  userservice:
+    build: ./user-service
+  orderservice:
+    build: ./order-service
+  gateway:
+    build: ./gateway
+    ports:
+      - "10010:10010"
+</code></pre>
+<p><strong>nacos：作为注册中心和配置中心</strong></p>
+<pre><code>image: nacos/nacos-server： 基于nacos/nacos-server镜像构建
+environment：环境变量
+    MODE: standalone：单点模式启动
+ports：端口映射，这里暴露了8848端口
+</code></pre>
+<p><strong>mysql：数据库</strong></p>
+<pre><code>image: mysql:5.7.25：镜像版本是mysql:5.7.25
+environment：环境变量
+    MYSQL_ROOT_PASSWORD: 123：设置数据库root账户的密码为123
+volumes：数据卷挂载，这里挂载了mysql的data、conf目录，其中有我提前准备好的数据
+</code></pre>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-7649738510105297867-6e8sVWm.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20230420192234172"></p>
+<p><strong>它可以帮你通过docker部署整个集群</strong></p>
+<p><strong>配置文件需要改：</strong></p>
+<p><strong>因为微服务将来要部署为docker容器，而容器之间互联不是通过IP地址，而是通过****容器名</strong>访问。这里我们将order-service、user-service、gateway服务的mysql、nacos地址都修改为基于容器名的访问。改成这样：</p>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-8794921657274027690-h8XvNoV.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20230420192421428"></p>
+<ol start="4">
+<li><strong>最后：</strong><code>将cloud-demo上传至虚拟机，利用 docker-compose up -d 来部署</code></li>
+</ol>
+                <div>
+                    <hr>
+
+标题：复习Docker<br>
+作者：<a href="https://blog.donggei.top" target="_blank">donggei</a><br>
+地址：<a href="https://blog.donggei.top/articles/2023/11/14/1699960071438.html" target="_blank">https://blog.donggei.top/articles/2023/11/14/1699960071438.html</a><br>
+
+<!-- 签名档内可使用 HTML、JavaScript -->
+<br>
+                </div>
+        </div>
+    </div>
+    <div class="post__toc">
+<ul class="article__toc">
+        <li class="toc__h1">
+            <a href="#toc_h1_0">复习Docker</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_1">docker有什么用？</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_2">怎么实现打包Ubuntu的到centos上跑的</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_3">是什么</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_4">docker和虚拟机的区别</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_5">镜像和容器</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_6">Docker架构</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_7">基本操作</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_8">容器的3个状态，docker常用命令</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_9">为什么要整数据卷，有什么用？</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_10">数据卷，操作命令</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_11">挂载本地目录</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_12">自定义dockerfile</a>
+        </li>
+        <li class="toc__h4">
+            <a href="#toc_h4_13">第二种：基于java8构建Java项目（其实都一样）</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_14">dockerCompose</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_15">微服务集群利用DockerCompose部署</a>
+        </li>
+</ul>    </div>
+    <div class="body--gray post__gray">
+        <div class="wrapper comment">
+                <div id="gitalk-container" style="padding: 30px 0;"></div>
+                <div id="b3logsolocomments"></div>
+                <div id="vcomment" style="padding: 30px 0;" data-name="donggei" data-postId="1699960071438"></div>
+
+            <div class="post__list fn__flex">
+                <div class="fn__flex-1">
+                    <div id="externalRelevantArticles"></div>
+                </div>
+                <div class="post__list-mid fn__flex-1">
+                    <div id="randomArticles"></div>
+                </div>
+                <div class="fn__flex-1">
+                    <div id="relevantArticles"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="post__fix">
+        <div class="wrapper">
+            <span class="post__share mobile__none">
+                Share
+                <span class="tag tag--4" data-type="weibo">WeiBo</span>
+                <span class="tag tag--5" data-type="twitter">Twitter</span>
+                <span class="tag tag--6" data-type="qqz">QZone</span>
+                <span class="post__code tag tag--7"
+                      data-type="wechat"
+                      data-title="复习Docker"
+                      data-blogtitle="donggei 的个人博客"
+                      data-url="https://blog.donggei.top/articles/2023/11/14/1699960071438.html"
+                      data-avatar="https://b3logfile.com/avatar/1699945842626_1699952075889.png?imageView2/1/w/128/h/128/interlace/0/q/100">
+                    WeChat
+                    <span class="qrcode"></span>
+                </span>
+            </span>
+            <span class="post__arrow">
+                    <a href="https://blog.donggei.top/articles/2023/11/14/1699959970120.html" rel="prev"
+                       class="vditor-tooltipped__n vditor-tooltipped"
+                       pjax-title="java注解和反射"
+                       aria-label="旧一篇: java注解和反射">←</a>
+
+                    <a href="https://blog.donggei.top/articles/2023/11/14/1699960138443.html" rel="next"
+                       class="vditor-tooltipped__n vditor-tooltipped"
+                       pjax-title="elasticsearch基础"
+                       aria-label="新一篇: elasticsearch基础">→</a>
+                <a href="javascript:Util.goTop()" class="vditor-tooltipped__n vditor-tooltipped"
+                   aria-label="移动到顶部">↑</a>
+                <a href="javascript:Util.goBottom()" class="vditor-tooltipped__n vditor-tooltipped"
+                   aria-label="移动到底部">↓</a>
+            </span>
+        </div>
+    </div>
+    
+</main>
+<footer class="footer">
+    <div class="ft__center">
+    <a href="https://ld246.com/member/donggei"
+       aria-label="https://ld246.com/member/donggei"
+       class="vditor-tooltipped__n vditor-tooltipped  user__site"
+       target="_blank" rel="noopener nofollow">
+        <svg viewBox="0 0 32 32" width="100%" height="100%">
+            <path fill="#d23f31" style="fill: var(--color1, #d23f31)" d="M5.787 17.226h17.033l5.954 9.528c0.47 0.752 0.003 1.361-1.042 1.361h-15.141z"></path>
+            <path d="M10.74 3.927h17.033c1.045 0 1.512 0.609 1.042 1.361l-5.954 9.528h-19.872l6.379-10.209c0.235-0.376 0.849-0.681 1.372-0.681z"></path>
+            <path d="M2.953 17.226h2.839l6.804 10.889h-1.892c-0.523 0-1.137-0.305-1.372-0.681z"></path>
+        </svg>
+    </a>
+
+        <a href="https://github.com/dong2645981073"
+           aria-label="https://github.com/dong2645981073"
+           class="vditor-tooltipped__n vditor-tooltipped  user__site"
+           target="_blank" rel="noopener nofollow">
+            <svg viewBox="0 0 32 32" width="100%" height="100%">
+                <path d="M16 0.331c-8.836 0-16 7.163-16 16 0 7.069 4.585 13.067 10.942 15.182 0.8 0.148 1.094-0.347 1.094-0.77 0-0.381-0.015-1.642-0.022-2.979-4.452 0.968-5.391-1.888-5.391-1.888-0.728-1.849-1.776-2.341-1.776-2.341-1.452-0.993 0.11-0.973 0.11-0.973 1.606 0.113 2.452 1.649 2.452 1.649 1.427 2.446 3.743 1.739 4.656 1.33 0.143-1.034 0.558-1.74 1.016-2.14-3.554-0.404-7.29-1.777-7.29-7.907 0-1.747 0.625-3.174 1.649-4.295-0.166-0.403-0.714-2.030 0.155-4.234 0 0 1.344-0.43 4.401 1.64 1.276-0.355 2.645-0.532 4.005-0.539 1.359 0.006 2.729 0.184 4.008 0.539 3.054-2.070 4.395-1.64 4.395-1.64 0.871 2.204 0.323 3.831 0.157 4.234 1.026 1.12 1.647 2.548 1.647 4.295 0 6.145-3.743 7.498-7.306 7.895 0.574 0.497 1.085 1.47 1.085 2.963 0 2.141-0.019 3.864-0.019 4.391 0 0.426 0.288 0.925 1.099 0.768 6.354-2.118 10.933-8.113 10.933-15.18 0-8.837-7.164-16-16-16z"></path>
+            </svg>
+        </a>
+
+        <a href="tencent://message/?uin=2645981073"
+           aria-label="2645981073"
+           target="_blank"
+           class="vditor-tooltipped__n vditor-tooltipped  user__site" rel="noopener nofollow">
+            <svg viewBox="0 0 32 32" width="100%" height="100%">
+                <path d="M4.821 14.393c-0.125-0.304-0.143-0.607-0.143-0.929 0-0.5 0.321-1.304 0.625-1.679-0.018-0.464 0.179-1.411 0.536-1.714 0-3.304 2.554-7.464 5.536-8.893 1.839-0.875 3.768-1.179 5.786-1.179 1.571 0 3.286 0.375 4.75 0.982 4.196 1.768 5.143 5.054 6.036 9.25l0.018 0.089c0.518 0.786 0.982 1.714 0.982 2.679 0 0.482-0.321 0.964-0.321 1.393 0 0.036 0.107 0.179 0.125 0.214 1.536 2.268 2.929 4.732 2.929 7.554 0 0.625-0.339 2.804-1.339 2.804-0.696 0-1.464-1.696-1.714-2.161-0.018-0.018-0.036-0.018-0.054-0.018l-0.089 0.071c-0.571 1.482-1.196 2.875-2.357 3.982 1.018 0.982 2.661 0.893 2.964 2.589-0.089 0.196-0.054 0.411-0.196 0.607-1.018 1.536-3.75 1.732-5.393 1.732-2.179 0-3.946-0.571-6-1.179-0.429-0.125-1.071-0.054-1.536-0.107-1.089 1.196-3.75 1.518-5.286 1.518-1.357 0-6.607-0.089-6.607-2.411 0-1 0.214-1.286 0.911-1.929 0.554-0.107 0.964-0.411 1.607-0.446 0.089 0 0.161-0.018 0.25-0.036 0.018-0.018 0.036-0.018 0.036-0.071l-0.036-0.054c-1.232-0.286-2.964-3.393-3.232-4.679l-0.089-0.054c-0.125 0-0.179 0.268-0.214 0.357-0.393 0.911-1.321 1.893-2.357 2h-0.018c-0.143 0-0.089-0.143-0.196-0.179-0.25-0.589-0.411-1.125-0.411-1.786 0-3.571 1.714-6.214 4.5-8.321z"></path>
+            </svg>
+        </a>
+    </div>
+    <nav class="footer__nav mobile__none">
+            <a class="ft__link" href="http://localhost:8080/tags/daily" target="_self" rel="section">
+                daily
+            </a>
+        <a class="ft__link" rel="alternate" href="https://blog.donggei.top/rss.xml" rel="section">RSS</a>
+    </nav>
+    <div class="footer__border mobile__none"></div>
+    <div class="wrapper fn__flex">
+        <div class="fn__flex-1 mobile__none">
+            <div class="ft__fade">donggei - 藏器于身，不患无此时 </div>
+            <br>
+                
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?4a65454c1d3be24651aed5fbf3c9e47b";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<h2>致知于行</h2>
+<!-- 公告栏可使用 HTML、JavaScript，比如可以在此加入第三方统计 js -->
+        </div>
+
+
+        <div class="fn__flex-1 footer__copyright">
+            <a class="ft__link" href="https://blog.donggei.top/archives.html">
+                11
+                文章
+            </a>
+           <br>
+            <span data-uvstaturl="https://blog.donggei.top">0</span> <span class="ft-gray">浏览</span>
+ <br>
+            &copy; 2023
+            <a class="ft__link" href="https://blog.donggei.top">donggei 的个人博客</a>
+            
+        </div>
+    </div>
+</footer>
+<script>
+  var Label = {
+    speech: true,
+    servePath: "https://blog.donggei.top",
+    staticServePath: "https://blog.donggei.top",
+    luteAvailable: false,
+    hljsStyle: 'github',
+    langLabel: "zh_CN",
+    version: "4.4.0",
+    staticSite: true,
+    showCodeBlockLn: false,
+    articleId: "1699960071438",
+  }
+</script>
+<script type="text/javascript" src="https://blog.donggei.top/skins/Pinghsu/js/headroom.min.js"></script>
+<script type="text/javascript"
+        src="https://blog.donggei.top/skins/Pinghsu/js/common.min.js?1699954326316"
+        charset="utf-8"></script>
+
+
+
+<script type="text/javascript">
+    Util.addScript('https://blog.donggei.top/js/page.min.js?1699954326316', 'soloPageScript')
+    var page = new Page({
+        "commentContentCannotEmptyLabel": "评论不能为空",
+        "oId": "1699960071438",
+        "blogHost": "https://blog.donggei.top",
+        "randomArticles1Label": "随机阅读：",
+        "externalRelevantArticles1Label": "站外相关阅读："
+    });
+    $(document).ready(function () {
+        page.load();
+    page.tips.externalRelevantArticlesDisplayCount = "0";
+    page.loadRandomArticles('<h3>RECOMMEND POSTS</h3>');
+    page.loadRelevantArticles('1699960071438', '<h3>RELEVANT POSTS</h3>');
+Skin.initArticle()
+    });
+</script>
+
+</body>
+</html>
+
+<!-- Generated by Latke (https://github.com/88250/latke) in 29ms, 2023/11/14 19:13:32 -->

@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/><meta name="theme-color" content="#3b3e43"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"/><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="format-detection" content="telephone=no"/><title>elasticsearch基础 - donggei 的个人博客</title><meta name="description" content="A small and beautiful blogging website. 一个小而美的博客。"/><meta property="og:description" content="A small and beautiful blogging website. 一个小而美的博客。"/>    <meta name="keywords" content="Java,博客,开源"/><link rel="dns-prefetch" href="https://blog.donggei.top"/><link rel="dns-prefetch" href="https://unpkg.com"/><link rel="preconnect" href="https://blog.donggei.top"><link rel="icon" type="image/png" href="https://b3log.org/images/brand/solo-128.png"/><link rel="apple-touch-icon" href="https://b3log.org/images/brand/solo-128.png"><link rel="shortcut icon" type="image/x-icon" href="https://b3log.org/images/brand/solo-128.png"><meta name="copyright" content="B3log"/><meta http-equiv="Window-target" content="_top"/><meta property="og:locale" content="zh_CN"/><meta property="og:title" content="elasticsearch基础 - donggei 的个人博客"/><meta property="og:site_name" content="donggei 的个人博客"/><meta property="og:url"      content="https://blog.donggei.top/articles/2023/11/14/1699960138443.html?"/><meta property="og:image" content="https://b3log.org/images/brand/solo-128.png"/><link rel="search" type="application/opensearchdescription+xml" title="elasticsearch基础 - donggei 的个人博客" href="/opensearch.xml"><link href="https://blog.donggei.top/rss.xml" title="RSS" type="application/rss+xml" rel="alternate"/><link rel="manifest" href="https://blog.donggei.top/manifest.json">        <link rel="canonical" href="https://blog.donggei.top/articles/2023/11/14/1699960138443.html">        <link rel="stylesheet"
+              href="https://blog.donggei.top/skins/Pinghsu/css/base.css?1699954326316"/>
+            <link rel="prev" title="复习Docker" href="https://blog.donggei.top/articles/2023/11/14/1699960071438.html">
+    <script src="https://unpkg.com/vditor@3.8.15/dist/js/icons/ant.js" async="" id="vditorIconScript"></script></head>
+<body>
+<header class="header">
+    <div class="wrapper">
+        <a href="https://blog.donggei.top" rel="start" class="header__logo">
+            <img src="https://b3logfile.com/avatar/1699945842626_1699952075889.png?imageView2/1/w/128/h/128/interlace/0/q/100" alt="donggei 的个人博客"/>
+            donggei 的个人博客
+        </a>
+
+        <nav class="header__nav mobile__none">
+            <a href="https://blog.donggei.top/tags.html" rel="section">
+                Tags
+            </a>
+            <a href="https://blog.donggei.top/archives.html">
+                Archives
+            </a>
+            <a rel="archive" href="https://blog.donggei.top/links.html">
+                Links
+            </a>
+        </nav>
+
+        <div class="header__bar fn__none" onclick="$(this).next().slideToggle()">
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+                <path fill="#444" d="M0 3h20v2h-20v-2zM0 9h20v2h-20v-2zM0 15h20v2h-20v-2z"></path>
+            </svg>
+        </div>
+        <main class="header__menu fn__none">
+            <ul>
+                    <li>
+                        <a href="http://localhost:8080/tags/daily" target="_self" rel="section">
+                            daily
+                        </a>
+                    </li>
+                <li>
+                    <a href="https://blog.donggei.top/tags.html" rel="section">
+                        Tags
+                    </a>
+                </li>
+                <li>
+                    <a href="https://blog.donggei.top/archives.html">
+                        Archives
+                    </a>
+                </li>
+                <li>
+                    <a rel="archive" href="https://blog.donggei.top/links.html">
+                        Links
+                    </a>
+                </li>
+                <li>
+                    <a rel="alternate" href="https://blog.donggei.top/rss.xml" rel="section">
+                        RSS
+                    </a>
+                </li>
+            </ul>
+        </main>
+    </div>
+</header>
+<main id="pjax" class="fn__flex-1">
+    
+    <div class="post wrapper wrapper--miner">
+        <h2 class="item__title">
+            <a rel="bookmark" href="https://blog.donggei.top/articles/2023/11/14/1699960138443.html">
+                elasticsearch基础
+            </a>
+        </h2>
+        <div class="ft__fade item__meta">
+                Published on
+            <time>
+                Nov 14, 2023
+            </time>
+            with <span data-uvstaturl="https://blog.donggei.top/articles/2023/11/14/1699960138443.html">0</span> views
+                and <a href="#b3logsolocomments"><span data-uvstatcmt="1699960138443">0</span> comments</a>
+        </div>
+        <div class="item__tags">
+                <a rel="tag" class="tag tag--0" href="https://blog.donggei.top/tags/elasticsearch">
+                    <b># elasticsearch</b>
+                </a>
+        </div>
+        <div class="vditor-reset">
+            <p><img src="https://b3logfile.com/bing/20210306.jpg?imageView2/1/w/960/h/540/interlace/1/q/100" alt=""></p>
+<p><strong>ES</strong></p>
+<h3 id="toc_h3_0">1.了解是什么？</h3>
+<p><strong>强大开源****搜索引擎</strong>。海量数据中搜索</p>
+<p><strong>elasticsearch结合kibana,Logstash,beats组件，也叫SLK(elastic stack).应用于日志数据分析，实时监控等</strong></p>
+<p><strong>kibana,Logstash,beat属于是官方提供给你，你想用就用。</strong></p>
+<p><strong>elasticsearch是基于Luncene(java语言的搜索引擎类库【其实就是个jar包】。Hadoop和Luncene是同一个作者)开发。</strong></p>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-2127986888963089331-HHL0eAe.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="img"></p>
+<p><strong>elasticsearch：支持分布式，水平扩展，提供restful接口，其他语言可调用。</strong></p>
+<h3 id="toc_h3_1">2.正向索引和倒排索引</h3>
+<p><strong>这种模糊会全表扫描</strong></p>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-1537026308166638973-cWhTsu5.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="img"></p>
+<p><strong>倒排索引：</strong></p>
+<p><strong>标题 LIKE %abc%</strong></p>
+<p><strong>正排是一行一行去找，根据一行的标题去对比abc。根据内容去对比词条</strong></p>
+<p><strong>倒排的意义或者含义就是，先找到词条，再找到行数据（文档）</strong></p>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-8682206867472496753-svNdP0m.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="img">一行数据就是一个文档，词条相当于是标签类似。词条是不重复的。Map<a href="#">string</a>。</p>
+<p><strong>可以根据词条创建唯一索引，查询的速度比较快。</strong></p>
+<p><strong>右上图中的查找，进行了两次查表。每一次都利用了索引</strong></p>
+<p><strong>擅长于部分的这种模糊查询</strong></p>
+<h3 id="toc_h3_2">文档（行数据</h3>
+<p><strong>se是面向文档存储的，（也就是mysql的行数据）</strong></p>
+<p><strong>文档会被序列化为json格式后存储在es中。相当于mysql的列要对应到json的K。相当于一行对应一个对象json。</strong></p>
+<h3 id="toc_h3_3">索引（表</h3>
+<p><strong>映射（mapping）：索引中文档的字段的约束条件，类似表的结构索引</strong></p>
+<p><strong>索引（index）：相同类型的文档的集合。</strong></p>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-11062809322810453304-SV3ZAj9.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="img"></p>
+<h3 id="toc_h3_4">对比mysql</h3>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-2529583900234489295-CPDXs29.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="img"></p>
+<p><strong>DSL 是通过http请求发送出去实现CRUD</strong></p>
+<p><strong>它们的优缺点：</strong></p>
+<p><strong>mysql更擅长事务类的操作，保证数据的安全性和一致性 ACID</strong></p>
+<p><strong>es：更擅长海量数据的搜索，分析，计算</strong></p>
+<h3 id="toc_h3_5">安装部署ES和<strong>kibana（ES的数据可视化界面）</strong></h3>
+<p><a href="https://blog.csdn.net/weixin_44757863/article/details/120959505" target="_blank">https://blog.csdn.net/weixin_44757863/article/details/120959505</a></p>
+<h3 id="toc_h3_6">分词器</h3>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-6693884990184054181-coS5iqe.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="img"></p>
+<p><strong>用这个请求测试分词器(下面这个参数是分词器）</strong></p>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-13848185476505514196-Bcp1GMf.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="img"></p>
+<p><strong>默认分词器很难用，无论是哪种都不适合中文的。</strong></p>
+<p><strong>中文我们一般使用IK分词器</strong></p>
+<p><strong>docker es安装分词器，在数据卷加进去分词器。</strong></p>
+<p><strong>ik分词器有两种模式</strong></p>
+<ul>
+<li><strong>ik_smart 最少切分  粗粒度</strong></li>
+<li><strong>ik_max_word 最细切分  细粒度</strong></li>
+</ul>
+<p><strong>分词次依赖字典来分词，可以自己去扩展这个字典。</strong></p>
+<p><strong>ik字典的个性化设计</strong></p>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-15434025835408401054-aRPnJE8.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="img"></p>
+<p><strong>什么时候用到分词器？</strong></p>
+<ul>
+<li><strong>创建倒排索引</strong></li>
+<li><strong>用户查询的时候，对输入的内容分词</strong></li>
+</ul>
+<p><strong>IK分词器用几张模式？</strong></p>
+<p><strong>ik分词器有两种模式</strong></p>
+<ul>
+<li><strong>ik_smart 最少切分  粗粒度</strong></li>
+<li><strong>ik_max_word 最细切分  细粒度</strong></li>
+</ul>
+<h3 id="toc_h3_7">3.索引库操作（建表）</h3>
+<h4 id="toc_h4_8">mapping属性</h4>
+<p><strong>是对文档（json）的约束.</strong></p>
+<p><strong>mapping常见属性：</strong></p>
+<p><strong>type, index, analyzer, properties</strong></p>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-2900362314562189854-flPyrex.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="img">keyword是不可再拆的，设类型的时候想好；</p>
+<p><strong>对象的子属性之后也是可查的；</strong></p>
+<p><strong>es没有数组这种类型；但是允许某个类型的字段有多个值；（这不就是数组？？）</strong></p>
+<p><strong>默认为ture 所以的字段都会创建倒排索引、进行搜索。根据实际开发项目，有些可以设为false 不搜索。</strong></p>
+<p>**分词器只是针对text字段类型，其他类型都不需要分词。**<strong>中文记得改一下 默认很差</strong></p>
+<h4 id="toc_h4_9">索引库的增删改查</h4>
+<p><strong>增加：</strong></p>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-725787779323136681-VkAUU46.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="img"></p>
+<pre><code># 创建索引库
+PUT /dong
+{
+  "mappings": {
+    "properties": {
+      "info": {
+        "type": "text",
+        "analyzer": "ik_smart"
+      },
+      "email": {
+        "type": "keyword",
+        "index": false
+      },
+      "name": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "keyword"
+          },
+          "lastName": {
+            "type": "keyword"
+          }
+        }
+      }
+    }
+  }
+}
+</code></pre>
+<p><strong>查看、修改、删除索引库</strong></p>
+<p><strong>查看索引库：GET /索引库名</strong><br>
+<strong>删除索引库：DELETE /索引库名</strong></p>
+<p>#** 查询**</p>
+<pre><code># 查询
+GET /dong
+
+# 删除
+DELETE /dong
+
+# 修改（必须添加一个全新的字段）
+PUT /dong/_mapping
+{
+  "properties":{
+    "age":{
+      "type": "integer"
+    }
+  }
+}
+</code></pre>
+<p><strong>修改索引库从设计上被禁止了，索引库和mapping一旦创建无法修改</strong>，但是可以添加新的字段 <strong>(该字段必须是全新的字段)</strong></p>
+<p><strong>总结:</strong></p>
+<p><strong>创建索引库  PUT /dong</strong></p>
+<p><strong>删除 DELETE /dong</strong></p>
+<p><strong>查询  GET</strong></p>
+<p><strong>修改  PUT /dong/_mapping</strong></p>
+<h3 id="toc_h3_10">4.文档的增删改查</h3>
+<h4 id="toc_h4_11">增删查</h4>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-3243020443823253966-5t2lMhs.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="img"></p>
+<p><strong>文档id必须写上，否则es自动随机生成。</strong></p>
+<pre><code># 插入一个文档
+POST /dong/_doc/1
+{
+  "info": "程序员java讲师",
+  "email": "112837@qq.com",
+  "name":{
+    "firstName":"云",
+    "lastName":"赵"
+  }
+}
+# 查询
+GET /heima/_doc/1
+
+# 删除
+DELETE /heima/_doc/1
+</code></pre>
+<h4 id="toc_h4_12">改</h4>
+<h5 id="toc_h5_13">全量修改</h5>
+<p>** 它会删除旧文档，新增新文档  **</p>
+<p><strong>语法：和新增的语法完全一致，只不过新增是POST，全量修改是PUT</strong></p>
+<p><strong>示例：</strong></p>
+<pre><code>PUT /dong/_doc/1
+{
+  "info": "程序员java讲师",
+  "email": "112837@qq.com",
+  "name":{
+    "firstName":"云",
+    "lastName":"赵"
+  }
+}
+</code></pre>
+<p><strong>如果id在索引库里面不存在，并不会报错，而是直接新增</strong>，如果索引库存在该记录，就会先删掉该记录，然后增加一个全新的。</p>
+<p><strong>即是修改又是新增！</strong></p>
+<h5 id="toc_h5_14"><strong>增量修改</strong></h5>
+<pre><code># 局部修改文档字段
+# 第三行，必须跟一个doc
+POST /dong/_update/1
+{
+  "doc": {  
+    "email":"lbwnb@qq.com"
+  }
+}
+</code></pre>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-11639314070639411199-JLDgK86.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="img"></p>
+<h3 id="toc_h3_15">5.RestClient操作索引库和文档_javaAPI</h3>
+<p><strong>概念</strong></p>
+<p><strong>ES官方为各种语言操作ES提供了客户端API，用来操作ES。其实本质都是组装ES语句，通过http请求发送给ES。 官方文档地址：</strong><a href="https://www.elastic.co/guide/en/elasticsearch/client/index.html" target="_blank">https://www.elastic.co/guide/en/elasticsearch/client/index.html</a></p>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-16023399536645851217-E1qXE38.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="img"></p>
+<p><strong>可以看到有很多语言的版本。</strong></p>
+<p><strong>根据mysql创建ES的mapping映射</strong></p>
+<pre><code>CREATE TABLE `tb_hotel` (
+  `id` bigint(20) NOT NULL COMMENT '酒店id',
+  `name` varchar(255) NOT NULL COMMENT '酒店名称；例：7天酒店',
+  `address` varchar(255) NOT NULL COMMENT '酒店地址；例：航头路',
+  `price` int(10) NOT NULL COMMENT '酒店价格；例：329',
+  `score` int(2) NOT NULL COMMENT '酒店评分；例：45，就是4.5分',
+  `brand` varchar(32) NOT NULL COMMENT '酒店品牌；例：如家',
+  `city` varchar(32) NOT NULL COMMENT '所在城市；例：上海',
+  `star_name` varchar(16) DEFAULT NULL COMMENT '酒店星级，从低到高分别是：1星到5星，1钻到5钻',
+  `business` varchar(255) DEFAULT NULL COMMENT '商圈；例：虹桥',
+  `latitude` varchar(32) NOT NULL COMMENT '纬度；例：31.2497',
+  `longitude` varchar(32) NOT NULL COMMENT '经度；例：120.3925',
+  `pic` varchar(255) DEFAULT NULL COMMENT '酒店图片；例:/img/1.jpg',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+# 酒店的mapping
+PUT /hotel
+{
+  "mappings": {
+    "properties": {
+      "id":{
+        "type": "keyword"       
+      },
+      "name":{
+        "type": "text"
+        , "analyzer": "ik_max_word",
+        "copy_to": "all"
+      },
+      "address":{
+        "type": "keyword"
+        , "index": false
+      },
+      "price":{
+        "type": "integer"
+      },
+      "score":{
+        "type": "integer"
+      },
+      "brand":{
+        "type": "keyword",
+        "copy_to": "all"
+      },
+      "city":{
+        "type": "keyword"
+      },
+      "starName":{
+        "type": "keyword"
+      },
+      "business":{
+        "type": "keyword",
+        "copy_to": "all"
+      },
+      "location":{
+        "type": "geo_point"
+      },
+       "pic":{
+        "type": "keyword"
+        , "index": false
+      },
+      # copy_to 其他属性把字段都拷贝在到了这个“all”字段（不是真拷贝，优化过的）
+      # 简单的理解，copy_to可以将它们合成一个字段，这样可以方便我们的搜索。
+      # 相当于同时针对多个字段进行查询
+      "all":{
+        "type": "text",
+        "analyzer": "ik_max_word"
+      }
+    }
+  }
+}
+</code></pre>
+<p><strong>备注1：index如果设置成false，则既不参与索引也不参与分词。</strong><br>
+****<strong>备注2：索引库的id总是被要求成keyword（也就是String）类型，即使数据库的主键id可能是int</strong></p>
+<p>** 字段参数（用于聚合）：copy to ;**<br>
+**地理位置特殊数据类型：geo_point  **</p>
+<p><strong>使用RestClient操作文档（索引库相当于数据库的table，文档就相当于数据库的行。）Java的API本质都是组装ES语句，通过http请求发送给ES</strong></p>
+<p><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html" target="_blank">https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html</a></p>
+<h4 id="toc_h4_16">使用_初始化</h4>
+<pre><code>1）引入es的RestHighLevelClient依赖：
+&lt;dependency&gt;
+&lt;groupId&gt;org.elasticsearch.client&lt;/groupId&gt;
+&lt;artifactId&gt;elasticsearch-rest-high-level-client&lt;/artifactId&gt;
+&lt;/dependency&gt;
+
+
+2）因为SpringBoot默认的ES版本是7.6.2，所以我们需要覆盖默认的ES版本：
+&lt;properties&gt;
+&lt;java.version&gt;1.8&lt;/java.version&gt;
+&lt;elasticsearch.version&gt;7.12.1&lt;/elasticsearch.version&gt;
+&lt;/properties&gt;
+
+
+3）初始化RestHighLevelClient：初始化的代码如下：
+RestHighLevelClient client = new RestHighLevelClient(RestClient.builder(
+HttpHost.create("http://192.168.117.129:9200")
+));
+</code></pre>
+<h4 id="toc_h4_17">5.1索引操作</h4>
+<p>** 核心是client.indices()方法来获取索引库的操作对象。  **</p>
+<p><strong>创建</strong></p>
+<pre><code>package cn.itcast.hotel.constants;
+
+public class HotelConstants {
+    public static final String MAPPING_TEMPLATE = "{\n" +
+            "  \"mappings\": {\n" +
+            "    \"properties\": {\n" +
+            "      \"id\": {\n" +
+            "        \"type\": \"keyword\"\n" +
+            "      },\n" +
+            "      \"name\":{\n" +
+            "        \"type\": \"text\",\n" +
+            "        \"analyzer\": \"ik_max_word\",\n" +
+            "        \"copy_to\": \"all\"\n" +
+            "      },\n" +
+            "      \"address\":{\n" +
+            "        \"type\": \"keyword\",\n" +
+            "        \"index\": false\n" +
+            "      },\n" +
+            "      \"price\":{\n" +
+            "        \"type\": \"integer\"\n" +
+            "      },\n" +
+            "      \"score\":{\n" +
+            "        \"type\": \"integer\"\n" +
+            "      },\n" +
+            "      \"brand\":{\n" +
+            "        \"type\": \"keyword\",\n" +
+            "        \"copy_to\": \"all\"\n" +
+            "      },\n" +
+            "      \"city\":{\n" +
+            "        \"type\": \"keyword\",\n" +
+            "        \"copy_to\": \"all\"\n" +
+            "      },\n" +
+            "      \"starName\":{\n" +
+            "        \"type\": \"keyword\"\n" +
+            "      },\n" +
+            "      \"business\":{\n" +
+            "        \"type\": \"keyword\"\n" +
+            "      },\n" +
+            "      \"location\":{\n" +
+            "        \"type\": \"geo_point\"\n" +
+            "      },\n" +
+            "      \"pic\":{\n" +
+            "        \"type\": \"keyword\",\n" +
+            "        \"index\": false\n" +
+            "      },\n" +
+            "      \"all\":{\n" +
+            "        \"type\": \"text\",\n" +
+            "        \"analyzer\": \"ik_max_word\"\n" +
+            "      }\n" +
+            "    }\n" +
+            "  }\n" +
+            "}";
+}
+
+
+@Test
+void createHotelIndex() throws IOException {
+    // 1.创建Request对象  设置指定索引
+    CreateIndexRequest request = new CreateIndexRequest("hotel");
+    // 2.准备请求的参数：DSL语句  MAPPING_TEMPLATE是一个static final String，后面是前面的类型
+    request.source(MAPPING_TEMPLATE, XContentType.JSON);
+    // 3.发送请求   一般都用RequestOptions.DEFAULT，里面主要是一些请求头信息
+    client.indices().create(request, RequestOptions.DEFAULT);
+</code></pre>
+<p><strong>删除索引</strong></p>
+<pre><code>@Test
+void testDeleteHotelIndex() throws IOException {
+    // 1.创建Request对象
+    DeleteIndexRequest request = new DeleteIndexRequest("hotel");
+    // 2.发送请求
+    client.indices().delete(request, RequestOptions.DEFAULT);
+}
+</code></pre>
+<p><strong>判断索引库是否存在</strong></p>
+<p><strong>因Java代码流程是类似的。依然是三步走：</strong></p>
+<ul>
+<li><strong>1）创建Request对象。这次是GetIndexRequest对象</strong></li>
+<li><strong>2）准备参数。这里是无参</strong></li>
+<li><strong>3）发送请求。改用exists方法</strong></li>
+</ul>
+<pre><code>@Test
+void testExistsHotelIndex() throws IOException {
+   // 1.创建Request对象
+   GetIndexRequest request = new GetIndexRequest("hotel");
+   // 2.发送请求
+   boolean exists = client.indices().exists(request, RequestOptions.DEFAULT);
+   // 3.输出
+   System.err.println(exists ? "索引库已经存在！" : "索引库不存在！");
+}
+</code></pre>
+<h4 id="toc_h4_18">5.2文档操作</h4>
+<ul>
+<li><strong>IndexRequest，也就是新增</strong></li>
+<li><strong>UpdateRequest，也就是修改</strong></li>
+<li><strong>DeleteRequest，也就是删除</strong></li>
+<li><strong>GetRequest，也就是查询</strong></li>
+</ul>
+<h4 id="toc_h4_19">案例：数据库查询酒店数据，导入到hotel索引库。实现酒店的CRUD。</h4>
+<pre><code>@Data 
+@TableName("tb_hotel")
+public class Hotel {
+    @TableId(type = IdType.INPUT) //主键
+    private Long id;
+    private String name;
+    private String address;
+    private Integer price;
+    private Integer score;
+    private String brand;
+    private String city;
+    private String starName;
+    private String business;
+    private String longitude;
+    private String latitude;
+    private String pic;
+}
+</code></pre>
+<p>** 我们需要定义一个新的类型，与索引库结构吻合：  **</p>
+<p><strong>差异在于 数据库的是</strong></p>
+<p><strong>private String longitude;private String latitude;</strong></p>
+<p><strong>es中定义的是</strong></p>
+<p>"<strong>location</strong>"<strong>:{\n" +</strong></p>
+<p>**            "        <strong>"<strong>type</strong>"</strong>: <strong>"<strong>geo_point</strong>"</strong>\n" +**</p>
+<p>**            "      },**</p>
+<p><strong>private String location;</strong></p>
+<pre><code>package cn.itcast.hotel.pojo;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+public class HotelDoc {
+    private Long id;
+    private String name;
+    private String address;
+    private Integer price;
+    private Integer score;
+    private String brand;
+    private String city;
+    private String starName;
+    private String business;
+    private String location;
+    private String pic;
+
+    public HotelDoc(Hotel hotel) {
+        this.id = hotel.getId();
+        this.name = hotel.getName();
+        this.address = hotel.getAddress();
+        this.price = hotel.getPrice();
+        this.score = hotel.getScore();
+        this.brand = hotel.getBrand();
+        this.city = hotel.getCity();
+        this.starName = hotel.getStarName();
+        this.business = hotel.getBusiness();
+        //差异的处理
+        this.location = hotel.getLatitude() + ", " + hotel.getLongitude();
+        this.pic = hotel.getPic();
+    }
+}
+</code></pre>
+<h5 id="toc_h5_20">新增文档</h5>
+<pre><code>@Test
+void testAddDocument() throws IOException {
+    // 1.根据id查询酒店数据
+    Hotel hotel = hotelService.getById(61083L);
+    // 2.转换为文档类型
+    HotelDoc hotelDoc = new HotelDoc(hotel);
+    // 3.将HotelDoc转json
+    String json = JSON.toJSONString(hotelDoc);
+
+    // 1.准备Request对象
+    IndexRequest request = new IndexRequest("hotel").id(hotelDoc.getId().toString());
+    // 2.准备Json文档
+    request.source(json, XContentType.JSON);
+    // 3.发送请求
+    client.index(request, RequestOptions.DEFAULT);
+}
+</code></pre>
+<h5 id="toc_h5_21">查询文档</h5>
+<pre><code>@Test
+void testGetDocumentById() throws IOException {
+    // 1.准备Request
+    GetRequest request = new GetRequest("hotel", "61082");
+    // 2.发送请求，得到响应
+    GetResponse response = client.get(request, RequestOptions.DEFAULT);
+    // 3.解析响应结果
+    String json = response.getSourceAsString();
+
+    HotelDoc hotelDoc = JSON.parseObject(json, HotelDoc.class);
+    System.out.println(hotelDoc);
+}
+</code></pre>
+<h5 id="toc_h5_22">修改文档</h5>
+<p><strong>之前两种方式：</strong></p>
+<ul>
+<li><strong>全量修改：本质是先根据id删除，再新增</strong></li>
+<li><strong>增量修改：修改文档中的指定字段值</strong></li>
+</ul>
+<p><strong>在RestClient的API中，全量修改与新增的API完全一致，判断依据是ID：</strong></p>
+<ul>
+<li><strong>如果新增时，ID已经存在，则修改</strong></li>
+<li><strong>如果新增时，ID不存在，则新增</strong></li>
+</ul>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-17955352595902805318-nkQ5mS1.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="img"></p>
+<pre><code>@Test
+void testUpdateDocument() throws IOException {
+    // 1.准备Request
+    UpdateRequest request = new UpdateRequest("hotel", "61083");
+    // 2.准备请求参数
+    request.doc(
+        "price", "952",
+        "starName", "四钻"
+    );
+    // 3.发送请求
+    client.update(request, RequestOptions.DEFAULT);
+}
+</code></pre>
+<h5 id="toc_h5_23">批量导入文档</h5>
+<p>** 利用BulkRequest批量将数据库数据导入到索引库中。  **</p>
+<ul>
+<li><strong>1）创建Request对象。这里是BulkRequest</strong></li>
+<li><strong>2）准备参数。批处理的参数，就是其它Request对象，这里就是多个IndexRequest</strong></li>
+<li><strong>3）发起请求。这里是批处理，调用的方法为client.bulk()方法</strong></li>
+</ul>
+<pre><code>@Test
+void testBulkRequest() throws IOException {
+    // 批量查询酒店数据
+    List&lt;Hotel&gt; hotels = hotelService.list();
+
+    // 1.创建Request
+    BulkRequest request = new BulkRequest();
+    // 2.准备参数，添加多个新增的Request
+    for (Hotel hotel : hotels) {
+        // 2.1.转换为文档类型HotelDoc
+        HotelDoc hotelDoc = new HotelDoc(hotel);
+        // 2.2.创建新增文档的Request对象
+        request.add(new IndexRequest("hotel")
+                    .id(hotelDoc.getId().toString())
+                    .source(JSON.toJSONString(hotelDoc), XContentType.JSON));
+    }
+    // 3.发送请求
+    client.bulk(request, RequestOptions.DEFAULT);
+}
+</code></pre>
+<h3 id="toc_h3_24">6.DSL查询文档 （domain-specific language）</h3>
+<h3 id="toc_h3_25"><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-3843498346297499964-dHYdha6.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="img"></h3>
+<h4 id="toc_h4_26">查询所有</h4>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-9984692255624641577-eungvuO.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="img"></p>
+<h4 id="toc_h4_27">全文检索</h4>
+<p><img src="http://bijioss.donggei.top/1682238041419-e4cbbac8-9093-40c0-bdea-97e9299af93c.png" alt="img"></p>
+<pre><code>全文检索查询例：
+# match 和 multi_match
+GET /hotel/_search
+{
+  "query": {
+    "match": {
+      "address": "如家外滩"
+    }
+  }
+}
+
+GET /hotel/_search
+{
+  "query": {
+    "match": {
+      "all": "外滩"
+    }
+  }
+}
+
+GET /hotel/_search
+{
+  "query": {
+    "multi_match": {
+      "query": "外滩如家",
+      "fields": ["brand","name","business"]
+    }
+  }
+}
+</code></pre>
+<p>**"multi_match"和"all" 的效果是类似的，****但是推荐使用all这种方式,**因为"multi_match"的字段越多查询的效率越低</p>
+<h4 id="toc_h4_28">精确查询</h4>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-14546523370485014362-hTFsUJp.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="img"></p>
+<pre><code># 精确查询（term查询）
+GET /hotel/_search
+{
+  "query": {
+    "term": {
+      "city": {
+        "value": "上海"
+      }
+    }
+  }
+}
+
+# 精确查询(范围range)
+GET /hotel/_search
+{
+  "query": {
+    "range": {
+      "price": {
+        "gte": 100,
+        "lte": 300
+      }
+    }
+  }
+}
+</code></pre>
+<h4 id="toc_h4_29">地理查询</h4>
+<p><img src="http://bijioss.donggei.top/1682252080106-5c12fa3e-bbed-45cd-8e85-04126bdabf66.png" alt="img"><img src="http://bijioss.donggei.top/1682252091558-1d7a83a8-db98-4c80-8f4d-65037fb2193e.png" alt="img"></p>
+<pre><code># distance查询
+GET /hotel/_search
+{
+  "query": {
+    "geo_distance":{
+      "distance": "5km",
+      "location": "31.21, 121.5"
+    }
+  }
+}
+</code></pre>
+<h4 id="toc_h4_30">复合查询</h4>
+<p><strong>复合(compound)查询:复合查询可以将其它简单查询组合起来，实现更复杂的搜索逻辑，例如:</strong></p>
+<p><strong>fuction score: 算分函数查询，可以控制文档相关性算分，控制文档排名。例如百度竞价</strong></p>
+<hr>
+<p><strong>铺垫</strong></p>
+<p><strong>默认应该是用相关性算分，以下是使用match（全文检索）时默认的一个相关性的规则</strong></p>
+<p><img src="http://bijioss.donggei.top/1682255534858-c0e4657a-7651-4a92-9daf-3d17ff85aa84.png" alt="img"><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-5411426621821792772-cNQXmE8.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="img"></p>
+<p><strong>这上面个是最好理解的，词条包含多的在前面</strong></p>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-16119719634892942046-cHk4sx9.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="img">上面这种TF-IDF是 计算如家：3/3=1  log(1)=0  “如家" 这个词条失去比重，虹桥占比高</p>
+<p><strong>总结：总体出现的越少 占比越多</strong>**（剔除没有区分度的词条）！！ 但是目前es5.1开始就没有使用**TF-IDF算法了</p>
+<p><strong>采用了新的BM25算法（目前使用的）</strong></p>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-17886838808650276296-CQQfAPU.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="img"></p>
+<p><strong>和传统TF算法相比，后面的幅度更小</strong></p>
+<p><img src="http://bijioss.donggei.top/1682255514535-f9a1eb53-3cba-42ba-b881-34266ee83dc1.png" alt="img"></p>
+<p><img src="http://bijioss.donggei.top/1682255649327-0e8e7c98-f1bb-46ba-9fc3-d6c1acbaf5a1.png" alt="img"></p>
+<p>**传统的TF值理论上是可以无限大的。而BM25与之不同，它在TF计算方法中增加了一个常量k，用来限制TF值的增长极限。下面是两种计算方法中，词频对TF Score影响的走势图。从图中可以看到，当tf增加时，TF Score跟着增加，但是BM25的TF Score会被限制在0~k+1之间。它可以无限逼近k+1，但永远无法触达它。**<strong>这在业务上可以理解为某一个因素的影响强度不能是无限的，而是有个最大值，这也符合我们对文本相关性逻辑的理解。</strong></p>
+<p><strong>铺垫完毕</strong></p>
+<hr>
+<h5 id="toc_h5_31">Function Score Query对默认算分方式进行修改</h5>
+<p><strong>可以影响到默认的排序，</strong>~百度让广告去前面~。</p>
+<p><strong>使用function score query,可以修改文档的相关性算分(query score)，根据新得到的算分排序。</strong></p>
+<p><img src="http://bijioss.donggei.top/image-20230427211855268.png" alt="image-20230427211855268"></p>
+<p><strong>案例：</strong></p>
+<p><img src="http://bijioss.donggei.top/image-20230427212029819.png" alt="image-20230427212029819"></p>
+<h5 id="toc_h5_32"><strong>Boolean Query</strong></h5>
+<p><img src="http://bijioss.donggei.top/b2dde62523f34b37be5920e74ab2a2c4.png" alt="在这里插入图片描述"></p>
+<p><strong>must和filter都是必须匹配，filter不参与算分（must_not也是）。算分是会消耗资源的，并且filter和must_not有缓冲。提高效率</strong></p>
+<h4 id="toc_h4_33">搜索结果处理</h4>
+<h5 id="toc_h5_34">排序</h5>
+<p><strong>elasticsearch支持对搜索结果排序,默认是根据相关度算分(_ score) 来排序。可以排序字段类型有: keyword类型.数值类型、地理坐标类型、日期类型等。</strong></p>
+<pre><code># sort排序
+GET /hotel/_search
+{
+  "query": {
+    "match_all": {}
+  },
+  "sort": [
+    {
+      "score": "desc"
+    },
+    {
+      "price": "asc"
+    }
+  ]
+}
+</code></pre>
+<p><img src="http://bijioss.donggei.top/image-20230428173442541.png" alt="image-20230428173442541"></p>
+<p><strong>注意！</strong></p>
+<p><strong>一旦排序后, score字段就失效了</strong></p>
+<p><img src="http://bijioss.donggei.top/image-20230428180343477.png" alt="image-20230428180343477"></p>
+<h5 id="toc_h5_35">分页</h5>
+<p>** es默认分页是top10。**</p>
+<p><strong>如果想返回更多条数据，则需修改分页参数。</strong></p>
+<p><strong>分页语法（有点像MySQL的limit）：</strong></p>
+<p><img src="http://bijioss.donggei.top/197fba5a1a48439196fcbc8abff4101f.png" alt="在这里插入图片描述"></p>
+<pre><code>GET /hotel/_search
+{
+  "query": {
+    "match_all": {}
+  }, 
+  "sort": [
+    {
+      "price": "asc"
+    }
+  ],
+  "from": 20   ,           &lt;---
+  "size": 5 			 &lt;---
+}
+</code></pre>
+<p><strong>注意：</strong></p>
+<blockquote>
+<p><strong>底层是倒排索引</strong></p>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-10551567728915929784-HnHWYIY.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20230428193436689"></p>
+<p><strong>所以分页查询是一种逻辑上的分页。比如现在要查从990开始，截取10条数据（990～1000这10条），对ES来讲，是先查出来0～1000条数据，查出来之后逻辑分页截取10条给你。</strong></p>
+<p><strong>如果是单体项目没问题，但是****如果做集群</strong> 分布式的，</p>
+<p><strong>ES会对数据进行拆分，那么查（990～1000这10条）需要在每个集群查前1000，然后在内存中重新的排序。如果有500个集群，那么就是查500*1000的数据（因为不确定排序的最高在哪个服务器），然后在内存中重新排序，浪费资源。</strong></p>
+<p><strong>比如 百度和京东在业务上做了限制，最多查100页左右</strong></p>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-3633024045885029110-ijjf606.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20230428193833701"></p>
+</blockquote>
+<p><strong>还有两种分页的方法</strong></p>
+<p><strong>search after:分页时需要排序,原理是从上一次的排序值开始,查询下一页数据。官方推荐使用的方式。</strong></p>
+<p><strong>scroll: 原理将排序数据形成快照，保存在内存。官方已经不推荐使用。</strong></p>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-6141894769774874557-Eni7ojl.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20230428194646921"></p>
+<p><strong>Search_After的注意事项：</strong></p>
+<ol>
+<li><strong>搜索时，需要指定sort,并且保证值是唯一的（可以通过加入_id或者文档body中的业务唯一值来保证）；</strong></li>
+<li><strong>再次查询时，使用上一次最后一个文档的sort值作为search_after的值来进行查询；</strong></li>
+</ol>
+<h5 id="toc_h5_36">高亮</h5>
+<p><img src="http://bijioss.donggei.top/image-20230428211914865.png" alt="image-20230428211914865"></p>
+<p><strong>后端把便签返回</strong></p>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-6485336693448552077-T3XajKH.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20230428212520463"></p>
+<p><strong>高亮查询,默认情况下ES搜索****match和fields必须是一样的</strong></p>
+<p><strong>如果不一样 加一行</strong></p>
+<pre><code>GET /hotel/_search
+{
+  "query": {
+    "match": {
+      "name": "如家"
+    }
+  },"highlight": {
+    "fields": {
+      "name": {
+        #这里为空的话 默认的就是em 标签
+
+      }
+    }
+</code></pre>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-2650296672309823958-NBvDZjQ.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20230428212923823"></p>
+<hr>
+<hr>
+<hr>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-6563661068260577898-4qpg4Fn.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20230428213043785"></p>
+<h4 id="toc_h4_37">Java RestClient查询语法</h4>
+<p><a href="https://blog.csdn.net/weixin_44757863/article/details/120959505#117_Java_RestClient_1347" target="_blank">https://blog.csdn.net/weixin_44757863/article/details/120959505#117_Java_RestClient_1347</a></p>
+<p><strong>省略了，在官方文档上有api使用方法 ，和上面的文档操作和索引操作api差不多。</strong></p>
+<p><strong>这节所有东西都在这</strong></p>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-8402744873651589959-2KxxvAf.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20230429191600700"></p>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-12860827496513703534-pQp3Zuu.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20230429191654862"></p>
+                <div>
+                    <hr>
+
+标题：elasticsearch基础<br>
+作者：<a href="https://blog.donggei.top" target="_blank">donggei</a><br>
+地址：<a href="https://blog.donggei.top/articles/2023/11/14/1699960138443.html" target="_blank">https://blog.donggei.top/articles/2023/11/14/1699960138443.html</a><br>
+
+<!-- 签名档内可使用 HTML、JavaScript -->
+<br>
+                </div>
+        </div>
+    </div>
+    <div class="post__toc">
+<ul class="article__toc">
+        <li class="toc__h3">
+            <a href="#toc_h3_0">1.了解是什么？</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_1">2.正向索引和倒排索引</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_2">文档（行数据</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_3">索引（表</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_4">对比mysql</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_5">安装部署ES和kibana（ES的数据可视化界面）</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_6">分词器</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_7">3.索引库操作（建表）</a>
+        </li>
+        <li class="toc__h4">
+            <a href="#toc_h4_8">mapping属性</a>
+        </li>
+        <li class="toc__h4">
+            <a href="#toc_h4_9">索引库的增删改查</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_10">4.文档的增删改查</a>
+        </li>
+        <li class="toc__h4">
+            <a href="#toc_h4_11">增删查</a>
+        </li>
+        <li class="toc__h4">
+            <a href="#toc_h4_12">改</a>
+        </li>
+        <li class="toc__h5">
+            <a href="#toc_h5_13">全量修改</a>
+        </li>
+        <li class="toc__h5">
+            <a href="#toc_h5_14">增量修改</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_15">5.RestClient操作索引库和文档_javaAPI</a>
+        </li>
+        <li class="toc__h4">
+            <a href="#toc_h4_16">使用_初始化</a>
+        </li>
+        <li class="toc__h4">
+            <a href="#toc_h4_17">5.1索引操作</a>
+        </li>
+        <li class="toc__h4">
+            <a href="#toc_h4_18">5.2文档操作</a>
+        </li>
+        <li class="toc__h4">
+            <a href="#toc_h4_19">案例：数据库查询酒店数据，导入到hotel索引库。实现酒店的CRUD。</a>
+        </li>
+        <li class="toc__h5">
+            <a href="#toc_h5_20">新增文档</a>
+        </li>
+        <li class="toc__h5">
+            <a href="#toc_h5_21">查询文档</a>
+        </li>
+        <li class="toc__h5">
+            <a href="#toc_h5_22">修改文档</a>
+        </li>
+        <li class="toc__h5">
+            <a href="#toc_h5_23">批量导入文档</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_24">6.DSL查询文档 （domain-specific language）</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_25"></a>
+        </li>
+        <li class="toc__h4">
+            <a href="#toc_h4_26">查询所有</a>
+        </li>
+        <li class="toc__h4">
+            <a href="#toc_h4_27">全文检索</a>
+        </li>
+        <li class="toc__h4">
+            <a href="#toc_h4_28">精确查询</a>
+        </li>
+        <li class="toc__h4">
+            <a href="#toc_h4_29">地理查询</a>
+        </li>
+        <li class="toc__h4">
+            <a href="#toc_h4_30">复合查询</a>
+        </li>
+        <li class="toc__h5">
+            <a href="#toc_h5_31">Function Score Query对默认算分方式进行修改</a>
+        </li>
+        <li class="toc__h5">
+            <a href="#toc_h5_32">Boolean Query</a>
+        </li>
+        <li class="toc__h4">
+            <a href="#toc_h4_33">搜索结果处理</a>
+        </li>
+        <li class="toc__h5">
+            <a href="#toc_h5_34">排序</a>
+        </li>
+        <li class="toc__h5">
+            <a href="#toc_h5_35">分页</a>
+        </li>
+        <li class="toc__h5">
+            <a href="#toc_h5_36">高亮</a>
+        </li>
+        <li class="toc__h4">
+            <a href="#toc_h4_37">Java RestClient查询语法</a>
+        </li>
+</ul>    </div>
+    <div class="body--gray post__gray">
+        <div class="wrapper comment">
+                <div id="gitalk-container" style="padding: 30px 0;"></div>
+                <div id="b3logsolocomments"></div>
+                <div id="vcomment" style="padding: 30px 0;" data-name="donggei" data-postId="1699960138443"></div>
+
+            <div class="post__list fn__flex">
+                <div class="fn__flex-1">
+                    <div id="externalRelevantArticles"></div>
+                </div>
+                <div class="post__list-mid fn__flex-1">
+                    <div id="randomArticles"></div>
+                </div>
+                <div class="fn__flex-1">
+                    <div id="relevantArticles"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="post__fix">
+        <div class="wrapper">
+            <span class="post__share mobile__none">
+                Share
+                <span class="tag tag--4" data-type="weibo">WeiBo</span>
+                <span class="tag tag--5" data-type="twitter">Twitter</span>
+                <span class="tag tag--6" data-type="qqz">QZone</span>
+                <span class="post__code tag tag--7"
+                      data-type="wechat"
+                      data-title="elasticsearch基础"
+                      data-blogtitle="donggei 的个人博客"
+                      data-url="https://blog.donggei.top/articles/2023/11/14/1699960138443.html"
+                      data-avatar="https://b3logfile.com/avatar/1699945842626_1699952075889.png?imageView2/1/w/128/h/128/interlace/0/q/100">
+                    WeChat
+                    <span class="qrcode"></span>
+                </span>
+            </span>
+            <span class="post__arrow">
+                    <a href="https://blog.donggei.top/articles/2023/11/14/1699960071438.html" rel="prev"
+                       class="vditor-tooltipped__n vditor-tooltipped"
+                       pjax-title="复习Docker"
+                       aria-label="旧一篇: 复习Docker">←</a>
+
+                <a href="javascript:Util.goTop()" class="vditor-tooltipped__n vditor-tooltipped"
+                   aria-label="移动到顶部">↑</a>
+                <a href="javascript:Util.goBottom()" class="vditor-tooltipped__n vditor-tooltipped"
+                   aria-label="移动到底部">↓</a>
+            </span>
+        </div>
+    </div>
+    
+</main>
+<footer class="footer">
+    <div class="ft__center">
+    <a href="https://ld246.com/member/donggei"
+       aria-label="https://ld246.com/member/donggei"
+       class="vditor-tooltipped__n vditor-tooltipped  user__site"
+       target="_blank" rel="noopener nofollow">
+        <svg viewBox="0 0 32 32" width="100%" height="100%">
+            <path fill="#d23f31" style="fill: var(--color1, #d23f31)" d="M5.787 17.226h17.033l5.954 9.528c0.47 0.752 0.003 1.361-1.042 1.361h-15.141z"></path>
+            <path d="M10.74 3.927h17.033c1.045 0 1.512 0.609 1.042 1.361l-5.954 9.528h-19.872l6.379-10.209c0.235-0.376 0.849-0.681 1.372-0.681z"></path>
+            <path d="M2.953 17.226h2.839l6.804 10.889h-1.892c-0.523 0-1.137-0.305-1.372-0.681z"></path>
+        </svg>
+    </a>
+
+        <a href="https://github.com/dong2645981073"
+           aria-label="https://github.com/dong2645981073"
+           class="vditor-tooltipped__n vditor-tooltipped  user__site"
+           target="_blank" rel="noopener nofollow">
+            <svg viewBox="0 0 32 32" width="100%" height="100%">
+                <path d="M16 0.331c-8.836 0-16 7.163-16 16 0 7.069 4.585 13.067 10.942 15.182 0.8 0.148 1.094-0.347 1.094-0.77 0-0.381-0.015-1.642-0.022-2.979-4.452 0.968-5.391-1.888-5.391-1.888-0.728-1.849-1.776-2.341-1.776-2.341-1.452-0.993 0.11-0.973 0.11-0.973 1.606 0.113 2.452 1.649 2.452 1.649 1.427 2.446 3.743 1.739 4.656 1.33 0.143-1.034 0.558-1.74 1.016-2.14-3.554-0.404-7.29-1.777-7.29-7.907 0-1.747 0.625-3.174 1.649-4.295-0.166-0.403-0.714-2.030 0.155-4.234 0 0 1.344-0.43 4.401 1.64 1.276-0.355 2.645-0.532 4.005-0.539 1.359 0.006 2.729 0.184 4.008 0.539 3.054-2.070 4.395-1.64 4.395-1.64 0.871 2.204 0.323 3.831 0.157 4.234 1.026 1.12 1.647 2.548 1.647 4.295 0 6.145-3.743 7.498-7.306 7.895 0.574 0.497 1.085 1.47 1.085 2.963 0 2.141-0.019 3.864-0.019 4.391 0 0.426 0.288 0.925 1.099 0.768 6.354-2.118 10.933-8.113 10.933-15.18 0-8.837-7.164-16-16-16z"></path>
+            </svg>
+        </a>
+
+        <a href="tencent://message/?uin=2645981073"
+           aria-label="2645981073"
+           target="_blank"
+           class="vditor-tooltipped__n vditor-tooltipped  user__site" rel="noopener nofollow">
+            <svg viewBox="0 0 32 32" width="100%" height="100%">
+                <path d="M4.821 14.393c-0.125-0.304-0.143-0.607-0.143-0.929 0-0.5 0.321-1.304 0.625-1.679-0.018-0.464 0.179-1.411 0.536-1.714 0-3.304 2.554-7.464 5.536-8.893 1.839-0.875 3.768-1.179 5.786-1.179 1.571 0 3.286 0.375 4.75 0.982 4.196 1.768 5.143 5.054 6.036 9.25l0.018 0.089c0.518 0.786 0.982 1.714 0.982 2.679 0 0.482-0.321 0.964-0.321 1.393 0 0.036 0.107 0.179 0.125 0.214 1.536 2.268 2.929 4.732 2.929 7.554 0 0.625-0.339 2.804-1.339 2.804-0.696 0-1.464-1.696-1.714-2.161-0.018-0.018-0.036-0.018-0.054-0.018l-0.089 0.071c-0.571 1.482-1.196 2.875-2.357 3.982 1.018 0.982 2.661 0.893 2.964 2.589-0.089 0.196-0.054 0.411-0.196 0.607-1.018 1.536-3.75 1.732-5.393 1.732-2.179 0-3.946-0.571-6-1.179-0.429-0.125-1.071-0.054-1.536-0.107-1.089 1.196-3.75 1.518-5.286 1.518-1.357 0-6.607-0.089-6.607-2.411 0-1 0.214-1.286 0.911-1.929 0.554-0.107 0.964-0.411 1.607-0.446 0.089 0 0.161-0.018 0.25-0.036 0.018-0.018 0.036-0.018 0.036-0.071l-0.036-0.054c-1.232-0.286-2.964-3.393-3.232-4.679l-0.089-0.054c-0.125 0-0.179 0.268-0.214 0.357-0.393 0.911-1.321 1.893-2.357 2h-0.018c-0.143 0-0.089-0.143-0.196-0.179-0.25-0.589-0.411-1.125-0.411-1.786 0-3.571 1.714-6.214 4.5-8.321z"></path>
+            </svg>
+        </a>
+    </div>
+    <nav class="footer__nav mobile__none">
+            <a class="ft__link" href="http://localhost:8080/tags/daily" target="_self" rel="section">
+                daily
+            </a>
+        <a class="ft__link" rel="alternate" href="https://blog.donggei.top/rss.xml" rel="section">RSS</a>
+    </nav>
+    <div class="footer__border mobile__none"></div>
+    <div class="wrapper fn__flex">
+        <div class="fn__flex-1 mobile__none">
+            <div class="ft__fade">donggei - 藏器于身，不患无此时 </div>
+            <br>
+                
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?4a65454c1d3be24651aed5fbf3c9e47b";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<h2>致知于行</h2>
+<!-- 公告栏可使用 HTML、JavaScript，比如可以在此加入第三方统计 js -->
+        </div>
+
+
+        <div class="fn__flex-1 footer__copyright">
+            <a class="ft__link" href="https://blog.donggei.top/archives.html">
+                11
+                文章
+            </a>
+           <br>
+            <span data-uvstaturl="https://blog.donggei.top">0</span> <span class="ft-gray">浏览</span>
+ <br>
+            &copy; 2023
+            <a class="ft__link" href="https://blog.donggei.top">donggei 的个人博客</a>
+            
+        </div>
+    </div>
+</footer>
+<script>
+  var Label = {
+    speech: true,
+    servePath: "https://blog.donggei.top",
+    staticServePath: "https://blog.donggei.top",
+    luteAvailable: false,
+    hljsStyle: 'github',
+    langLabel: "zh_CN",
+    version: "4.4.0",
+    staticSite: true,
+    showCodeBlockLn: false,
+    articleId: "1699960138443",
+  }
+</script>
+<script type="text/javascript" src="https://blog.donggei.top/skins/Pinghsu/js/headroom.min.js"></script>
+<script type="text/javascript"
+        src="https://blog.donggei.top/skins/Pinghsu/js/common.min.js?1699954326316"
+        charset="utf-8"></script>
+
+
+
+<script type="text/javascript">
+    Util.addScript('https://blog.donggei.top/js/page.min.js?1699954326316', 'soloPageScript')
+    var page = new Page({
+        "commentContentCannotEmptyLabel": "评论不能为空",
+        "oId": "1699960138443",
+        "blogHost": "https://blog.donggei.top",
+        "randomArticles1Label": "随机阅读：",
+        "externalRelevantArticles1Label": "站外相关阅读："
+    });
+    $(document).ready(function () {
+        page.load();
+    page.tips.externalRelevantArticlesDisplayCount = "0";
+    page.loadRandomArticles('<h3>RECOMMEND POSTS</h3>');
+    page.loadRelevantArticles('1699960138443', '<h3>RELEVANT POSTS</h3>');
+Skin.initArticle()
+    });
+</script>
+
+</body>
+</html>
+
+<!-- Generated by Latke (https://github.com/88250/latke) in 34ms, 2023/11/14 19:13:32 -->

@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/><meta name="theme-color" content="#3b3e43"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"/><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="format-detection" content="telephone=no"/><title>java注解和反射 - donggei 的个人博客</title><meta name="description" content="A small and beautiful blogging website. 一个小而美的博客。"/><meta property="og:description" content="A small and beautiful blogging website. 一个小而美的博客。"/>    <meta name="keywords" content="Java,博客,开源"/><link rel="dns-prefetch" href="https://blog.donggei.top"/><link rel="dns-prefetch" href="https://unpkg.com"/><link rel="preconnect" href="https://blog.donggei.top"><link rel="icon" type="image/png" href="https://b3log.org/images/brand/solo-128.png"/><link rel="apple-touch-icon" href="https://b3log.org/images/brand/solo-128.png"><link rel="shortcut icon" type="image/x-icon" href="https://b3log.org/images/brand/solo-128.png"><meta name="copyright" content="B3log"/><meta http-equiv="Window-target" content="_top"/><meta property="og:locale" content="zh_CN"/><meta property="og:title" content="java注解和反射 - donggei 的个人博客"/><meta property="og:site_name" content="donggei 的个人博客"/><meta property="og:url"      content="https://blog.donggei.top/articles/2023/11/14/1699959970120.html?"/><meta property="og:image" content="https://b3log.org/images/brand/solo-128.png"/><link rel="search" type="application/opensearchdescription+xml" title="java注解和反射 - donggei 的个人博客" href="/opensearch.xml"><link href="https://blog.donggei.top/rss.xml" title="RSS" type="application/rss+xml" rel="alternate"/><link rel="manifest" href="https://blog.donggei.top/manifest.json">        <link rel="canonical" href="https://blog.donggei.top/articles/2023/11/14/1699959970120.html">        <link rel="stylesheet"
+              href="https://blog.donggei.top/skins/Pinghsu/css/base.css?1699954326316"/>
+            <link rel="prev" title="java集合（进阶）" href="https://blog.donggei.top/articles/2023/11/14/1699959935349.html">
+            <link rel="next" title="复习Docker" href="https://blog.donggei.top/articles/2023/11/14/1699960071438.html">
+    <script src="https://unpkg.com/vditor@3.8.15/dist/js/icons/ant.js" async="" id="vditorIconScript"></script></head>
+<body>
+<header class="header">
+    <div class="wrapper">
+        <a href="https://blog.donggei.top" rel="start" class="header__logo">
+            <img src="https://b3logfile.com/avatar/1699945842626_1699952075889.png?imageView2/1/w/128/h/128/interlace/0/q/100" alt="donggei 的个人博客"/>
+            donggei 的个人博客
+        </a>
+
+        <nav class="header__nav mobile__none">
+            <a href="https://blog.donggei.top/tags.html" rel="section">
+                Tags
+            </a>
+            <a href="https://blog.donggei.top/archives.html">
+                Archives
+            </a>
+            <a rel="archive" href="https://blog.donggei.top/links.html">
+                Links
+            </a>
+        </nav>
+
+        <div class="header__bar fn__none" onclick="$(this).next().slideToggle()">
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+                <path fill="#444" d="M0 3h20v2h-20v-2zM0 9h20v2h-20v-2zM0 15h20v2h-20v-2z"></path>
+            </svg>
+        </div>
+        <main class="header__menu fn__none">
+            <ul>
+                    <li>
+                        <a href="http://localhost:8080/tags/daily" target="_self" rel="section">
+                            daily
+                        </a>
+                    </li>
+                <li>
+                    <a href="https://blog.donggei.top/tags.html" rel="section">
+                        Tags
+                    </a>
+                </li>
+                <li>
+                    <a href="https://blog.donggei.top/archives.html">
+                        Archives
+                    </a>
+                </li>
+                <li>
+                    <a rel="archive" href="https://blog.donggei.top/links.html">
+                        Links
+                    </a>
+                </li>
+                <li>
+                    <a rel="alternate" href="https://blog.donggei.top/rss.xml" rel="section">
+                        RSS
+                    </a>
+                </li>
+            </ul>
+        </main>
+    </div>
+</header>
+<main id="pjax" class="fn__flex-1">
+    
+    <div class="post wrapper wrapper--miner">
+        <h2 class="item__title">
+            <a rel="bookmark" href="https://blog.donggei.top/articles/2023/11/14/1699959970120.html">
+                java注解和反射
+            </a>
+        </h2>
+        <div class="ft__fade item__meta">
+                Published on
+            <time>
+                Nov 14, 2023
+            </time>
+            with <span data-uvstaturl="https://blog.donggei.top/articles/2023/11/14/1699959970120.html">0</span> views
+                and <a href="#b3logsolocomments"><span data-uvstatcmt="1699959970120">0</span> comments</a>
+        </div>
+        <div class="item__tags">
+                <a rel="tag" class="tag tag--0" href="https://blog.donggei.top/tags/java">
+                    <b># java</b>
+                </a>
+                <a rel="tag" class="tag tag--1" href="https://blog.donggei.top/tags/java%E5%9F%BA%E7%A1%80">
+                    <b># java基础</b>
+                </a>
+        </div>
+        <div class="vditor-reset">
+            <h1 id="toc_h1_0">javaSE—注解和反射</h1>
+<h2 id="toc_h2_1">一.注解</h2>
+<h3 id="toc_h3_2">1.什么是注解</h3>
+<p><strong>Annotation是从JDK5.0开始引入的概念</strong></p>
+<p><strong>eg：@override  重写的注解</strong></p>
+<ul>
+<li><strong>1.不是程序本身 给程序作出解释（）</strong></li>
+<li>**2.**<strong>可以被其他程序读取</strong></li>
+<li><strong>非必须</strong></li>
+<li><strong>3.格式：@注释+注释名，还可以加一些参数值</strong></li>
+<li><strong>4.有检查和约束的作用</strong></li>
+<li><strong>可以放在方法或者类等等上面</strong></li>
+</ul>
+<p><strong>.....注释是给人看的,注解是给人和机器看的</strong></p>
+<h3 id="toc_h3_3">2.内置注解</h3>
+<p><strong>@override 指示方法声明旨在覆盖超类型中的方法声明。</strong><br>
+<strong>@Deprecated 已过时 不推荐使用的代码</strong><br>
+<strong>@SuppressWarnings  镇压警告（可以放入参数）</strong></p>
+<h3 id="toc_h3_4">3.元注解</h3>
+<p>**作用：负责注解其他注解 **<br>
+<strong>4个标准的meta-annotation类型：</strong></p>
+<ul>
+<li>**@Target **	<strong>被描述的注解可以用在什么地方</strong></li>
+</ul>
+<pre><code>@Target(value =ElementType.METHOD)  说明作用域在方法上 
+@Target(ElementType.FIELD) 作用域在属性上（成员变量）
+@Target(value ={ElementType.METHOD,ElementType.TYPE})  说明作用域在方法和类上 
+</code></pre>
+<ul>
+<li><strong>@Retention</strong>	<strong>表示需要在什么级别保存注释信息（一般都写RUNTIME）</strong><br>
+<strong>表示我们的注释在什么地方还有效</strong></li>
+</ul>
+<pre><code>@Retention(value =RetentionPolicy.RUNTIME)
+</code></pre>
+<ul>
+<li><strong>@Documented  是否我们的注解生成在JAVAdoc中</strong></li>
+<li><strong>@Inherited    表示子类能继承父类该注解</strong></li>
+</ul>
+<h3 id="toc_h3_5">4.自定义注解</h3>
+<ul>
+<li><strong>使用@interface自定义注解时，自动继承注解接口</strong></li>
+<li><strong>写在注解里的参数格式：参数类型 + 参数名（）；</strong></li>
+<li><strong>default 设默认值</strong><br>
+<strong>注解显示赋值，如果没有默认值，我们必须赋值</strong></li>
+</ul>
+<pre><code>@interface MyAnnotion{
+string name() default ""
+int id() default -1   //一般负一代表不存在
+}
+
+@interface MyAnnotion2{
+string value()
+}
+
+@MyAnnotion2("abc")  //只有一个且名字是value时 这样 等价于 (value="'abc'")
+public viod test(){
+}
+</code></pre>
+<h2 id="toc_h2_6">二.反射</h2>
+<h3 id="toc_h3_7">1.概念</h3>
+<p><strong>Java（静态语言）被视为准动态语言的关键，反射机制允许程序在****执行期</strong>借助于Reflection API取得任何类的内部信息，并能直接操作任意对象的内部属性及方法。   private 里的也可以操作</p>
+<p><strong>加载完类之后，在堆内存的方法区中就产生了一个Class类型的对象(一个类只有一个Class对象) ，这个对象就包含了完整的类的结构信息。我们可以通过这个对象看到类的结构。这个对象就像一面镜子， 透过这个镜子看到类的结构，所以，我们形象的称之为:反射</strong></p>
+<p><strong>正常方式: 引入需要的"包类"名称一&gt; 通过new实例化—&gt;取得实例化对象</strong><br>
+<strong>反射方式:实例化对象一&gt; getClass方法—&gt;得到完整的“包类”名称</strong></p>
+<h3 id="toc_h3_8">2.class类的创建方式</h3>
+<pre><code>public class test03 {
+    public static void main(String[] args) throws ClassNotFoundException {
+        Person person =new Student();
+        System.out.println("这个人是："+person.name);
+        //通过对象获得
+        Class c1 = person.getClass();
+        //forname获得
+        Class c2 = Class.forName("lesson05.Student");
+        //通过类名.class获得
+        Class c3 = Student.class;
+
+        //获得父类类型
+        Class c5 = c1.getSuperclass();
+    }
+
+
+
+}
+
+class Person{
+   public String name;
+
+    public Person() {
+    }
+
+    public Person(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "name='" + name + '\'' +
+                '}';
+    }
+}
+
+class Student extends Person{
+    public Student() {
+       this.name="学生";
+    }
+}
+
+class Teacher extends Person{
+    public Teacher() {
+        this.name="老师";
+    }
+}
+</code></pre>
+<h3 id="toc_h3_9">3.那些类型有Class对象</h3>
+<pre><code>public class test04 {
+    public static void main(String[] args) {
+        Class objectClass = Object.class;//类
+        Class comparableClass = Comparable.class;//接口
+        Class aClass = String[].class;//一维数组
+        Class aClass1 = int[][].class; //二维数组
+        Class overrideClass = Override.class;//注解
+        Class elementTypeClass = ElementType.class; //枚举
+        Class  integerClass = Integer.class;//基本数据类型
+        Class voidClass = void.class;//void
+        Class classClass = Class.class;//Class
+    }
+}
+</code></pre>
+<h3 id="toc_h3_10">4.分析类初始化</h3>
+<p>**       (1.) 类的主动引用(一定会发生类的初始化)**</p>
+<ul>
+<li><strong>当虚拟机启动，先初始化main方法所在的类</strong></li>
+<li><strong>new 一个类的对象</strong></li>
+<li><strong>调用类的静态成员(除了final常量)和静态方法</strong></li>
+<li><strong>使用java.lang.reflect包的方法对类进行反射调用</strong></li>
+<li><strong>当初始化一个类,如果其父类没有被初始化，则先会初始化它的父类</strong><br>
+<strong>(2.)类的被动引用(不会发生类的初始化)</strong></li>
+<li><strong>当访问一个静态域时，只有真正声明这个域的类才会被初始化。如:当通过子类引用父类的静态变量,不会导致子类初始化</strong></li>
+<li><strong>通过数组定义类引用，不会触发此类的初始化</strong></li>
+<li><strong>引用常量（final）不会触发此类的初始化(常量在链接阶段就存入调用类的常量池中了)</strong>
+<pre><code>public class test05 {
+    public static void main(String[] args) throws ClassNotFoundException {
+        System.out.println("main调用");
+
+        //(1.) 类的主动引用(一定会发生类的初始化)
+        ///zi son = new zi();
+
+        //System.out.println(Fu.b);
+
+
+      // Class.forName("lesson05.zi");
+        //Class.forName("lesson05.Fu");
+
+        //(2.)类的被动引用(不会发生类的初始化)
+
+        //System.out.println(zi.b);
+
+        //zi[] zis = new zi[5];
+
+
+        //System.out.println(zi.m);
+
+
+    }
+
+}
+class Fu {
+    static int b=2;
+    static {
+        System.out.println("父类被调用");
+    }
+}
+class zi extends Fu{
+   final static int m=0;
+    static {
+        System.out.println("子类被调用");
+    }
+}
+</code></pre>
+</li>
+</ul>
+<p><strong>补充：</strong></p>
+<p><strong>1.static方法</strong></p>
+<p>**　　static方法一般称作静态方法，由于静态方法不依赖于任何对象就可以进行访问，因此对于静态方法来说，是没有this的，因为它不依附于任何对象，既然都没有对象，就谈不上this了。并且由于这个特性，在静态方法中不能访问类的非静态成员变量和非静态成员方法，因为非静态成员方法/变量都是必须依赖具体的对象才能够被调用。**</p>
+<p>**　　但是要注意的是，虽然在静态方法中不能访问非静态成员方法和非静态成员变量，但是在非静态成员方法中是可以访问静态成员方法/变量的。**</p>
+<p><strong>2.static变量</strong></p>
+<p>**　　static变量也称作静态变量，静态变量和非静态变量的区别是：静态变量被所有的对象所共享，在内存中只有一个副本，它当且仅当在类初次加载时会被初始化。而非静态变量是对象所拥有的，在创建对象的时候被初始化，存在多个副本，各个对象拥有的副本互不影响。**</p>
+<p>**　　static成员变量的初始化顺序按照定义的顺序进行初始化。**</p>
+<p><strong>3.static代码块</strong></p>
+<p>**　　static关键字还有一个比较关键的作用就是 用来形成静态代码块以优化程序性能。static块可以置于类中的任何地方，类中可以有多个static块。在类初次被加载的时候，会按照static块的顺序来执行每个static块，并且只会执行一次。**</p>
+<p><strong>4.static作用于成员变量用来表示只保存一份副本，final的作用是用来保证变量不可变</strong></p>
+<h3 id="toc_h3_11">5.类加载内存分析</h3>
+<p><strong>测试代码：</strong></p>
+<p><strong>运行结果：</strong></p>
+<p><strong>分析：</strong></p>
+<p><strong>注意：静态代码块和 静态变量执行的先后顺序取决于代码编写的顺序</strong> 在**<clinit>**时完成</clinit></p>
+<h3 id="toc_h3_12">6.类加载器</h3>
+<ul>
+<li>**引导类加载器 **</li>
+</ul>
+<pre><code>引导类加载器:用C++编写的， 是JVM自带的类
+加载器，负责Java平台核心库（rt.jar），用来装载核心类
+库。该加载器无法直接获取
+</code></pre>
+<ul>
+<li><strong>扩展类加载器</strong></li>
+</ul>
+<pre><code>扩展类加载器:负责jre/ib/ext目录下的jar包或-
+D java.ext.dirs指定目录下的jar包装入工作库
+</code></pre>
+<ul>
+<li><strong>系统类加载器</strong></li>
+</ul>
+<pre><code>系统类加载器:负责java - classpath或-D
+java.class. path所指的目录下的类与jar包装入工
+作库，是最常用的加载器
+</code></pre>
+<h3 id="toc_h3_13">7.获取运行时类的完整结构</h3>
+<pre><code>import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
+
+//获取类的信息
+public class test06 {
+    public static void main(String[] args) throws NoSuchFieldException, NoSuchMethodException {
+        USer uSer = new USer();
+        Class c1 = uSer.getClass();
+        //获取类的名字
+        System.out.println(c1.getName());
+
+//        //获得类的属性
+//        System.out.println("===========================================");
+//        Field[] fields = c1.getFields(); //只能找到public属性
+//        for (Field field : fields) {
+//            System.out.println(field);
+//        }
+//        System.out.println("===========================================");
+//        Field[] fields1 = c1.getDeclaredFields();//找到全部属性
+//        for (Field field : fields1) {
+//            System.out.println(field);
+
+        //获得指定属性
+            System.out.println("===========================================");
+            System.out.println(c1.getDeclaredField("name"));
+
+        //获得类的方法
+            System.out.println("===========================================");
+            Method[] methods = c1.getMethods();  //本类及父类所有方法
+
+            for (Method method : methods) {
+                System.out.println("正常的："+method);
+            }
+            System.out.println("===========================================");
+            Method[] declaredMethods = c1.getDeclaredMethods();//本类的所有方法
+
+            for (Method declaredMethod : declaredMethods) {
+                System.out.println("getDeclaredMethods的："+declaredMethod);
+        }
+        //获得指定方法
+        //可能会发生重载 所以要传入参数 丢进去一个类型就可以了
+            System.out.println("===========================================");
+            Method getName = c1.getMethod("getName", null);
+            Method setName = c1.getMethod("setName", String.class);
+            System.out.println(getName);
+            System.out.println(setName);
+
+        //构造方法
+            System.out.println("===========================================");
+            Constructor[] constructors = c1.getConstructors();//本类public构造方法
+
+            for (Constructor constructor : constructors) {
+                System.out.println(constructor);
+            }
+
+            System.out.println("===========================================");
+            Constructor[] constructors1 = c1.getDeclaredConstructors(); //本类全部构造方法
+
+            for (Constructor constructor1 : constructors1) {
+                System.out.println(constructor1);
+            }
+
+        //获得指定构造器
+            System.out.println("===========================================");
+            System.out.println(c1.getConstructor(String.class, int.class, int.class));
+
+
+    }
+}
+</code></pre>
+<h3 id="toc_h3_14">7. 动态创建对象执行方法</h3>
+<p><strong>其中没有参数的给null</strong></p>
+<pre><code>//通过反射，动态创建对象
+public class test07 {
+    public static void main(String[] args) throws Exception {
+        //获得class对象
+        Class c1 = Class.forName("lesson05.USer");
+
+        //构造对象
+        USer user = (USer) c1.newInstance();//本质调用了无参构造器
+        System.out.println(user);
+
+        //通过构造器创建对象
+        Constructor constructor = c1.getConstructor(String.class, int.class, int.class);
+        USer user2  = (USer) constructor.newInstance("dongGEi", 01, 18);
+        System.out.println(user2);
+
+        //通过反射调用普通方法
+        USer user3 = (USer) c1.newInstance();
+        //通过反射获得方法
+        Method setName = c1.getMethod("setName", String.class);
+        setName.invoke(user3,"abcd"); //invoke 激活，给user3这个对象 参数是abcd
+        System.out.println(user3);
+        //通过反射操作属性
+        USer user4 = (USer) c1.newInstance();
+        Field name = c1.getDeclaredField("name");
+            //不能直接操作私有属性，需要先关闭安全检测，属性和方法都是setAccessible(true)
+        name.setAccessible(true);//设置权限
+        name.set(user4,"abcd222");
+        System.out.println(user4);
+
+    }
+}
+</code></pre>
+<h3 id="toc_h3_15">8.性能对比</h3>
+<ul>
+<li><strong>普通方法 new User 出来的进行set get等等操作</strong></li>
+<li>**反射方法 uesr.getClass 然后获得方法 然后invoke **</li>
+<li><strong>关闭权限检测的反射调用 加一个setAccessible（true）</strong></li>
+</ul>
+<p><strong>速度  普通&gt;关闭权限检测的反射&gt;反射方法</strong></p>
+<p><strong>需要反射时可以关闭权限检测 提高速度</strong></p>
+<h3 id="toc_h3_16">9.反射获取泛型信息</h3>
+<p><strong>解释上面代码：test01 是一个参数为Map和List的方法，</strong></p>
+<p><strong>反射拿到这个方法 然后获得参数列表</strong></p>
+<p>** 遍历参数列表 然后参数类型是参数化类型（加&lt;&gt;的；泛型 ）的强转成参数化类型**</p>
+<p>**再遍历 拿到真真实参数  **</p>
+<p><strong>（口语化 有点绕=.=）</strong></p>
+<h3 id="toc_h3_17">10. 反射获取注解信息</h3>
+<h5 id="toc_h5_18">ORM对象关系映射</h5>
+<p><strong>◆类和表结构对应</strong></p>
+<p><strong>◆属性和字段对应</strong></p>
+<p><strong>◆对象和记录对应</strong></p>
+<p><strong>要求:利用注解和反射完成类和表结构的映射关系</strong></p>
+<p><strong>先看下面 再看psvm</strong></p>
+<pre><code>package test;
+
+import java.lang.annotation.*;
+import java.lang.reflect.Field;
+
+public class Test {
+
+    public static void main(String[] args) throws ClassNotFoundException, NoSuchFieldException {
+        Class&lt;?&gt; c1 = Class.forName("test.Student");
+        //通过反射获得注解
+        Annotation[] annotations = c1.getAnnotations();
+        for (Annotation annotation : annotations) {
+            System.out.println(annotation);
+        }
+        //获得注解value的值
+        //获得指定注解 传进注解的class
+        TableDong tableDong = c1.getAnnotation(TableDong.class);
+        String value = tableDong.value();
+        System.out.println(value);
+
+        //获得指定属性 （成员变量）
+        Field f = c1.getDeclaredField("name");
+        //获得属性上的 指定注解 取出注解的值
+        FieldDong fieldDong = f.getAnnotation(FieldDong.class);
+        System.out.println(fieldDong.columName());
+        System.out.println(fieldDong.length());
+        System.out.println(fieldDong.type());
+        System.out.println("---------------");
+
+        f = c1.getDeclaredField("id");
+        //获得指定注解
+        fieldDong = f.getAnnotation(FieldDong.class);
+        System.out.println(fieldDong.columName());
+        System.out.println(fieldDong.length());
+        System.out.println(fieldDong.type());
+    }
+}
+@TableDong("db_student")
+class Student{
+    @FieldDong(columName = "db_id",type = "varchar",length = 10)
+    private String id;
+    @FieldDong(columName = "db_age",type = "int",length = 3)
+    private int age;
+    @FieldDong(columName = "db_name",type = "varchar",length = 10)
+    private String name;
+
+    public Student() {
+    }
+
+    public Student(String id, int age, String name) {
+        this.id = id;
+        this.age = age;
+        this.name = name;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "id='" + id + '\'' +
+                ", age=" + age +
+                ", name='" + name + '\'' +
+                '}';
+    }
+}
+
+//类名的注解
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+@interface TableDong{
+    String value();
+}
+
+//属性的注解
+@Target(ElementType.FIELD)
+@Retention(RetentionPolicy.RUNTIME)
+@interface FieldDong{
+    String columName(); //列名（不是学生名）
+    String type();
+    int length();
+}
+</code></pre>
+<p><strong>（本篇 JVM深入部分 还是不太懂 以后再深入了解吧- . -）</strong></p>
+                <div>
+                    <hr>
+
+标题：java注解和反射<br>
+作者：<a href="https://blog.donggei.top" target="_blank">donggei</a><br>
+地址：<a href="https://blog.donggei.top/articles/2023/11/14/1699959970120.html" target="_blank">https://blog.donggei.top/articles/2023/11/14/1699959970120.html</a><br>
+
+<!-- 签名档内可使用 HTML、JavaScript -->
+<br>
+                </div>
+        </div>
+    </div>
+    <div class="post__toc">
+<ul class="article__toc">
+        <li class="toc__h1">
+            <a href="#toc_h1_0">javaSE—注解和反射</a>
+        </li>
+        <li class="toc__h2">
+            <a href="#toc_h2_1">一.注解</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_2">1.什么是注解</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_3">2.内置注解</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_4">3.元注解</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_5">4.自定义注解</a>
+        </li>
+        <li class="toc__h2">
+            <a href="#toc_h2_6">二.反射</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_7">1.概念</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_8">2.class类的创建方式</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_9">3.那些类型有Class对象</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_10">4.分析类初始化</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_11">5.类加载内存分析</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_12">6.类加载器</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_13">7.获取运行时类的完整结构</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_14">7. 动态创建对象执行方法</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_15">8.性能对比</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_16">9.反射获取泛型信息</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_17">10. 反射获取注解信息</a>
+        </li>
+        <li class="toc__h5">
+            <a href="#toc_h5_18">ORM对象关系映射</a>
+        </li>
+</ul>    </div>
+    <div class="body--gray post__gray">
+        <div class="wrapper comment">
+                <div id="gitalk-container" style="padding: 30px 0;"></div>
+                <div id="b3logsolocomments"></div>
+                <div id="vcomment" style="padding: 30px 0;" data-name="donggei" data-postId="1699959970120"></div>
+
+            <div class="post__list fn__flex">
+                <div class="fn__flex-1">
+                    <div id="externalRelevantArticles"></div>
+                </div>
+                <div class="post__list-mid fn__flex-1">
+                    <div id="randomArticles"></div>
+                </div>
+                <div class="fn__flex-1">
+                    <div id="relevantArticles"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="post__fix">
+        <div class="wrapper">
+            <span class="post__share mobile__none">
+                Share
+                <span class="tag tag--4" data-type="weibo">WeiBo</span>
+                <span class="tag tag--5" data-type="twitter">Twitter</span>
+                <span class="tag tag--6" data-type="qqz">QZone</span>
+                <span class="post__code tag tag--7"
+                      data-type="wechat"
+                      data-title="java注解和反射"
+                      data-blogtitle="donggei 的个人博客"
+                      data-url="https://blog.donggei.top/articles/2023/11/14/1699959970120.html"
+                      data-avatar="https://b3logfile.com/avatar/1699945842626_1699952075889.png?imageView2/1/w/128/h/128/interlace/0/q/100">
+                    WeChat
+                    <span class="qrcode"></span>
+                </span>
+            </span>
+            <span class="post__arrow">
+                    <a href="https://blog.donggei.top/articles/2023/11/14/1699959935349.html" rel="prev"
+                       class="vditor-tooltipped__n vditor-tooltipped"
+                       pjax-title="java集合（进阶）"
+                       aria-label="旧一篇: java集合（进阶）">←</a>
+
+                    <a href="https://blog.donggei.top/articles/2023/11/14/1699960071438.html" rel="next"
+                       class="vditor-tooltipped__n vditor-tooltipped"
+                       pjax-title="复习Docker"
+                       aria-label="新一篇: 复习Docker">→</a>
+                <a href="javascript:Util.goTop()" class="vditor-tooltipped__n vditor-tooltipped"
+                   aria-label="移动到顶部">↑</a>
+                <a href="javascript:Util.goBottom()" class="vditor-tooltipped__n vditor-tooltipped"
+                   aria-label="移动到底部">↓</a>
+            </span>
+        </div>
+    </div>
+    
+</main>
+<footer class="footer">
+    <div class="ft__center">
+    <a href="https://ld246.com/member/donggei"
+       aria-label="https://ld246.com/member/donggei"
+       class="vditor-tooltipped__n vditor-tooltipped  user__site"
+       target="_blank" rel="noopener nofollow">
+        <svg viewBox="0 0 32 32" width="100%" height="100%">
+            <path fill="#d23f31" style="fill: var(--color1, #d23f31)" d="M5.787 17.226h17.033l5.954 9.528c0.47 0.752 0.003 1.361-1.042 1.361h-15.141z"></path>
+            <path d="M10.74 3.927h17.033c1.045 0 1.512 0.609 1.042 1.361l-5.954 9.528h-19.872l6.379-10.209c0.235-0.376 0.849-0.681 1.372-0.681z"></path>
+            <path d="M2.953 17.226h2.839l6.804 10.889h-1.892c-0.523 0-1.137-0.305-1.372-0.681z"></path>
+        </svg>
+    </a>
+
+        <a href="https://github.com/dong2645981073"
+           aria-label="https://github.com/dong2645981073"
+           class="vditor-tooltipped__n vditor-tooltipped  user__site"
+           target="_blank" rel="noopener nofollow">
+            <svg viewBox="0 0 32 32" width="100%" height="100%">
+                <path d="M16 0.331c-8.836 0-16 7.163-16 16 0 7.069 4.585 13.067 10.942 15.182 0.8 0.148 1.094-0.347 1.094-0.77 0-0.381-0.015-1.642-0.022-2.979-4.452 0.968-5.391-1.888-5.391-1.888-0.728-1.849-1.776-2.341-1.776-2.341-1.452-0.993 0.11-0.973 0.11-0.973 1.606 0.113 2.452 1.649 2.452 1.649 1.427 2.446 3.743 1.739 4.656 1.33 0.143-1.034 0.558-1.74 1.016-2.14-3.554-0.404-7.29-1.777-7.29-7.907 0-1.747 0.625-3.174 1.649-4.295-0.166-0.403-0.714-2.030 0.155-4.234 0 0 1.344-0.43 4.401 1.64 1.276-0.355 2.645-0.532 4.005-0.539 1.359 0.006 2.729 0.184 4.008 0.539 3.054-2.070 4.395-1.64 4.395-1.64 0.871 2.204 0.323 3.831 0.157 4.234 1.026 1.12 1.647 2.548 1.647 4.295 0 6.145-3.743 7.498-7.306 7.895 0.574 0.497 1.085 1.47 1.085 2.963 0 2.141-0.019 3.864-0.019 4.391 0 0.426 0.288 0.925 1.099 0.768 6.354-2.118 10.933-8.113 10.933-15.18 0-8.837-7.164-16-16-16z"></path>
+            </svg>
+        </a>
+
+        <a href="tencent://message/?uin=2645981073"
+           aria-label="2645981073"
+           target="_blank"
+           class="vditor-tooltipped__n vditor-tooltipped  user__site" rel="noopener nofollow">
+            <svg viewBox="0 0 32 32" width="100%" height="100%">
+                <path d="M4.821 14.393c-0.125-0.304-0.143-0.607-0.143-0.929 0-0.5 0.321-1.304 0.625-1.679-0.018-0.464 0.179-1.411 0.536-1.714 0-3.304 2.554-7.464 5.536-8.893 1.839-0.875 3.768-1.179 5.786-1.179 1.571 0 3.286 0.375 4.75 0.982 4.196 1.768 5.143 5.054 6.036 9.25l0.018 0.089c0.518 0.786 0.982 1.714 0.982 2.679 0 0.482-0.321 0.964-0.321 1.393 0 0.036 0.107 0.179 0.125 0.214 1.536 2.268 2.929 4.732 2.929 7.554 0 0.625-0.339 2.804-1.339 2.804-0.696 0-1.464-1.696-1.714-2.161-0.018-0.018-0.036-0.018-0.054-0.018l-0.089 0.071c-0.571 1.482-1.196 2.875-2.357 3.982 1.018 0.982 2.661 0.893 2.964 2.589-0.089 0.196-0.054 0.411-0.196 0.607-1.018 1.536-3.75 1.732-5.393 1.732-2.179 0-3.946-0.571-6-1.179-0.429-0.125-1.071-0.054-1.536-0.107-1.089 1.196-3.75 1.518-5.286 1.518-1.357 0-6.607-0.089-6.607-2.411 0-1 0.214-1.286 0.911-1.929 0.554-0.107 0.964-0.411 1.607-0.446 0.089 0 0.161-0.018 0.25-0.036 0.018-0.018 0.036-0.018 0.036-0.071l-0.036-0.054c-1.232-0.286-2.964-3.393-3.232-4.679l-0.089-0.054c-0.125 0-0.179 0.268-0.214 0.357-0.393 0.911-1.321 1.893-2.357 2h-0.018c-0.143 0-0.089-0.143-0.196-0.179-0.25-0.589-0.411-1.125-0.411-1.786 0-3.571 1.714-6.214 4.5-8.321z"></path>
+            </svg>
+        </a>
+    </div>
+    <nav class="footer__nav mobile__none">
+            <a class="ft__link" href="http://localhost:8080/tags/daily" target="_self" rel="section">
+                daily
+            </a>
+        <a class="ft__link" rel="alternate" href="https://blog.donggei.top/rss.xml" rel="section">RSS</a>
+    </nav>
+    <div class="footer__border mobile__none"></div>
+    <div class="wrapper fn__flex">
+        <div class="fn__flex-1 mobile__none">
+            <div class="ft__fade">donggei - 藏器于身，不患无此时 </div>
+            <br>
+                
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?4a65454c1d3be24651aed5fbf3c9e47b";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<h2>致知于行</h2>
+<!-- 公告栏可使用 HTML、JavaScript，比如可以在此加入第三方统计 js -->
+        </div>
+
+
+        <div class="fn__flex-1 footer__copyright">
+            <a class="ft__link" href="https://blog.donggei.top/archives.html">
+                11
+                文章
+            </a>
+           <br>
+            <span data-uvstaturl="https://blog.donggei.top">0</span> <span class="ft-gray">浏览</span>
+ <br>
+            &copy; 2023
+            <a class="ft__link" href="https://blog.donggei.top">donggei 的个人博客</a>
+            
+        </div>
+    </div>
+</footer>
+<script>
+  var Label = {
+    speech: true,
+    servePath: "https://blog.donggei.top",
+    staticServePath: "https://blog.donggei.top",
+    luteAvailable: false,
+    hljsStyle: 'github',
+    langLabel: "zh_CN",
+    version: "4.4.0",
+    staticSite: true,
+    showCodeBlockLn: false,
+    articleId: "1699959970120",
+  }
+</script>
+<script type="text/javascript" src="https://blog.donggei.top/skins/Pinghsu/js/headroom.min.js"></script>
+<script type="text/javascript"
+        src="https://blog.donggei.top/skins/Pinghsu/js/common.min.js?1699954326316"
+        charset="utf-8"></script>
+
+
+
+<script type="text/javascript">
+    Util.addScript('https://blog.donggei.top/js/page.min.js?1699954326316', 'soloPageScript')
+    var page = new Page({
+        "commentContentCannotEmptyLabel": "评论不能为空",
+        "oId": "1699959970120",
+        "blogHost": "https://blog.donggei.top",
+        "randomArticles1Label": "随机阅读：",
+        "externalRelevantArticles1Label": "站外相关阅读："
+    });
+    $(document).ready(function () {
+        page.load();
+    page.tips.externalRelevantArticlesDisplayCount = "0";
+    page.loadRandomArticles('<h3>RECOMMEND POSTS</h3>');
+    page.loadRelevantArticles('1699959970120', '<h3>RELEVANT POSTS</h3>');
+Skin.initArticle()
+    });
+</script>
+
+</body>
+</html>
+
+<!-- Generated by Latke (https://github.com/88250/latke) in 27ms, 2023/11/14 19:13:32 -->

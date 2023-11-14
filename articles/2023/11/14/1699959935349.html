@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/><meta name="theme-color" content="#3b3e43"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"/><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="format-detection" content="telephone=no"/><title>java集合（进阶） - donggei 的个人博客</title><meta name="description" content="A small and beautiful blogging website. 一个小而美的博客。"/><meta property="og:description" content="A small and beautiful blogging website. 一个小而美的博客。"/>    <meta name="keywords" content="Java,博客,开源"/><link rel="dns-prefetch" href="https://blog.donggei.top"/><link rel="dns-prefetch" href="https://unpkg.com"/><link rel="preconnect" href="https://blog.donggei.top"><link rel="icon" type="image/png" href="https://b3log.org/images/brand/solo-128.png"/><link rel="apple-touch-icon" href="https://b3log.org/images/brand/solo-128.png"><link rel="shortcut icon" type="image/x-icon" href="https://b3log.org/images/brand/solo-128.png"><meta name="copyright" content="B3log"/><meta http-equiv="Window-target" content="_top"/><meta property="og:locale" content="zh_CN"/><meta property="og:title" content="java集合（进阶） - donggei 的个人博客"/><meta property="og:site_name" content="donggei 的个人博客"/><meta property="og:url"      content="https://blog.donggei.top/articles/2023/11/14/1699959935349.html?"/><meta property="og:image" content="https://b3log.org/images/brand/solo-128.png"/><link rel="search" type="application/opensearchdescription+xml" title="java集合（进阶） - donggei 的个人博客" href="/opensearch.xml"><link href="https://blog.donggei.top/rss.xml" title="RSS" type="application/rss+xml" rel="alternate"/><link rel="manifest" href="https://blog.donggei.top/manifest.json">        <link rel="canonical" href="https://blog.donggei.top/articles/2023/11/14/1699959935349.html">        <link rel="stylesheet"
+              href="https://blog.donggei.top/skins/Pinghsu/css/base.css?1699954326316"/>
+            <link rel="prev" title="java垃圾回收机制" href="https://blog.donggei.top/articles/2023/11/14/1699959882168.html">
+            <link rel="next" title="java注解和反射" href="https://blog.donggei.top/articles/2023/11/14/1699959970120.html">
+    <script src="https://unpkg.com/vditor@3.8.15/dist/js/icons/ant.js" async="" id="vditorIconScript"></script></head>
+<body>
+<header class="header">
+    <div class="wrapper">
+        <a href="https://blog.donggei.top" rel="start" class="header__logo">
+            <img src="https://b3logfile.com/avatar/1699945842626_1699952075889.png?imageView2/1/w/128/h/128/interlace/0/q/100" alt="donggei 的个人博客"/>
+            donggei 的个人博客
+        </a>
+
+        <nav class="header__nav mobile__none">
+            <a href="https://blog.donggei.top/tags.html" rel="section">
+                Tags
+            </a>
+            <a href="https://blog.donggei.top/archives.html">
+                Archives
+            </a>
+            <a rel="archive" href="https://blog.donggei.top/links.html">
+                Links
+            </a>
+        </nav>
+
+        <div class="header__bar fn__none" onclick="$(this).next().slideToggle()">
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+                <path fill="#444" d="M0 3h20v2h-20v-2zM0 9h20v2h-20v-2zM0 15h20v2h-20v-2z"></path>
+            </svg>
+        </div>
+        <main class="header__menu fn__none">
+            <ul>
+                    <li>
+                        <a href="http://localhost:8080/tags/daily" target="_self" rel="section">
+                            daily
+                        </a>
+                    </li>
+                <li>
+                    <a href="https://blog.donggei.top/tags.html" rel="section">
+                        Tags
+                    </a>
+                </li>
+                <li>
+                    <a href="https://blog.donggei.top/archives.html">
+                        Archives
+                    </a>
+                </li>
+                <li>
+                    <a rel="archive" href="https://blog.donggei.top/links.html">
+                        Links
+                    </a>
+                </li>
+                <li>
+                    <a rel="alternate" href="https://blog.donggei.top/rss.xml" rel="section">
+                        RSS
+                    </a>
+                </li>
+            </ul>
+        </main>
+    </div>
+</header>
+<main id="pjax" class="fn__flex-1">
+    
+    <div class="post wrapper wrapper--miner">
+        <h2 class="item__title">
+            <a rel="bookmark" href="https://blog.donggei.top/articles/2023/11/14/1699959935349.html">
+                java集合（进阶）
+            </a>
+        </h2>
+        <div class="ft__fade item__meta">
+                Updated on
+            <time>
+                Nov 14, 2023
+            </time>
+            with <span data-uvstaturl="https://blog.donggei.top/articles/2023/11/14/1699959935349.html">0</span> views
+                and <a href="#b3logsolocomments"><span data-uvstatcmt="1699959935349">0</span> comments</a>
+        </div>
+        <div class="item__tags">
+                <a rel="tag" class="tag tag--0" href="https://blog.donggei.top/tags/java">
+                    <b># java</b>
+                </a>
+                <a rel="tag" class="tag tag--1" href="https://blog.donggei.top/tags/%E9%9B%86%E5%90%88">
+                    <b># 集合</b>
+                </a>
+        </div>
+        <div class="vditor-reset">
+            <p><img src="https://b3logfile.com/bing/20220615.jpg?imageView2/1/w/960/h/540/interlace/1/q/100" alt=""></p>
+<p><img src="https://b3logfile.com/bing/20190124.jpg?imageView2/1/w/960/h/540/interlace/1/q/100" alt=""></p>
+<h1 id="toc_h1_0">集合（进阶）</h1>
+<h2 id="toc_h2_1">一.集合类体系结构</h2>
+<p><strong>1.Collection （单列）---&gt;&gt;List（可重复）---&gt;&gt;ArrayList</strong><br>
+**																		<strong>---&gt;&gt;Linkedlist</strong><br>
+**									<strong>---&gt;&gt;set(不可重复)---&gt;&gt;HashSet</strong><br>
+**																	<strong>---&gt;&gt;TreeSet</strong><br>
+**2.Map 双列---&gt;&gt;HashMap</p>
+<p><strong>Collection,Map, List,set是接口，4个是实现类</strong></p>
+<p><strong>后面的可以使用前面类里的方法</strong></p>
+<h2 id="toc_h2_2">二.collection集合</h2>
+<h3 id="toc_h3_3">1.概述及常用方法</h3>
+<p>**boolean add(E e) **	**<br>
+**向集合添加元素e，若指定集合元素改变了则返回true</p>
+<p><strong>boolean addAll(Collection&lt;? extends E&gt; c)</strong>	**<br>
+**把集合C中的元素全部添加到集合中，若指定集合元素改变返回true</p>
+<p><strong>void clear()</strong>	**<br>
+**清空所有集合元素</p>
+<p><strong>boolean contains(Object o)</strong>	**<br>
+**判断指定集合是否包含对象o</p>
+<p><strong>boolean containsAll(Collection&lt;?&gt; c)</strong><br>
+<strong>判断指定集合是否包含集合c的所有元素</strong></p>
+<p><strong>boolean isEmpty()</strong>	**<br>
+**判断指定集合的元素size是否为0</p>
+<p><strong>boolean remove(Object o)</strong><br>
+<strong>删除集合中的元素对象o,若集合有多个o元素，则只会删除第一个元素</strong></p>
+<p><strong>boolean removeAll(Collection&lt;?&gt; c）</strong><br>
+<strong>删除指定集合包含集合c的元素</strong></p>
+<p><strong>boolean retainAll(Collection&lt;?&gt; c)</strong><br>
+<strong>从指定集合中保留包含集合c的元素,其他元素则删除</strong></p>
+<p><strong>int size()</strong>	**<br>
+**集合的元素个数</p>
+<p><strong>T[] toArray(T[] a)</strong><br>
+<strong>将集合转换为T类型的数组</strong></p>
+<hr>
+<p><strong>Arrylist重写了tosrting</strong></p>
+<p><strong>add ， remove（有重复删除第一个）， clear， contains(判断是否存在指定元素)， isEmpty，size</strong></p>
+<h3 id="toc_h3_4">2.collection集合的遍历</h3>
+<p><strong>迭代器：iteartor 集合专用遍历</strong><br>
+**用.iteartor方法获得迭代器  是用了Iitearto的实现类 **<br>
+<strong>两个常用方法：</strong></p>
+<p><strong>增强for循环</strong></p>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-5724326752147746937-SDMr713.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20210807220642894"></p>
+<h2 id="toc_h2_5">三.List</h2>
+<h3 id="toc_h3_6">1.List集合概述和特点</h3>
+<ul>
+<li>**有序集合，精确控制插入位置，索引访问元素 **</li>
+<li><strong>与set不同，列表通常允许重复的元素</strong><br>
+**特点：有序 可重复 **</li>
+<li><strong>特有方法：增，删，改，查，增加了索引（不能越界）</strong><br>
+<strong>索引遍历</strong></li>
+</ul>
+<h3 id="toc_h3_7">2.并发修改异常</h3>
+<p>**  迭代器 循环列表时 增删元素报错 可以通过for和.size方法**</p>
+<h3 id="toc_h3_8">3. Listiteartor</h3>
+<ul>
+<li><strong>前后方向都可       previous 返回上一个元素</strong></li>
+<li><strong>迭代期间可以修改列表  使用列表迭代器的add方法  无并发修改异常</strong></li>
+</ul>
+<h3 id="toc_h3_9">4.增强for语句</h3>
+<ul>
+<li><strong>内部原理是一个iteartor迭代器</strong></li>
+</ul>
+<h3 id="toc_h3_10">List集合子类特点</h3>
+<ul>
+<li><strong>ArryList底层是数组 查找快 增删慢</strong></li>
+<li><strong>LinkedList底层是链表  特有方法：增，查，删开头和末尾</strong></li>
+</ul>
+<h2 id="toc_h2_11">四.set</h2>
+<ul>
+<li><strong>无重复元素    重复元素不会加进去</strong></li>
+<li><strong>无索引，不能普通for循环遍历</strong></li>
+<li><strong>对迭代顺序不作保证</strong></li>
+</ul>
+<h3 id="toc_h3_12">1.HashSet</h3>
+<p><strong>底层数据结构是哈希表 JDK8之前是数组+链表</strong></p>
+<ul>
+<li><strong>同一对象哈希值一样 hashcode</strong></li>
+<li><strong>可以通过方法重写改变哈希值</strong></li>
+<li><strong>储存时先比哈希值再比内容 都相同时不会储存</strong></li>
+<li><em><strong>自定义的类需要重写hashcode和equals</strong></em>（自动生成） 才能保证不会重复储存</li>
+</ul>
+<h3 id="toc_h3_13">2.LinkedHashSet集合概述和特点</h3>
+<ul>
+<li><strong>哈希表和链表实现的set接口</strong></li>
+<li>**元素不重复 ，**<strong>迭代有次序</strong>（取和存顺序一样）</li>
+</ul>
+<h3 id="toc_h3_14">3.TreeSet集合概述和特点</h3>
+<ul>
+<li><strong>它的元素是排序的，可以是natural ordering（自然排序） ，或Comparator（比较器排序）这取决于所使用的构造方法</strong></li>
+</ul>
+<pre><code>TreeSet() //构造一个新的空树集，根据其元素的自然顺序进行排序。  
+TreeSet(Comparator&lt;? super E&gt; comparator) //构造一个新的空树集，根据指定的比较器进行排序。  
+</code></pre>
+<ul>
+<li>
+<p><strong>无索引，不能普通for遍历</strong></p>
+</li>
+<li>
+<p><strong>无重复 ，有排序</strong></p>
+<h4>自然顺序Comparable的使用</h4>
+<p><strong>TreeSet无参构造</strong></p>
+<p><strong>自然顺序就是让元素所属的类实现Comparable&lt;类名&gt;接口</strong></p>
+<p><strong>然后，重写compareTo</strong></p>
+<p><strong>compareTo中return 1，就是添加的顺序排序 ；-1就是添加的倒序排序；0，只存第一个</strong></p>
+<p>******* 比较器里return 0时会认为是相同元素，不会储存****</p>
+<p><em><strong>要注意主要条件和次要条件都写</strong></em></p>
+<p><strong>this是后面要加入的那个对象 s是传进来比较的前面那个对象</strong></p>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-11189188503461239292-lGAb4OA.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20210808213003447"></p>
+<h4>比较器comparator的使用</h4>
+<p>**	**TreeSet带参构造</p>
+<p><strong>在需要参数的地方 new一个comparator（匿名内部类）直接重写compare方法</strong></p>
+<p><strong>compare方法里s1是后面要加入的那个对象，s2是前面的那个对象</strong></p>
+</li>
+</ul>
+<h3 id="toc_h3_15">应用</h3>
+<ul>
+<li><strong>成绩排序（注意要注意主要条件和次要条件都写）</strong></li>
+<li><strong>不重复的随机数</strong></li>
+</ul>
+<h2 id="toc_h2_16">五.泛型</h2>
+<ul>
+<li><strong>运行时异常提前到编译期</strong></li>
+<li><strong>避免了强制类型转换</strong></li>
+</ul>
+<h3 id="toc_h3_17">1.泛型类</h3>
+<pre><code>public class GenericDemo {
+    public static void main(String[] args) {
+        Generic&lt;String&gt; g1=new Generic&lt;String&gt;();
+        g1.setT("张三");
+        System.out.println(g1.getT());
+
+        Generic&lt;Integer&gt; g2=new Generic&lt;Integer&gt;();
+        g2.setT(30);
+        System.out.println(g2.getT());
+    }
+}
+</code></pre>
+<pre><code>public class Generic&lt;T&gt; {
+    private T t;
+
+    public T getT() {
+        return t;
+    }
+
+    public void setT(T t) {
+        this.t = t;
+    }
+}
+</code></pre>
+<h3 id="toc_h3_18">2.泛型方法</h3>
+<p><strong>与重载类似</strong></p>
+<pre><code>public class Generic {
+    public&lt;T&gt; void show(T t){
+        System.out.println(t);
+    }
+}
+</code></pre>
+<pre><code>public static void main(String[] args) {
+    Generic g1 = new Generic();
+    g1.show("张三");
+    g1.show("1324");
+}
+</code></pre>
+<h3 id="toc_h3_19">3.泛型接口</h3>
+<pre><code>public static void main(String[] args) {
+    GenreicImpl&lt;String&gt; g1 = new GenreicImpl&lt;String&gt;();
+    g1.show("张三");
+    GenreicImpl&lt;Integer&gt; g2 = new GenreicImpl&lt;Integer&gt;();
+    g2.show(123465);
+}
+</code></pre>
+<pre><code>public class GenreicImpl&lt;T&gt; implements Generic&lt;T&gt; {
+
+    @Override
+    public void show(T t) {
+        System.out.println(t);
+    }
+}
+</code></pre>
+<pre><code>public interface Generic&lt;T&gt; {
+    void show(T t);
+}
+</code></pre>
+<h3 id="toc_h3_20">4.泛型通配符</h3>
+<ul>
+<li><strong>List&lt;?&gt;:表示元素类型未知的List,它的元素可以匹配任何的类型</strong></li>
+<li><strong>这种带通配符的List仅表示它是各种泛 型List的父类，并不能把元素添加到其中</strong></li>
+<li><strong>类型通配符 上限: &lt;?extends 类型&gt;  List&lt;? extends Number&gt;:它表示的类型是Number或者其子类型</strong></li>
+<li><strong>类型通配符下限: &lt;?super 类型&gt;  List&lt;? super Number&gt;:它表示的类型是Number或者其父类犁</strong></li>
+</ul>
+<h3 id="toc_h3_21">5.可变参数</h3>
+<p><strong>逻辑：每个参数都封装在数组里面了</strong><br>
+<strong>范例: public static int sum（int...a){ }   就是一个数组 可以传进去n个int</strong><br>
+**public static int sum（int b,int...a){ } //可以这样使用  多个参数 可变参数放在最后  **</p>
+<ul>
+<li><strong>Arrays工具类里的静态方法</strong></li>
+</ul>
+<p><strong>static <strong><t></t></strong> List</strong><t>** asList(T... a) 返回由指定数组支持的****固定大小**的列表。</t></p>
+<pre><code>List&lt;String&gt; list =Arrays.asLIst("hello","world");
+无法使用list.add和list.remove，因为大小已经固定，可以用set（1,"java"）;
+</code></pre>
+<ul>
+<li><strong>List接口中有一个静态方法</strong></li>
+</ul>
+<p><strong>static <strong><e></e></strong> List</strong><e>** of(E... elements) 返回包含任意数量元素的不可修改列表。  **</e></p>
+<pre><code>List&lt;String&gt; list = List.of("hello","world");
+无法使用list.add和list.remove和list.set
+</code></pre>
+<ul>
+<li><strong>set接口中有一个静态方法</strong></li>
+</ul>
+<p><strong>static <strong><e></e></strong> Set</strong><e>** of(E... elements) 返回包含任意数量元素的不可修改集。  **</e></p>
+<pre><code>Set&lt;String&gt; set = Set.of("hello","world");
+Set&lt;String&gt; set = Set.of("hello","world","world");&lt;--错误  不可重复
+</code></pre>
+<h2 id="toc_h2_22">六.Map</h2>
+<h3 id="toc_h3_23">1.概述</h3>
+<ul>
+<li><strong>Interface Map&lt;K,V&gt;， K：键的类型 V:值的类型   kay和value</strong></li>
+<li>**地图不能包含重复的键; 每个键最多可以映射一个值。 **</li>
+<li><strong>举例：学号对应姓名</strong></li>
+</ul>
+<pre><code>public class MapDemo {
+    public static void main(String[] args) {
+        Map&lt;String, String&gt; map = new HashMap&lt;String, String&gt;();
+
+        //添加方法
+        map.put("001","a");
+        map.put("002","b");
+        map.put("003","c");
+		map.put("003","d");&lt;&lt;——错误 会覆盖上一个003
+        System.out.println(map);
+
+    }
+}
+</code></pre>
+<h3 id="toc_h3_24">2.Map的基本功能</h3>
+<p><strong>put,remove(返回V),clear,containsKey(是否包含指定键)，containsValue(是否包含指定值)，isEmpy,size,</strong></p>
+<h3 id="toc_h3_25">3.Map的获取功能</h3>
+<pre><code>	Set&lt;K&gt; keySet() 返回所有键的集合
+	V get(Object key) 返回指定键映射到的值，如果此映射不包含键的映射，则返回 null 。  
+	Collection&lt;V&gt; values()  获取所有值的集合
+</code></pre>
+<h3 id="toc_h3_26">4.Map集合的遍历</h3>
+<p><strong>遍历直接sout也行，主要是了解方法</strong></p>
+<p><strong>方式一：</strong></p>
+<pre><code>public class MapDemo {
+    public static void main(String[] args) {
+        Map&lt;String, String&gt; map = new HashMap&lt;String, String&gt;();//这里的String 可以是自己创建的对象
+
+        //添加方法
+        map.put("001","a");
+        map.put("002","b");
+        map.put("003","c");
+
+        Set&lt;String&gt; keyset = map.keySet();
+
+        for (String key : keyset){
+            System.out.println(key +","+map.get(key));
+        }
+    }
+}
+</code></pre>
+<p><strong>方式二：</strong></p>
+<pre><code>public class MapDemo {
+ &nbsp; &nbsp;public static void main(String[] args) {
+ &nbsp; &nbsp; &nbsp; &nbsp;Map&lt;String, String&gt; map = new HashMap&lt;String, String&gt;();
+
+ &nbsp; &nbsp; &nbsp; &nbsp;//添加方法
+ &nbsp; &nbsp; &nbsp; &nbsp;map.put("001","a");
+ &nbsp; &nbsp; &nbsp; &nbsp;map.put("002","b");
+ &nbsp; &nbsp; &nbsp; &nbsp;map.put("003","c");
+
+ &nbsp; &nbsp; &nbsp; &nbsp;Set&lt;String&gt; keyset = map.keySet();
+
+ &nbsp; &nbsp; &nbsp; &nbsp;//获取所有键值对对象 的集合
+ &nbsp; &nbsp; &nbsp; &nbsp;Set&lt;Map.Entry&lt;String, String&gt;&gt; entrySet = map.entrySet();
+ &nbsp; &nbsp; &nbsp; &nbsp;for(Map.Entry&lt;String, String&gt; me :entrySet){
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;String key = me.getKey();
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;String value = me.getValue();
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;System.out.println(key+value);
+ &nbsp; &nbsp; &nbsp;  }
+ &nbsp;  }
+}
+</code></pre>
+                <div>
+                    <hr>
+
+标题：java集合（进阶）<br>
+作者：<a href="https://blog.donggei.top" target="_blank">donggei</a><br>
+地址：<a href="https://blog.donggei.top/articles/2023/11/14/1699959935349.html" target="_blank">https://blog.donggei.top/articles/2023/11/14/1699959935349.html</a><br>
+
+<!-- 签名档内可使用 HTML、JavaScript -->
+<br>
+                </div>
+        </div>
+    </div>
+    <div class="post__toc">
+<ul class="article__toc">
+        <li class="toc__h1">
+            <a href="#toc_h1_0">集合（进阶）</a>
+        </li>
+        <li class="toc__h2">
+            <a href="#toc_h2_1">一.集合类体系结构</a>
+        </li>
+        <li class="toc__h2">
+            <a href="#toc_h2_2">二.collection集合</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_3">1.概述及常用方法</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_4">2.collection集合的遍历</a>
+        </li>
+        <li class="toc__h2">
+            <a href="#toc_h2_5">三.List</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_6">1.List集合概述和特点</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_7">2.并发修改异常</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_8">3. Listiteartor</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_9">4.增强for语句</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_10">List集合子类特点</a>
+        </li>
+        <li class="toc__h2">
+            <a href="#toc_h2_11">四.set</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_12">1.HashSet</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_13">2.LinkedHashSet集合概述和特点</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_14">3.TreeSet集合概述和特点</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_15">应用</a>
+        </li>
+        <li class="toc__h2">
+            <a href="#toc_h2_16">五.泛型</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_17">1.泛型类</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_18">2.泛型方法</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_19">3.泛型接口</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_20">4.泛型通配符</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_21">5.可变参数</a>
+        </li>
+        <li class="toc__h2">
+            <a href="#toc_h2_22">六.Map</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_23">1.概述</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_24">2.Map的基本功能</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_25">3.Map的获取功能</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_26">4.Map集合的遍历</a>
+        </li>
+</ul>    </div>
+    <div class="body--gray post__gray">
+        <div class="wrapper comment">
+                <div id="gitalk-container" style="padding: 30px 0;"></div>
+                <div id="b3logsolocomments"></div>
+                <div id="vcomment" style="padding: 30px 0;" data-name="donggei" data-postId="1699959935349"></div>
+
+            <div class="post__list fn__flex">
+                <div class="fn__flex-1">
+                    <div id="externalRelevantArticles"></div>
+                </div>
+                <div class="post__list-mid fn__flex-1">
+                    <div id="randomArticles"></div>
+                </div>
+                <div class="fn__flex-1">
+                    <div id="relevantArticles"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="post__fix">
+        <div class="wrapper">
+            <span class="post__share mobile__none">
+                Share
+                <span class="tag tag--4" data-type="weibo">WeiBo</span>
+                <span class="tag tag--5" data-type="twitter">Twitter</span>
+                <span class="tag tag--6" data-type="qqz">QZone</span>
+                <span class="post__code tag tag--7"
+                      data-type="wechat"
+                      data-title="java集合（进阶）"
+                      data-blogtitle="donggei 的个人博客"
+                      data-url="https://blog.donggei.top/articles/2023/11/14/1699959935349.html"
+                      data-avatar="https://b3logfile.com/avatar/1699945842626_1699952075889.png?imageView2/1/w/128/h/128/interlace/0/q/100">
+                    WeChat
+                    <span class="qrcode"></span>
+                </span>
+            </span>
+            <span class="post__arrow">
+                    <a href="https://blog.donggei.top/articles/2023/11/14/1699959882168.html" rel="prev"
+                       class="vditor-tooltipped__n vditor-tooltipped"
+                       pjax-title="java垃圾回收机制"
+                       aria-label="旧一篇: java垃圾回收机制">←</a>
+
+                    <a href="https://blog.donggei.top/articles/2023/11/14/1699959970120.html" rel="next"
+                       class="vditor-tooltipped__n vditor-tooltipped"
+                       pjax-title="java注解和反射"
+                       aria-label="新一篇: java注解和反射">→</a>
+                <a href="javascript:Util.goTop()" class="vditor-tooltipped__n vditor-tooltipped"
+                   aria-label="移动到顶部">↑</a>
+                <a href="javascript:Util.goBottom()" class="vditor-tooltipped__n vditor-tooltipped"
+                   aria-label="移动到底部">↓</a>
+            </span>
+        </div>
+    </div>
+    
+</main>
+<footer class="footer">
+    <div class="ft__center">
+    <a href="https://ld246.com/member/donggei"
+       aria-label="https://ld246.com/member/donggei"
+       class="vditor-tooltipped__n vditor-tooltipped  user__site"
+       target="_blank" rel="noopener nofollow">
+        <svg viewBox="0 0 32 32" width="100%" height="100%">
+            <path fill="#d23f31" style="fill: var(--color1, #d23f31)" d="M5.787 17.226h17.033l5.954 9.528c0.47 0.752 0.003 1.361-1.042 1.361h-15.141z"></path>
+            <path d="M10.74 3.927h17.033c1.045 0 1.512 0.609 1.042 1.361l-5.954 9.528h-19.872l6.379-10.209c0.235-0.376 0.849-0.681 1.372-0.681z"></path>
+            <path d="M2.953 17.226h2.839l6.804 10.889h-1.892c-0.523 0-1.137-0.305-1.372-0.681z"></path>
+        </svg>
+    </a>
+
+        <a href="https://github.com/dong2645981073"
+           aria-label="https://github.com/dong2645981073"
+           class="vditor-tooltipped__n vditor-tooltipped  user__site"
+           target="_blank" rel="noopener nofollow">
+            <svg viewBox="0 0 32 32" width="100%" height="100%">
+                <path d="M16 0.331c-8.836 0-16 7.163-16 16 0 7.069 4.585 13.067 10.942 15.182 0.8 0.148 1.094-0.347 1.094-0.77 0-0.381-0.015-1.642-0.022-2.979-4.452 0.968-5.391-1.888-5.391-1.888-0.728-1.849-1.776-2.341-1.776-2.341-1.452-0.993 0.11-0.973 0.11-0.973 1.606 0.113 2.452 1.649 2.452 1.649 1.427 2.446 3.743 1.739 4.656 1.33 0.143-1.034 0.558-1.74 1.016-2.14-3.554-0.404-7.29-1.777-7.29-7.907 0-1.747 0.625-3.174 1.649-4.295-0.166-0.403-0.714-2.030 0.155-4.234 0 0 1.344-0.43 4.401 1.64 1.276-0.355 2.645-0.532 4.005-0.539 1.359 0.006 2.729 0.184 4.008 0.539 3.054-2.070 4.395-1.64 4.395-1.64 0.871 2.204 0.323 3.831 0.157 4.234 1.026 1.12 1.647 2.548 1.647 4.295 0 6.145-3.743 7.498-7.306 7.895 0.574 0.497 1.085 1.47 1.085 2.963 0 2.141-0.019 3.864-0.019 4.391 0 0.426 0.288 0.925 1.099 0.768 6.354-2.118 10.933-8.113 10.933-15.18 0-8.837-7.164-16-16-16z"></path>
+            </svg>
+        </a>
+
+        <a href="tencent://message/?uin=2645981073"
+           aria-label="2645981073"
+           target="_blank"
+           class="vditor-tooltipped__n vditor-tooltipped  user__site" rel="noopener nofollow">
+            <svg viewBox="0 0 32 32" width="100%" height="100%">
+                <path d="M4.821 14.393c-0.125-0.304-0.143-0.607-0.143-0.929 0-0.5 0.321-1.304 0.625-1.679-0.018-0.464 0.179-1.411 0.536-1.714 0-3.304 2.554-7.464 5.536-8.893 1.839-0.875 3.768-1.179 5.786-1.179 1.571 0 3.286 0.375 4.75 0.982 4.196 1.768 5.143 5.054 6.036 9.25l0.018 0.089c0.518 0.786 0.982 1.714 0.982 2.679 0 0.482-0.321 0.964-0.321 1.393 0 0.036 0.107 0.179 0.125 0.214 1.536 2.268 2.929 4.732 2.929 7.554 0 0.625-0.339 2.804-1.339 2.804-0.696 0-1.464-1.696-1.714-2.161-0.018-0.018-0.036-0.018-0.054-0.018l-0.089 0.071c-0.571 1.482-1.196 2.875-2.357 3.982 1.018 0.982 2.661 0.893 2.964 2.589-0.089 0.196-0.054 0.411-0.196 0.607-1.018 1.536-3.75 1.732-5.393 1.732-2.179 0-3.946-0.571-6-1.179-0.429-0.125-1.071-0.054-1.536-0.107-1.089 1.196-3.75 1.518-5.286 1.518-1.357 0-6.607-0.089-6.607-2.411 0-1 0.214-1.286 0.911-1.929 0.554-0.107 0.964-0.411 1.607-0.446 0.089 0 0.161-0.018 0.25-0.036 0.018-0.018 0.036-0.018 0.036-0.071l-0.036-0.054c-1.232-0.286-2.964-3.393-3.232-4.679l-0.089-0.054c-0.125 0-0.179 0.268-0.214 0.357-0.393 0.911-1.321 1.893-2.357 2h-0.018c-0.143 0-0.089-0.143-0.196-0.179-0.25-0.589-0.411-1.125-0.411-1.786 0-3.571 1.714-6.214 4.5-8.321z"></path>
+            </svg>
+        </a>
+    </div>
+    <nav class="footer__nav mobile__none">
+            <a class="ft__link" href="http://localhost:8080/tags/daily" target="_self" rel="section">
+                daily
+            </a>
+        <a class="ft__link" rel="alternate" href="https://blog.donggei.top/rss.xml" rel="section">RSS</a>
+    </nav>
+    <div class="footer__border mobile__none"></div>
+    <div class="wrapper fn__flex">
+        <div class="fn__flex-1 mobile__none">
+            <div class="ft__fade">donggei - 藏器于身，不患无此时 </div>
+            <br>
+                
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?4a65454c1d3be24651aed5fbf3c9e47b";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<h2>致知于行</h2>
+<!-- 公告栏可使用 HTML、JavaScript，比如可以在此加入第三方统计 js -->
+        </div>
+
+
+        <div class="fn__flex-1 footer__copyright">
+            <a class="ft__link" href="https://blog.donggei.top/archives.html">
+                11
+                文章
+            </a>
+           <br>
+            <span data-uvstaturl="https://blog.donggei.top">0</span> <span class="ft-gray">浏览</span>
+ <br>
+            &copy; 2023
+            <a class="ft__link" href="https://blog.donggei.top">donggei 的个人博客</a>
+            
+        </div>
+    </div>
+</footer>
+<script>
+  var Label = {
+    speech: true,
+    servePath: "https://blog.donggei.top",
+    staticServePath: "https://blog.donggei.top",
+    luteAvailable: false,
+    hljsStyle: 'github',
+    langLabel: "zh_CN",
+    version: "4.4.0",
+    staticSite: true,
+    showCodeBlockLn: false,
+    articleId: "1699959935349",
+  }
+</script>
+<script type="text/javascript" src="https://blog.donggei.top/skins/Pinghsu/js/headroom.min.js"></script>
+<script type="text/javascript"
+        src="https://blog.donggei.top/skins/Pinghsu/js/common.min.js?1699954326316"
+        charset="utf-8"></script>
+
+
+
+<script type="text/javascript">
+    Util.addScript('https://blog.donggei.top/js/page.min.js?1699954326316', 'soloPageScript')
+    var page = new Page({
+        "commentContentCannotEmptyLabel": "评论不能为空",
+        "oId": "1699959935349",
+        "blogHost": "https://blog.donggei.top",
+        "randomArticles1Label": "随机阅读：",
+        "externalRelevantArticles1Label": "站外相关阅读："
+    });
+    $(document).ready(function () {
+        page.load();
+    page.tips.externalRelevantArticlesDisplayCount = "0";
+    page.loadRandomArticles('<h3>RECOMMEND POSTS</h3>');
+    page.loadRelevantArticles('1699959935349', '<h3>RELEVANT POSTS</h3>');
+Skin.initArticle()
+    });
+</script>
+
+</body>
+</html>
+
+<!-- Generated by Latke (https://github.com/88250/latke) in 21ms, 2023/11/14 19:13:32 -->

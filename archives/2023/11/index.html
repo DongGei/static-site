@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/><meta name="theme-color" content="#3b3e43"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"/><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="format-detection" content="telephone=no"/><title>2023 年 11 月 存档 - donggei 的个人博客</title><meta name="description" content="A small and beautiful blogging system. 一款小而美的博客系统。"/><meta property="og:description" content="A small and beautiful blogging system. 一款小而美的博客系统。"/>    <meta name="keywords" content="Solo,Java,博客,开源"/><link rel="dns-prefetch" href="https://blog.donggei.top"/><link rel="dns-prefetch" href="https://unpkg.com"/><link rel="preconnect" href="https://blog.donggei.top"><link rel="icon" type="image/png" href="https://b3log.org/images/brand/solo-128.png"/><link rel="apple-touch-icon" href="https://b3log.org/images/brand/solo-128.png"><link rel="shortcut icon" type="image/x-icon" href="https://b3log.org/images/brand/solo-128.png"><meta name="copyright" content="B3log"/><meta http-equiv="Window-target" content="_top"/><meta property="og:locale" content="zh_CN"/><meta property="og:title" content="2023 年 11 月 存档 - donggei 的个人博客"/><meta property="og:site_name" content="donggei 的个人博客"/><meta property="og:url"      content="https://blog.donggei.top/archives/2023/11?"/><meta property="og:image" content="https://b3log.org/images/brand/solo-128.png"/><link rel="search" type="application/opensearchdescription+xml" title="2023 年 11 月 存档 - donggei 的个人博客" href="/opensearch.xml"><link href="https://blog.donggei.top/rss.xml" title="RSS" type="application/rss+xml" rel="alternate"/><link rel="manifest" href="https://blog.donggei.top/manifest.json">            <link rel="canonical" href="https://blog.donggei.top/archives/2023/11">     <link rel="stylesheet" href="https://blog.donggei.top/skins/Pinghsu/css/base.css?1699950652748"/>
+<meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/><meta name="theme-color" content="#3b3e43"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"/><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="format-detection" content="telephone=no"/><title>2023 年 11 月 存档 - donggei 的个人博客</title><meta name="description" content="A small and beautiful blogging website. 一个小而美的博客。"/><meta property="og:description" content="A small and beautiful blogging website. 一个小而美的博客。"/>    <meta name="keywords" content="Java,博客,开源"/><link rel="dns-prefetch" href="https://blog.donggei.top"/><link rel="dns-prefetch" href="https://unpkg.com"/><link rel="preconnect" href="https://blog.donggei.top"><link rel="icon" type="image/png" href="https://b3log.org/images/brand/solo-128.png"/><link rel="apple-touch-icon" href="https://b3log.org/images/brand/solo-128.png"><link rel="shortcut icon" type="image/x-icon" href="https://b3log.org/images/brand/solo-128.png"><meta name="copyright" content="B3log"/><meta http-equiv="Window-target" content="_top"/><meta property="og:locale" content="zh_CN"/><meta property="og:title" content="2023 年 11 月 存档 - donggei 的个人博客"/><meta property="og:site_name" content="donggei 的个人博客"/><meta property="og:url"      content="https://blog.donggei.top/archives/2023/11?"/><meta property="og:image" content="https://b3log.org/images/brand/solo-128.png"/><link rel="search" type="application/opensearchdescription+xml" title="2023 年 11 月 存档 - donggei 的个人博客" href="/opensearch.xml"><link href="https://blog.donggei.top/rss.xml" title="RSS" type="application/rss+xml" rel="alternate"/><link rel="manifest" href="https://blog.donggei.top/manifest.json">            <link rel="canonical" href="https://blog.donggei.top/archives/2023/11">     <link rel="stylesheet" href="https://blog.donggei.top/skins/Pinghsu/css/base.css?1699954326316"/>
     <script src="https://unpkg.com/vditor@3.8.15/dist/js/icons/ant.js" async="" id="vditorIconScript"></script></head>
 <body class="body--gray">
 <header class="header">
@@ -30,6 +30,11 @@
         </div>
         <main class="header__menu fn__none">
             <ul>
+                    <li>
+                        <a href="http://localhost:8080/tags/daily" target="_self" rel="section">
+                            daily
+                        </a>
+                    </li>
                 <li>
                     <a href="https://blog.donggei.top/tags.html" rel="section">
                         Tags
@@ -64,6 +69,162 @@
 <main class="article-list fn__clear">
         <article class="item">
             <div class="item__container">
+                <div class="item__cover" style="background-image: url(https://b3logfile.com/bing/20210306.jpg?imageView2/1/w/960/h/540/interlace/1/q/100)"></div>
+                <div rel="bookmark" class="item__abstract">
+                    <a pjax-title="elasticsearch基础" href="https://blog.donggei.top/articles/2023/11/14/1699960138443.html">
+                        ES 1.了解是什么？ 强大开源****搜索引擎。海量数据中搜索 elasticsearch结合kibana,Logstash,beats组件，也叫SLK(elastic stack).应用于日志数据分析，实时监控等 kibana,Logstash,beat属于是官方提供给你，你想用就用。 elasticsearch是基于Luncene(java语言的搜索引擎类库【其实就是个jar包】。Hadoop和Luncene是同一个作者)开发。 elasticsearch：支持分布式，水平扩展，提供restful接口，其他语言可调用。 2.正向索引和倒排索引 这种模糊会全表扫描 倒排索引： 标题 LIKE %abc% 正排是一行一行去找，根据一行的标题去对比abc。根据内容去对比词条 倒排的意义或者含义就是，先找到词条，再找到行数据（文档） 一行数据就是一个文档，词条相当于是标签类似。词条是不重复的。Mapstring。 可以根据词条创建唯一索引，查询的速度比较快。 右上图中的查找，进行了两次查表。每一次都利用了索引 擅长于部分的这种模糊查询 文档（行数据 se是面向文档存储的，（也就是mysq....
+                    </a>
+                </div>
+                <div class="item__slant"></div>
+                <div class="item__slant item__slant--white"></div>
+                <div class="item__main">
+                    <span class="item__sup">
+                    </span>
+                    <h2 class="item__title">
+                        <a rel="bookmark" href="https://blog.donggei.top/articles/2023/11/14/1699960138443.html">
+                            elasticsearch基础
+                        </a>
+                    </h2>
+                            <div class="ico ico--0"></div>
+                                <a rel="tag" class="item__tag" href="https://blog.donggei.top/tags/elasticsearch">
+                                    elasticsearch
+                                </a>
+                </div>
+            </div>
+        </article>
+        <article class="item">
+            <div class="item__container">
+                <div class="item__cover" style="background-image: url(https://b3logfile.com/file/2023/11/solo-fetchupload-5845940816117993329-iP3vFHZ.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100)"></div>
+                <div rel="bookmark" class="item__abstract">
+                    <a pjax-title="复习Docker" href="https://blog.donggei.top/articles/2023/11/14/1699960071438.html">
+                        复习Docker 之前有过学习，没有及时复习和写笔记，忘记很多！做一个简单的复习 docker有什么用？ 不同的组件的****依赖和库或者系统都不同，在同一个机器上发布困难 解决各个组件的兼容性 开发 测试 生产环境都不同 可以打包Ubuntu的到centos上跑 怎么实现打包Ubuntu的到centos上跑的 ubuntu和centos的内核是一样的，docker直接打包了内核的命令 是什么 Docker是一个快速交付应用、运行应用的技术: 可以将程序及其依赖、运行环境一起打包为一个镜像, 可以迁移到任意Linux操作系统 运行时利用沙箱机制形成隔离容器，各个应用互不干扰 启动、移除都可以通过一行命令完成，方便快捷 docker和虚拟机的区别 虚拟机使用的是Hypervisor技术 hypervisor（又被称为virtual machine monitor，VMM，或virtualizer）是一种模拟器；它是创建或者运行虚拟机的软件、固件、或者硬件。 Docker仅仅是封装函数库，并没有模拟完整的操作系统 区别： docker是一个系统进程； 虚拟机是在操作系统中的操作系统； do....
+                    </a>
+                </div>
+                <div class="item__slant"></div>
+                <div class="item__slant item__slant--white"></div>
+                <div class="item__main">
+                    <span class="item__sup">
+                    </span>
+                    <h2 class="item__title">
+                        <a rel="bookmark" href="https://blog.donggei.top/articles/2023/11/14/1699960071438.html">
+                            复习Docker
+                        </a>
+                    </h2>
+                            <div class="ico ico--1"></div>
+                                <a rel="tag" class="item__tag" href="https://blog.donggei.top/tags/docker">
+                                    docker
+                                </a>
+                </div>
+            </div>
+        </article>
+        <article class="item">
+            <div class="item__container">
+                <div class="item__cover" style="background-image: url(https://b3logfile.com/bing/20180508.jpg?imageView2/1/w/1280/h/720/interlace/1/q/100)"></div>
+                <div rel="bookmark" class="item__abstract">
+                    <a pjax-title="java注解和反射" href="https://blog.donggei.top/articles/2023/11/14/1699959970120.html">
+                        javaSE—注解和反射 一.注解 1.什么是注解 Annotation是从JDK5.0开始引入的概念 eg：@override 重写的注解 1.不是程序本身 给程序作出解释（） **2.**可以被其他程序读取 非必须 3.格式：@注释+注释名，还可以加一些参数值 4.有检查和约束的作用 可以放在方法或者类等等上面 .....注释是给人看的,注解是给人和机器看的 2.内置注解 @override 指示方法声明旨在覆盖超类型中的方法声明。 @Deprecated 已过时 不推荐使用的代码 @SuppressWarnings 镇压警告（可以放入参数） 3.元注解 **作用：负责注解其他注解 ** 4个标准的meta-annotation类型： **@Target ** 被描述的注解可以用在什么地方 @Target(value =ElementType.METHOD) 说明作用域在方法上 @Target(ElementType.FIELD) 作用域在属性上（成员变量） @Target(value ={ElementType.METHOD,ElementType.TYPE}) 说明作用域在方法....
+                    </a>
+                </div>
+                <div class="item__slant"></div>
+                <div class="item__slant item__slant--white"></div>
+                <div class="item__main">
+                    <span class="item__sup">
+                    </span>
+                    <h2 class="item__title">
+                        <a rel="bookmark" href="https://blog.donggei.top/articles/2023/11/14/1699959970120.html">
+                            java注解和反射
+                        </a>
+                    </h2>
+                            <div class="ico ico--2"></div>
+                                <a rel="tag" class="item__tag" href="https://blog.donggei.top/tags/java">
+                                    java
+                                </a>
+                </div>
+            </div>
+        </article>
+        <article class="item">
+            <div class="item__container">
+                <div class="item__cover" style="background-image: url(https://b3logfile.com/bing/20220615.jpg?imageView2/1/w/960/h/540/interlace/1/q/100)"></div>
+                <div rel="bookmark" class="item__abstract">
+                    <a pjax-title="java集合（进阶）" href="https://blog.donggei.top/articles/2023/11/14/1699959935349.html">
+                        集合（进阶） 一.集合类体系结构 1.Collection （单列）---&gt;&gt;List（可重复）---&gt;&gt;ArrayList ** ---&gt;&gt;Linkedlist ** ---&gt;&gt;set(不可重复)---&gt;&gt;HashSet ** ---&gt;&gt;TreeSet **2.Map 双列---&gt;&gt;HashMap Collection,Map, List,set是接口，4个是实现类 后面的可以使用前面类里的方法 二.collection集合 1.概述及常用方法 **boolean add(E e) ** ** **向集合添加元素e，若指定集合元素改变了则返回true boolean addAll(Collection&lt;? extends E&gt; c) ** **把集合C中的元素全部添加到集合中，若指定集合元素改变返回true void clear() ** **清空所有集合元素 boolean contains(Object o) ** **判断指定集合是否包含对象o boolean containsAll....
+                    </a>
+                </div>
+                <div class="item__slant"></div>
+                <div class="item__slant item__slant--white"></div>
+                <div class="item__main">
+                    <span class="item__sup">
+                            <sup class="ft__red">
+                                有更新！
+                            </sup>
+                    </span>
+                    <h2 class="item__title">
+                        <a rel="bookmark" href="https://blog.donggei.top/articles/2023/11/14/1699959935349.html">
+                            java集合（进阶）
+                        </a>
+                    </h2>
+                            <div class="ico ico--3"></div>
+                                <a rel="tag" class="item__tag" href="https://blog.donggei.top/tags/java">
+                                    java
+                                </a>
+                </div>
+            </div>
+        </article>
+        <article class="item">
+            <div class="item__container">
+                <div class="item__cover" style="background-image: url(https://b3logfile.com/bing/20190917.jpg?imageView2/1/w/960/h/540/interlace/1/q/100)"></div>
+                <div rel="bookmark" class="item__abstract">
+                    <a pjax-title="java垃圾回收机制" href="https://blog.donggei.top/articles/2023/11/14/1699959882168.html">
+                        java垃圾回收机制 可达性分析法 这个算法的基本思想是通过一系列称为“GC Roots”的对象作为起始点，从这些节点向下搜索，搜索所走过的路径称为引用链，当一个对象到GC Roots没有任何引用链（即GC Roots到对象不可达）时，则证明此对象是不可用的。 GCRoot: (1). 虚拟机栈（栈帧中的局部变量区，也叫做局部变量表）中引用的对象。 (2). 方法区中的类静态属性引用的对象。 (3). 方法区中常量引用的对象。 (4). 本地方法栈中JNI(Native方法)引用的对象。 标记去除算法 标记整理算法 复制回收算法 java的四种引用类型代码
+                    </a>
+                </div>
+                <div class="item__slant"></div>
+                <div class="item__slant item__slant--white"></div>
+                <div class="item__main">
+                    <span class="item__sup">
+                    </span>
+                    <h2 class="item__title">
+                        <a rel="bookmark" href="https://blog.donggei.top/articles/2023/11/14/1699959882168.html">
+                            java垃圾回收机制
+                        </a>
+                    </h2>
+                            <div class="ico ico--4"></div>
+                                <a rel="tag" class="item__tag" href="https://blog.donggei.top/tags/java">
+                                    java
+                                </a>
+                </div>
+            </div>
+        </article>
+        <article class="item">
+            <div class="item__container">
+                <div class="item__cover" style="background-image: url(https://b3logfile.com/bing/20191111.jpg?imageView2/1/w/960/h/540/interlace/1/q/100)"></div>
+                <div rel="bookmark" class="item__abstract">
+                    <a pjax-title="日常" href="https://blog.donggei.top/articles/2023/11/14/1699954930162.html">
+                        test
+                    </a>
+                </div>
+                <div class="item__slant"></div>
+                <div class="item__slant item__slant--white"></div>
+                <div class="item__main">
+                    <span class="item__sup">
+                            <sup class="ft__red">
+                                有更新！
+                            </sup>
+                    </span>
+                    <h2 class="item__title">
+                        <a rel="bookmark" href="https://blog.donggei.top/articles/2023/11/14/1699954930162.html">
+                            日常
+                        </a>
+                    </h2>
+                            <div class="ico ico--5"></div>
+                                <a rel="tag" class="item__tag" href="https://blog.donggei.top/tags/daily">
+                                    daily
+                                </a>
+                </div>
+            </div>
+        </article>
+        <article class="item">
+            <div class="item__container">
                 <div class="item__cover" style="background-image: url(https://b3logfile.com/file/2023/11/solo-fetchupload-4795024217609908277-atSRtLT.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100)"></div>
                 <div rel="bookmark" class="item__abstract">
                     <a pjax-title="java多线程" href="https://blog.donggei.top/articles/2023/11/14/1699951927724.html">
@@ -80,7 +241,7 @@
                             java多线程
                         </a>
                     </h2>
-                            <div class="ico ico--0"></div>
+                            <div class="ico ico--6"></div>
                                 <a rel="tag" class="item__tag" href="https://blog.donggei.top/tags/java">
                                     java
                                 </a>
@@ -105,7 +266,7 @@
                             HashMap相关的一系列问题
                         </a>
                     </h2>
-                            <div class="ico ico--1"></div>
+                            <div class="ico ico--7"></div>
                                 <a rel="tag" class="item__tag" href="https://blog.donggei.top/tags/java">
                                     java
                                 </a>
@@ -130,7 +291,7 @@
                             java面经总结
                         </a>
                     </h2>
-                            <div class="ico ico--2"></div>
+                            <div class="ico ico--8"></div>
                                 <a rel="tag" class="item__tag" href="https://blog.donggei.top/tags/%E9%9D%A2%E7%BB%8F">
                                     面经
                                 </a>
@@ -155,7 +316,7 @@
                             红黑树  B  B+树
                         </a>
                     </h2>
-                            <div class="ico ico--3"></div>
+                            <div class="ico ico--9"></div>
                                 <a rel="tag" class="item__tag" href="https://blog.donggei.top/tags/%E7%AE%97%E6%B3%95">
                                     算法
                                 </a>
@@ -183,34 +344,9 @@
                             java 函数式编程
                         </a>
                     </h2>
-                            <div class="ico ico--4"></div>
+                            <div class="ico ico--0"></div>
                                 <a rel="tag" class="item__tag" href="https://blog.donggei.top/tags/java">
                                     java
-                                </a>
-                </div>
-            </div>
-        </article>
-        <article class="item">
-            <div class="item__container">
-                <div class="item__cover" style="background-image: url(https://b3logfile.com/bing/20200417.jpg?imageView2/1/w/1280/h/720/interlace/1/q/100)"></div>
-                <div rel="bookmark" class="item__abstract">
-                    <a pjax-title="世界，你好！" href="https://blog.donggei.top/hello-solo">
-                        Solo 博客系统已经初始化完毕，可在管理后台 - 工具 - 偏好设定中调整更多细节设置。如果需要导入已有博客文章，请参考文档 Solo 支持 Hexo/Jekyll 数据导入。 对了，出于安全考虑请尽快完成如下操作： 登录链滴社区后，在个人设置 - B3 中更新 B3 Key 在 Solo 管理后台 - 工具 - 用户管理中也进行同样的 B3 Key 更新 另外，如果你需要开启评论系统，请参考 Solo 集成 Gitalk 评论系统。 最后，如果你觉得 Solo 很赞的话，请到项目主页 Watch、Star、Fork 三连 😍
-                    </a>
-                </div>
-                <div class="item__slant"></div>
-                <div class="item__slant item__slant--white"></div>
-                <div class="item__main">
-                    <span class="item__sup">
-                    </span>
-                    <h2 class="item__title">
-                        <a rel="bookmark" href="https://blog.donggei.top/hello-solo">
-                            世界，你好！
-                        </a>
-                    </h2>
-                            <div class="ico ico--5"></div>
-                                <a rel="tag" class="item__tag" href="https://blog.donggei.top/tags/Solo">
-                                    Solo
                                 </a>
                 </div>
             </div>
@@ -235,25 +371,53 @@
         </svg>
     </a>
 
+        <a href="https://github.com/dong2645981073"
+           aria-label="https://github.com/dong2645981073"
+           class="vditor-tooltipped__n vditor-tooltipped  user__site"
+           target="_blank" rel="noopener nofollow">
+            <svg viewBox="0 0 32 32" width="100%" height="100%">
+                <path d="M16 0.331c-8.836 0-16 7.163-16 16 0 7.069 4.585 13.067 10.942 15.182 0.8 0.148 1.094-0.347 1.094-0.77 0-0.381-0.015-1.642-0.022-2.979-4.452 0.968-5.391-1.888-5.391-1.888-0.728-1.849-1.776-2.341-1.776-2.341-1.452-0.993 0.11-0.973 0.11-0.973 1.606 0.113 2.452 1.649 2.452 1.649 1.427 2.446 3.743 1.739 4.656 1.33 0.143-1.034 0.558-1.74 1.016-2.14-3.554-0.404-7.29-1.777-7.29-7.907 0-1.747 0.625-3.174 1.649-4.295-0.166-0.403-0.714-2.030 0.155-4.234 0 0 1.344-0.43 4.401 1.64 1.276-0.355 2.645-0.532 4.005-0.539 1.359 0.006 2.729 0.184 4.008 0.539 3.054-2.070 4.395-1.64 4.395-1.64 0.871 2.204 0.323 3.831 0.157 4.234 1.026 1.12 1.647 2.548 1.647 4.295 0 6.145-3.743 7.498-7.306 7.895 0.574 0.497 1.085 1.47 1.085 2.963 0 2.141-0.019 3.864-0.019 4.391 0 0.426 0.288 0.925 1.099 0.768 6.354-2.118 10.933-8.113 10.933-15.18 0-8.837-7.164-16-16-16z"></path>
+            </svg>
+        </a>
 
+        <a href="tencent://message/?uin=2645981073"
+           aria-label="2645981073"
+           target="_blank"
+           class="vditor-tooltipped__n vditor-tooltipped  user__site" rel="noopener nofollow">
+            <svg viewBox="0 0 32 32" width="100%" height="100%">
+                <path d="M4.821 14.393c-0.125-0.304-0.143-0.607-0.143-0.929 0-0.5 0.321-1.304 0.625-1.679-0.018-0.464 0.179-1.411 0.536-1.714 0-3.304 2.554-7.464 5.536-8.893 1.839-0.875 3.768-1.179 5.786-1.179 1.571 0 3.286 0.375 4.75 0.982 4.196 1.768 5.143 5.054 6.036 9.25l0.018 0.089c0.518 0.786 0.982 1.714 0.982 2.679 0 0.482-0.321 0.964-0.321 1.393 0 0.036 0.107 0.179 0.125 0.214 1.536 2.268 2.929 4.732 2.929 7.554 0 0.625-0.339 2.804-1.339 2.804-0.696 0-1.464-1.696-1.714-2.161-0.018-0.018-0.036-0.018-0.054-0.018l-0.089 0.071c-0.571 1.482-1.196 2.875-2.357 3.982 1.018 0.982 2.661 0.893 2.964 2.589-0.089 0.196-0.054 0.411-0.196 0.607-1.018 1.536-3.75 1.732-5.393 1.732-2.179 0-3.946-0.571-6-1.179-0.429-0.125-1.071-0.054-1.536-0.107-1.089 1.196-3.75 1.518-5.286 1.518-1.357 0-6.607-0.089-6.607-2.411 0-1 0.214-1.286 0.911-1.929 0.554-0.107 0.964-0.411 1.607-0.446 0.089 0 0.161-0.018 0.25-0.036 0.018-0.018 0.036-0.018 0.036-0.071l-0.036-0.054c-1.232-0.286-2.964-3.393-3.232-4.679l-0.089-0.054c-0.125 0-0.179 0.268-0.214 0.357-0.393 0.911-1.321 1.893-2.357 2h-0.018c-0.143 0-0.089-0.143-0.196-0.179-0.25-0.589-0.411-1.125-0.411-1.786 0-3.571 1.714-6.214 4.5-8.321z"></path>
+            </svg>
+        </a>
     </div>
     <nav class="footer__nav mobile__none">
+            <a class="ft__link" href="http://localhost:8080/tags/daily" target="_self" rel="section">
+                daily
+            </a>
         <a class="ft__link" rel="alternate" href="https://blog.donggei.top/rss.xml" rel="section">RSS</a>
     </nav>
     <div class="footer__border mobile__none"></div>
     <div class="wrapper fn__flex">
         <div class="fn__flex-1 mobile__none">
-            <div class="ft__fade">donggei - 记录精彩的程序人生</div>
+            <div class="ft__fade">donggei - 藏器于身，不患无此时 </div>
             <br>
-                Open Source, Open Mind, <br/>Open Sight, Open Future!
-
+                
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?4a65454c1d3be24651aed5fbf3c9e47b";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<h2>致知于行</h2>
 <!-- 公告栏可使用 HTML、JavaScript，比如可以在此加入第三方统计 js -->
         </div>
 
 
         <div class="fn__flex-1 footer__copyright">
             <a class="ft__link" href="https://blog.donggei.top/archives.html">
-                6
+                11
                 文章
             </a>
            <br>
@@ -280,10 +444,10 @@
 </script>
 <script type="text/javascript" src="https://blog.donggei.top/skins/Pinghsu/js/headroom.min.js"></script>
 <script type="text/javascript"
-        src="https://blog.donggei.top/skins/Pinghsu/js/common.min.js?1699950652748"
+        src="https://blog.donggei.top/skins/Pinghsu/js/common.min.js?1699954326316"
         charset="utf-8"></script>
 
 </body>
 </html>
 
-<!-- Generated by Latke (https://github.com/88250/latke) in 21ms, 2023/11/14 16:57:23 -->
+<!-- Generated by Latke (https://github.com/88250/latke) in 22ms, 2023/11/14 19:13:32 -->
