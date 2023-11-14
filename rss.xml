@@ -6,7 +6,7 @@
     <atom:link href="https://blog.donggei.top/rss.xml" rel="self" type="application/rss+xml"/>
     <description>藏器于身，不患无此时 </description>
     <generator>Solo, v4.4.0, https://b3log.org/solo</generator>
-    <lastBuildDate>Tue, 14 Nov 2023 19:13:32 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 14 Nov 2023 19:29:28 +0800</lastBuildDate>
     <language>zh-cn</language>
     <item>
       <title>java集合（进阶）</title>
@@ -42,8 +42,8 @@
       <description/>
       <author>donggei</author>
       <guid>https://blog.donggei.top/articles/2023/11/14/1699959970120.html</guid>
-      <category>java基础</category>
       <category>java</category>
+      <category>java基础</category>
       <pubDate>Tue, 14 Nov 2023 19:06:10 +0800</pubDate>
     </item>
     <item>
@@ -71,8 +71,8 @@
       <description/>
       <author>donggei</author>
       <guid>https://blog.donggei.top/articles/2023/11/14/1699951927724.html</guid>
-      <category>多线程</category>
       <category>java</category>
+      <category>多线程</category>
       <pubDate>Tue, 14 Nov 2023 16:52:07 +0800</pubDate>
     </item>
     <item>
@@ -92,9 +92,9 @@
       <description/>
       <author>donggei</author>
       <guid>https://blog.donggei.top/articles/2023/11/14/1699951852050.html</guid>
-      <category>基础</category>
-      <category>java</category>
       <category>面经</category>
+      <category>java</category>
+      <category>基础</category>
       <pubDate>Tue, 14 Nov 2023 16:50:52 +0800</pubDate>
     </item>
     <item>
