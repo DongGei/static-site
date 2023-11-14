@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/><meta name="theme-color" content="#3b3e43"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"/><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="format-detection" content="telephone=no"/><title>HashMap相关的一系列问题 - donggei 的个人博客</title><meta name="description" content="HashMap相关的一系列问题"/><meta property="og:description" content="HashMap相关的一系列问题"/>    <meta name="keywords" content="Solo,Java,博客,开源"/><link rel="dns-prefetch" href="https://blog.donggei.top"/><link rel="dns-prefetch" href="https://unpkg.com"/><link rel="preconnect" href="https://blog.donggei.top"><link rel="icon" type="image/png" href="https://b3log.org/images/brand/solo-128.png"/><link rel="apple-touch-icon" href="https://b3log.org/images/brand/solo-128.png"><link rel="shortcut icon" type="image/x-icon" href="https://b3log.org/images/brand/solo-128.png"><meta name="copyright" content="B3log"/><meta http-equiv="Window-target" content="_top"/><meta property="og:locale" content="zh_CN"/><meta property="og:title" content="HashMap相关的一系列问题 - donggei 的个人博客"/><meta property="og:site_name" content="donggei 的个人博客"/><meta property="og:url"      content="https://blog.donggei.top/articles/2023/11/14/1699951902323.html?"/><meta property="og:image" content="https://b3log.org/images/brand/solo-128.png"/><link rel="search" type="application/opensearchdescription+xml" title="HashMap相关的一系列问题 - donggei 的个人博客" href="/opensearch.xml"><link href="https://blog.donggei.top/rss.xml" title="RSS" type="application/rss+xml" rel="alternate"/><link rel="manifest" href="https://blog.donggei.top/manifest.json">        <link rel="canonical" href="https://blog.donggei.top/articles/2023/11/14/1699951902323.html">        <link rel="stylesheet"
+              href="https://blog.donggei.top/skins/Pinghsu/css/base.css?1699950652748"/>
+            <link rel="prev" title="java面经总结" href="https://blog.donggei.top/articles/2023/11/14/1699951852050.html">
+            <link rel="next" title="java多线程" href="https://blog.donggei.top/articles/2023/11/14/1699951927724.html">
+    <script src="https://unpkg.com/vditor@3.8.15/dist/js/icons/ant.js" async="" id="vditorIconScript"></script></head>
+<body>
+<header class="header">
+    <div class="wrapper">
+        <a href="https://blog.donggei.top" rel="start" class="header__logo">
+            <img src="https://b3logfile.com/avatar/1699945842626_1699952075889.png?imageView2/1/w/128/h/128/interlace/0/q/100" alt="donggei 的个人博客"/>
+            donggei 的个人博客
+        </a>
+
+        <nav class="header__nav mobile__none">
+            <a href="https://blog.donggei.top/tags.html" rel="section">
+                Tags
+            </a>
+            <a href="https://blog.donggei.top/archives.html">
+                Archives
+            </a>
+            <a rel="archive" href="https://blog.donggei.top/links.html">
+                Links
+            </a>
+        </nav>
+
+        <div class="header__bar fn__none" onclick="$(this).next().slideToggle()">
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+                <path fill="#444" d="M0 3h20v2h-20v-2zM0 9h20v2h-20v-2zM0 15h20v2h-20v-2z"></path>
+            </svg>
+        </div>
+        <main class="header__menu fn__none">
+            <ul>
+                <li>
+                    <a href="https://blog.donggei.top/tags.html" rel="section">
+                        Tags
+                    </a>
+                </li>
+                <li>
+                    <a href="https://blog.donggei.top/archives.html">
+                        Archives
+                    </a>
+                </li>
+                <li>
+                    <a rel="archive" href="https://blog.donggei.top/links.html">
+                        Links
+                    </a>
+                </li>
+                <li>
+                    <a rel="alternate" href="https://blog.donggei.top/rss.xml" rel="section">
+                        RSS
+                    </a>
+                </li>
+            </ul>
+        </main>
+    </div>
+</header>
+<main id="pjax" class="fn__flex-1">
+    
+    <div class="post wrapper wrapper--miner">
+        <h2 class="item__title">
+            <a rel="bookmark" href="https://blog.donggei.top/articles/2023/11/14/1699951902323.html">
+                HashMap相关的一系列问题
+            </a>
+        </h2>
+        <div class="ft__fade item__meta">
+                Published on
+            <time>
+                Nov 14, 2023
+            </time>
+            with <span data-uvstaturl="https://blog.donggei.top/articles/2023/11/14/1699951902323.html">0</span> views
+                and <a href="#b3logsolocomments"><span data-uvstatcmt="1699951902323">0</span> comments</a>
+        </div>
+        <div class="item__tags">
+                <a rel="tag" class="tag tag--0" href="https://blog.donggei.top/tags/java">
+                    <b># java</b>
+                </a>
+        </div>
+        <div class="vditor-reset">
+            <p><img src="https://b3logfile.com/bing/20230818.jpg?imageView2/1/w/960/h/540/interlace/1/q/100" alt=""></p>
+<h2 id="toc_h2_0">HashMap相关的一系列问题</h2>
+<h3 id="toc_h3_1">1.底层实现</h3>
+<p><strong>1.7 数组 链表</strong></p>
+<p><strong>1.8 数组 链表 红黑树</strong></p>
+<blockquote>
+<p><strong>当集合要添加新的元素s时，先调用这个元素的hashCode方法，如果这个位置上没有元素，它就可以直接存储在这个位置上，不用再进行任何比较了；如果这个位置上已经有元素了，就调用它的equals方法与新元素进行比较，相同的话就不存了，不相同就散列其它的地址。所以这里存在一个冲突解决的问题。这样一来实际调用equals方法的次数就大大降低了，几乎只需要一两次。</strong></p>
+<p><strong>1、相同的对象必须具有相等的哈希码（或者散列码）。</strong></p>
+<p><strong>2、如果两个对象的hashCode相同，它们并不一定相同。</strong></p>
+</blockquote>
+<p><strong>存取：两次hash--&gt; 用capacity取余--&gt; 得出桶下标</strong></p>
+<p><strong>扩容后是会计算桶下标的  可以解决链表过长</strong></p>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-17944444083532151693-so49VwL.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20230221175242217"></p>
+<p><strong>桶容量大于</strong></p>
+<h3 id="toc_h3_2">2.为什么用红黑树</h3>
+<p>**原来的链表那种查找太慢了  **</p>
+<h3 id="toc_h3_3">3.什么时候会扩容</h3>
+<p><strong>Hashmap的扩容需要满足两个条件：</strong></p>
+<p><strong>当前数据存储的数量（即size()）大小必须大于等于阈值；</strong>（默认大小为16，负载因子0.75，阈值12</p>
+<p><strong>当前加入的数据是否发生了hash冲突。</strong>（17会判断这个，18只要超过阈值就会扩容，不管冲突没）</p>
+<h3 id="toc_h3_4">4.什么时候会树化</h3>
+<ul>
+<li>**长度超过树化阈值8  **</li>
+<li><strong>整个数组长度&gt;= 64  （小于64会先扩容，来解决链表过长）</strong></li>
+</ul>
+<h3 id="toc_h3_5">5.树化阈值为什么是8</h3>
+<p><strong>在****受到攻击</strong>和<strong>用户实现这种不好的hash算法</strong> 时可以保证一定的性能。 尽量使用链表</p>
+<p><strong>hash值如果足够随机，则在hash表内按泊松分布，在负载因子0.75的情况下，长度超过8的链表出现概率是0.00000006,选择8就是为了让树化几率足够小。</strong></p>
+<p><strong>源码中的解释：</strong></p>
+<p><strong>当hashCode离散性很好的时候，树型bin用到的概率非常小，因为数据均匀分布在每个bin中，几乎不会有bin中链表长度会达到阈值。但是在随机hashCode下，离散性可能会变差，然而JDK又不能阻止用户实现这种不好的hash算法，因此就可能导致不均匀的数据分布。不过理想情况下随机hashCode算法下所有bin中节点的分布频率会遵循泊松分布，我们可以看到，一个bin中链表长度达到8个元素的概率为0.00000006，几乎是不可能事件。</strong></p>
+<h3 id="toc_h3_6">5.什么时候会退化成链表</h3>
+<ul>
+<li>**扩容后 导致树拆分 长度&lt;=6 **</li>
+<li><strong>remove树节点之前</strong><br>
+<strong>若root、， root.left、 root.right、 root.left.left有一个为null，也会退化为链表</strong></li>
+</ul>
+<h3 id="toc_h3_7">6.为什么不直接用树</h3>
+<ul>
+<li><strong>短的时候 性能相似</strong></li>
+<li><strong>树结点保存的数据多 占空间</strong></li>
+</ul>
+<h3 id="toc_h3_8">7.索引（桶下标）是怎么计算的</h3>
+<p>**两次hash--&gt; 用capacity取余--&gt; 得出桶下标 **</p>
+<p><strong>取余的优化：</strong></p>
+<p><strong>初始size为****16</strong>，扩容：newsize = oldsize*2，size一定为2的n次幂</p>
+<p><strong>因为size一定为2的n次幂  所以说可以使用index = hash &amp; (tab.length – 1)来取余做计算</strong></p>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-6110082733999093803-WBBeodh.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20230221184522763"></p>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-8956985573806380230-FLnCtsP.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20230221185816185"></p>
+<p><strong>容量是2的次幂的时候 性能较好，容量为质数时 hash分布较好（.net)。hashmap选择了2的次幂。二次hash也是保证分布性</strong></p>
+<h3 id="toc_h3_9">8.Hashmap的put流程</h3>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-14302551538489331688-CEc5CNA.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20230222100221644"></p>
+<p><strong>插入链表： JDK1.7版本及以前使用是头插法；JDK1.8使用的是尾插法</strong></p>
+<h3 id="toc_h3_10">9.为什么1.8改成尾插了</h3>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-5231207467598871455-qklZCxt.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20230222101143317"></p>
+<p><strong>扩容时迁移 多线程下  一个线程已经迁移 另一个也迁移时 发生</strong></p>
+<p><strong>ps:多线程下hashmap本来就不安全</strong></p>
+<h3 id="toc_h3_11">10.为什么负载因子是0.75f</h3>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-16795233351634025674-1WAOcbq.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20230222100449866"></p>
+<h3 id="toc_h3_12">11.hashcode里不能是可变对象</h3>
+<p>** 如果K是一个对象，hashcode中用到了对象属性，改变对象属性后，原来的K就失效了。**</p>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-16344217477357396593-lFSSJ7B.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20230222102809818"></p>
+<h3 id="toc_h3_13">12.String对象的hashCode()如何设计的，为啥每次乘的是31</h3>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-2763991768274011807-27q8LTX.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20230222103316702"></p>
+                <div>
+                    <hr>
+
+标题：HashMap相关的一系列问题<br>
+作者：<a href="https://blog.donggei.top" target="_blank">donggei</a><br>
+地址：<a href="https://blog.donggei.top/articles/2023/11/14/1699951902323.html" target="_blank">https://blog.donggei.top/articles/2023/11/14/1699951902323.html</a><br>
+
+<!-- 签名档内可使用 HTML、JavaScript -->
+<br>
+                </div>
+        </div>
+    </div>
+    <div class="post__toc">
+<ul class="article__toc">
+        <li class="toc__h2">
+            <a href="#toc_h2_0">HashMap相关的一系列问题</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_1">1.底层实现</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_2">2.为什么用红黑树</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_3">3.什么时候会扩容</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_4">4.什么时候会树化</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_5">5.树化阈值为什么是8</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_6">5.什么时候会退化成链表</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_7">6.为什么不直接用树</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_8">7.索引（桶下标）是怎么计算的</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_9">8.Hashmap的put流程</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_10">9.为什么1.8改成尾插了</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_11">10.为什么负载因子是0.75f</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_12">11.hashcode里不能是可变对象</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_13">12.String对象的hashCode()如何设计的，为啥每次乘的是31</a>
+        </li>
+</ul>    </div>
+    <div class="body--gray post__gray">
+        <div class="wrapper comment">
+                <div id="gitalk-container" style="padding: 30px 0;"></div>
+                <div id="b3logsolocomments"></div>
+                <div id="vcomment" style="padding: 30px 0;" data-name="donggei" data-postId="1699951902323"></div>
+
+            <div class="post__list fn__flex">
+                <div class="fn__flex-1">
+                    <div id="externalRelevantArticles"></div>
+                </div>
+                <div class="post__list-mid fn__flex-1">
+                    <div id="randomArticles"></div>
+                </div>
+                <div class="fn__flex-1">
+                    <div id="relevantArticles"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="post__fix">
+        <div class="wrapper">
+            <span class="post__share mobile__none">
+                Share
+                <span class="tag tag--4" data-type="weibo">WeiBo</span>
+                <span class="tag tag--5" data-type="twitter">Twitter</span>
+                <span class="tag tag--6" data-type="qqz">QZone</span>
+                <span class="post__code tag tag--7"
+                      data-type="wechat"
+                      data-title="HashMap相关的一系列问题"
+                      data-blogtitle="donggei 的个人博客"
+                      data-url="https://blog.donggei.top/articles/2023/11/14/1699951902323.html"
+                      data-avatar="https://b3logfile.com/avatar/1699945842626_1699952075889.png?imageView2/1/w/128/h/128/interlace/0/q/100">
+                    WeChat
+                    <span class="qrcode"></span>
+                </span>
+            </span>
+            <span class="post__arrow">
+                    <a href="https://blog.donggei.top/articles/2023/11/14/1699951852050.html" rel="prev"
+                       class="vditor-tooltipped__n vditor-tooltipped"
+                       pjax-title="java面经总结"
+                       aria-label="旧一篇: java面经总结">←</a>
+
+                    <a href="https://blog.donggei.top/articles/2023/11/14/1699951927724.html" rel="next"
+                       class="vditor-tooltipped__n vditor-tooltipped"
+                       pjax-title="java多线程"
+                       aria-label="新一篇: java多线程">→</a>
+                <a href="javascript:Util.goTop()" class="vditor-tooltipped__n vditor-tooltipped"
+                   aria-label="移动到顶部">↑</a>
+                <a href="javascript:Util.goBottom()" class="vditor-tooltipped__n vditor-tooltipped"
+                   aria-label="移动到底部">↓</a>
+            </span>
+        </div>
+    </div>
+    
+</main>
+<footer class="footer">
+    <div class="ft__center">
+    <a href="https://ld246.com/member/donggei"
+       aria-label="https://ld246.com/member/donggei"
+       class="vditor-tooltipped__n vditor-tooltipped  user__site"
+       target="_blank" rel="noopener nofollow">
+        <svg viewBox="0 0 32 32" width="100%" height="100%">
+            <path fill="#d23f31" style="fill: var(--color1, #d23f31)" d="M5.787 17.226h17.033l5.954 9.528c0.47 0.752 0.003 1.361-1.042 1.361h-15.141z"></path>
+            <path d="M10.74 3.927h17.033c1.045 0 1.512 0.609 1.042 1.361l-5.954 9.528h-19.872l6.379-10.209c0.235-0.376 0.849-0.681 1.372-0.681z"></path>
+            <path d="M2.953 17.226h2.839l6.804 10.889h-1.892c-0.523 0-1.137-0.305-1.372-0.681z"></path>
+        </svg>
+    </a>
+
+
+    </div>
+    <nav class="footer__nav mobile__none">
+        <a class="ft__link" rel="alternate" href="https://blog.donggei.top/rss.xml" rel="section">RSS</a>
+    </nav>
+    <div class="footer__border mobile__none"></div>
+    <div class="wrapper fn__flex">
+        <div class="fn__flex-1 mobile__none">
+            <div class="ft__fade">donggei - 记录精彩的程序人生</div>
+            <br>
+                Open Source, Open Mind, <br/>Open Sight, Open Future!
+
+<!-- 公告栏可使用 HTML、JavaScript，比如可以在此加入第三方统计 js -->
+        </div>
+
+
+        <div class="fn__flex-1 footer__copyright">
+            <a class="ft__link" href="https://blog.donggei.top/archives.html">
+                6
+                文章
+            </a>
+           <br>
+            <span data-uvstaturl="https://blog.donggei.top">0</span> <span class="ft-gray">浏览</span>
+ <br>
+            &copy; 2023
+            <a class="ft__link" href="https://blog.donggei.top">donggei 的个人博客</a>
+            
+        </div>
+    </div>
+</footer>
+<script>
+  var Label = {
+    speech: true,
+    servePath: "https://blog.donggei.top",
+    staticServePath: "https://blog.donggei.top",
+    luteAvailable: false,
+    hljsStyle: 'github',
+    langLabel: "zh_CN",
+    version: "4.4.0",
+    staticSite: true,
+    showCodeBlockLn: false,
+    articleId: "1699951902323",
+  }
+</script>
+<script type="text/javascript" src="https://blog.donggei.top/skins/Pinghsu/js/headroom.min.js"></script>
+<script type="text/javascript"
+        src="https://blog.donggei.top/skins/Pinghsu/js/common.min.js?1699950652748"
+        charset="utf-8"></script>
+
+
+
+<script type="text/javascript">
+    Util.addScript('https://blog.donggei.top/js/page.min.js?1699950652748', 'soloPageScript')
+    var page = new Page({
+        "commentContentCannotEmptyLabel": "评论不能为空",
+        "oId": "1699951902323",
+        "blogHost": "https://blog.donggei.top",
+        "randomArticles1Label": "随机阅读：",
+        "externalRelevantArticles1Label": "站外相关阅读："
+    });
+    $(document).ready(function () {
+        page.load();
+    page.tips.externalRelevantArticlesDisplayCount = "0";
+    page.loadRandomArticles('<h3>RECOMMEND POSTS</h3>');
+    page.loadRelevantArticles('1699951902323', '<h3>RELEVANT POSTS</h3>');
+Skin.initArticle()
+    });
+</script>
+
+</body>
+</html>
+
+<!-- Generated by Latke (https://github.com/88250/latke) in 13ms, 2023/11/14 16:57:23 -->

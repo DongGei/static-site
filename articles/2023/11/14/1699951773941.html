@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/><meta name="theme-color" content="#3b3e43"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"/><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="format-detection" content="telephone=no"/><title>红黑树  B  B+树 - donggei 的个人博客</title><meta name="description" content="红黑树 B B+树 --&gt;演化进程"/><meta property="og:description" content="红黑树 B B+树 --&gt;演化进程"/>    <meta name="keywords" content="Solo,Java,博客,开源"/><link rel="dns-prefetch" href="https://blog.donggei.top"/><link rel="dns-prefetch" href="https://unpkg.com"/><link rel="preconnect" href="https://blog.donggei.top"><link rel="icon" type="image/png" href="https://b3log.org/images/brand/solo-128.png"/><link rel="apple-touch-icon" href="https://b3log.org/images/brand/solo-128.png"><link rel="shortcut icon" type="image/x-icon" href="https://b3log.org/images/brand/solo-128.png"><meta name="copyright" content="B3log"/><meta http-equiv="Window-target" content="_top"/><meta property="og:locale" content="zh_CN"/><meta property="og:title" content="红黑树  B  B+树 - donggei 的个人博客"/><meta property="og:site_name" content="donggei 的个人博客"/><meta property="og:url"      content="https://blog.donggei.top/articles/2023/11/14/1699951773941.html?"/><meta property="og:image" content="https://b3log.org/images/brand/solo-128.png"/><link rel="search" type="application/opensearchdescription+xml" title="红黑树  B  B+树 - donggei 的个人博客" href="/opensearch.xml"><link href="https://blog.donggei.top/rss.xml" title="RSS" type="application/rss+xml" rel="alternate"/><link rel="manifest" href="https://blog.donggei.top/manifest.json">        <link rel="canonical" href="https://blog.donggei.top/articles/2023/11/14/1699951773941.html">        <link rel="stylesheet"
+              href="https://blog.donggei.top/skins/Pinghsu/css/base.css?1699950652748"/>
+            <link rel="prev" title="java 函数式编程" href="https://blog.donggei.top/articles/2023/11/14/1699946312113.html">
+            <link rel="next" title="java面经总结" href="https://blog.donggei.top/articles/2023/11/14/1699951852050.html">
+    <script src="https://unpkg.com/vditor@3.8.15/dist/js/icons/ant.js" async="" id="vditorIconScript"></script></head>
+<body>
+<header class="header">
+    <div class="wrapper">
+        <a href="https://blog.donggei.top" rel="start" class="header__logo">
+            <img src="https://b3logfile.com/avatar/1699945842626_1699952075889.png?imageView2/1/w/128/h/128/interlace/0/q/100" alt="donggei 的个人博客"/>
+            donggei 的个人博客
+        </a>
+
+        <nav class="header__nav mobile__none">
+            <a href="https://blog.donggei.top/tags.html" rel="section">
+                Tags
+            </a>
+            <a href="https://blog.donggei.top/archives.html">
+                Archives
+            </a>
+            <a rel="archive" href="https://blog.donggei.top/links.html">
+                Links
+            </a>
+        </nav>
+
+        <div class="header__bar fn__none" onclick="$(this).next().slideToggle()">
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+                <path fill="#444" d="M0 3h20v2h-20v-2zM0 9h20v2h-20v-2zM0 15h20v2h-20v-2z"></path>
+            </svg>
+        </div>
+        <main class="header__menu fn__none">
+            <ul>
+                <li>
+                    <a href="https://blog.donggei.top/tags.html" rel="section">
+                        Tags
+                    </a>
+                </li>
+                <li>
+                    <a href="https://blog.donggei.top/archives.html">
+                        Archives
+                    </a>
+                </li>
+                <li>
+                    <a rel="archive" href="https://blog.donggei.top/links.html">
+                        Links
+                    </a>
+                </li>
+                <li>
+                    <a rel="alternate" href="https://blog.donggei.top/rss.xml" rel="section">
+                        RSS
+                    </a>
+                </li>
+            </ul>
+        </main>
+    </div>
+</header>
+<main id="pjax" class="fn__flex-1">
+    
+    <div class="post wrapper wrapper--miner">
+        <h2 class="item__title">
+            <a rel="bookmark" href="https://blog.donggei.top/articles/2023/11/14/1699951773941.html">
+                红黑树  B  B+树
+            </a>
+        </h2>
+        <div class="ft__fade item__meta">
+                Published on
+            <time>
+                Nov 14, 2023
+            </time>
+            with <span data-uvstaturl="https://blog.donggei.top/articles/2023/11/14/1699951773941.html">0</span> views
+                and <a href="#b3logsolocomments"><span data-uvstatcmt="1699951773941">0</span> comments</a>
+        </div>
+        <div class="item__tags">
+                <a rel="tag" class="tag tag--0" href="https://blog.donggei.top/tags/%E7%AE%97%E6%B3%95">
+                    <b># 算法</b>
+                </a>
+                <a rel="tag" class="tag tag--1" href="https://blog.donggei.top/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84">
+                    <b># 数据结构</b>
+                </a>
+        </div>
+        <div class="vditor-reset">
+            <p><img src="https://b3logfile.com/bing/20171109.jpg?imageView2/1/w/960/h/540/interlace/1/q/100" alt=""></p>
+<h2 id="toc_h2_0">红黑树  B  B+树</h2>
+<h3 id="toc_h3_1">演化进程</h3>
+<p>二分查找(有序条件下 Binary Search)</p>
+<p>--&gt; 二叉查找树（BST）查询次数等于高度</p>
+<p>--&gt; 二叉平衡树，平衡因子不超1  h= L log2n 」 +1  O(log2N)</p>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-437998532380093657-gQP4XtS.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20221115194427533"></p>
+<p>查找和二叉查找一样的  删除和插入比较复杂</p>
+<h3 id="toc_h3_2">二叉查找树</h3>
+<p><strong>四种失去平衡的解决方法</strong></p>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-2006506232668067602-fUl177s.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20221115202932557"></p>
+<p>LR 两步</p>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-9958055240464037410-82LIzks.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20221115202215624"></p>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-3545179623103136173-QIgs2O0.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20221115202412473"></p>
+<p>RL 两步</p>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-12361890179156134799-ydcjB6r.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20221115202848252"></p>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-9004967574274703685-1IPSlFp.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20221115202908600"></p>
+<p>不断旋转比较耗时 进一步改进：</p>
+<h3 id="toc_h3_3">红黑树RBT</h3>
+<p>调整的次数少  平衡性不如二叉平衡树 ，</p>
+<p>插入删除频繁的使用红黑树，不频繁的使用二叉平衡树。</p>
+<hr>
+<p>（这里的空节点是叶子节点，与以往太不一样）</p>
+<p>1.结点是红色或黑色。</p>
+<p>2.根结点是黑色。</p>
+<p>3.每个叶子结点都是黑色的空结点（NIL结点）。</p>
+<p>4.红属性 ：每个红色结点的两个子结点都是黑色。</p>
+<p>5.黑属性：每一个结点到其每个叶子的所有路径都包含相同数目的黑色结点。</p>
+<p>The height of the red-black tree is at most：<br>
+2 log2(n+ 1)</p>
+<p>新插入的是红色</p>
+<ul>
+<li>父红，父兄弟红  那么 父亲和父亲兄弟 变黑，爷爷变红（这个是一直向上重复的，如果爷爷是根结点不用变  ）</li>
+</ul>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-10498037066517479482-vV10A3P.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20221115210159942"></p>
+<ul>
+<li>父红，父无兄弟或者父兄弟是黑 那么 先旋转（ll或者rr或者lr或者rl应该是） 后重新上色</li>
+</ul>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-14046411067792992033-A2qBiwH.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20221115205604719"></p>
+<p>给定下面这颗红黑树，新插入的结点是21：</p>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-11418363035000064688-1GTYQ2q.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20221115211804220"></p>
+<p>显然，新结点21和它的父结点22是连续的红色结点，违背了规则4，我们应该如何调整呢？</p>
+<p>新结点的父结点和叔叔结点都是红色。</p>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-12379975539735578618-b8KbU33.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20221115211900246"></p>
+<p>于是我们经过三次变色，22变为黑色，25变为红色，27变为黑色：</p>
+<p>经过上面的调整，以结点25为根的子树符合了红黑树规则，但结点25和结点17成为了连续的红色结点</p>
+<p>于是，我们把结点25看做一个新结点，正好符合：</p>
+<p>“新结点的父结点是红色，叔叔结点是黑色或者没有叔叔，且新结点是父结点的右孩子，父结点是祖父结点的右孩子”</p>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-8489089955936342517-rkpQ3RY.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20221115212651198"></p>
+<p>于是我们以根结点13为轴进行左旋转，使得结点17成为了新的根结点：</p>
+<p>接下来，让结点17变为黑色，结点13变为红色：</p>
+<p>如此一来，我们的红黑树变得重新符合规则。</p>
+<p>删除比插入更复杂</p>
+<h3 id="toc_h3_4">java中的RBT</h3>
+<p>JDK 7及以前版本：HashMap是数组+链表结构(即为链地址法)<br>
+JDK 8版本发布以后：HashMap是数组+链表+红黑树实现。</p>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-14038469496552876929-xcWQw6e.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20221115214635688"></p>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-8123905853817148373-blp7oj5.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20221115214651306"></p>
+<h3 id="toc_h3_5">B树（b-树）</h3>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-425370561096705257-dimL1QA.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20230112180359925"></p>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-7145649367170255352-AJnjAn1.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20230113114054088"></p>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-12504910539411913512-n9WlBny.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20230111213426197"></p>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-13704881000095576809-xizMmu2.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20230113114137537"></p>
+<p><img src="http://bijioss.donggei.top/image-20230113153345054.png" alt="image-20230113153345054"></p>
+<p>删除终端结点：3种情况</p>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-14676905576078405239-GiaBrsw.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20230113153222181"></p>
+<p>够借:左右兄弟结点都可以</p>
+<p>左右兄弟不够借：从父结点搞一个下来</p>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-15908275368535843499-flSVBTk.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20230113154003310"></p>
+<p>删除非终端结点：3种情况</p>
+<p>交换然后删除</p>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-13262567364944131305-UueZxo1.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20230113160624412"></p>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-17475044653789953026-56O9b9N.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20230113160551160"></p>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-8900836347820110174-xickx1Y.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20230113161834294"></p>
+<p>左右子结点加起来不超额，合并左右子结点，删除23</p>
+<h3 id="toc_h3_6">B+树</h3>
+<p><img src="http://bijioss.donggei.top/image-20230222214301740.png" alt="image-20230222214301740"></p>
+<p><strong>总结：</strong></p>
+<p>B+树查询与B-数据对比：</p>
+<p>B+树的中间节点没有卫星数据，所以同样大小的磁盘可以容纳更多的节点元素；<br>
+在数据量相同的情况下，B+树的结构比B-树更加“矮胖”，因此查询的IO次数也更少；<br>
+B+树的查询必须最终查找到叶子节点，而B-树只要查找匹配的元素即可，无论匹配的元素处于中间节点还是叶子节点。<br>
+B-树的查找性能并不稳定（最好情况只查询根节点，最坏情况是查找叶子节点）。而B+树的每一次查找都是稳定的。<br>
+原文链接：<a href="https://blog.csdn.net/jiang_wang01/article/details/113739230" target="_blank">https://blog.csdn.net/jiang_wang01/article/details/113739230</a><br>
+B+树比B-树的优势三个：</p>
+<ol>
+<li>单一节点存储更多的元素，使得查询的IO次数更少。</li>
+<li>所有查询都要查找到叶子节点，查询性能稳定。</li>
+<li>所有叶子节点形成有序链表，便于范围查询。</li>
+</ol>
+<h3 id="toc_h3_7">数据库为什么不用红黑树而用B+树？</h3>
+<p>1）B+树的磁盘读写代价更低</p>
+<p>　　B+树的内部结点并没有指向关键字具体信息的指针。因此其内部结点相对B 树更小。如果把所有同一内部结点的关键字存放在同一盘块中，那么盘块所能容纳的关键字数量也越多。一次性读入内存中的需要查找的关键字也就越多。相对来说IO读写次数也就降低了；</p>
+<p>2）B+树查询效率更加稳定</p>
+<p>　　由于非终结点并不是最终指向文件内容的结点，而只是叶子结点中关键字的索引。所以任何关键字的查找必须走一条从根结点到叶子结点的路。所有关键字查询的路径长度相同，导致每一个数据的查询效率相当；</p>
+<p>3）B+树便于范围查询（最重要的原因，范围查找是数据库的常态）</p>
+<p>　　B树在提高了IO性能的同时并没有解决元素遍历的我效率低下的问题，正是为了解决这个问题，B+树应用而生。B+树只需要去遍历叶子节点就可以实现整棵树的遍历。而且在数据库中基于范围的查询是非常频繁的，而B树不支持这样的操作或者说效率太低；</p>
+                <div>
+                    <hr>
+
+标题：红黑树  B  B+树<br>
+作者：<a href="https://blog.donggei.top" target="_blank">donggei</a><br>
+地址：<a href="https://blog.donggei.top/articles/2023/11/14/1699951773941.html" target="_blank">https://blog.donggei.top/articles/2023/11/14/1699951773941.html</a><br>
+
+<!-- 签名档内可使用 HTML、JavaScript -->
+<br>
+                </div>
+        </div>
+    </div>
+    <div class="post__toc">
+<ul class="article__toc">
+        <li class="toc__h2">
+            <a href="#toc_h2_0">红黑树 B B+树</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_1">演化进程</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_2">二叉查找树</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_3">红黑树RBT</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_4">java中的RBT</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_5">B树（b-树）</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_6">B+树</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_7">数据库为什么不用红黑树而用B+树？</a>
+        </li>
+</ul>    </div>
+    <div class="body--gray post__gray">
+        <div class="wrapper comment">
+                <div id="gitalk-container" style="padding: 30px 0;"></div>
+                <div id="b3logsolocomments"></div>
+                <div id="vcomment" style="padding: 30px 0;" data-name="donggei" data-postId="1699951773941"></div>
+
+            <div class="post__list fn__flex">
+                <div class="fn__flex-1">
+                    <div id="externalRelevantArticles"></div>
+                </div>
+                <div class="post__list-mid fn__flex-1">
+                    <div id="randomArticles"></div>
+                </div>
+                <div class="fn__flex-1">
+                    <div id="relevantArticles"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="post__fix">
+        <div class="wrapper">
+            <span class="post__share mobile__none">
+                Share
+                <span class="tag tag--4" data-type="weibo">WeiBo</span>
+                <span class="tag tag--5" data-type="twitter">Twitter</span>
+                <span class="tag tag--6" data-type="qqz">QZone</span>
+                <span class="post__code tag tag--7"
+                      data-type="wechat"
+                      data-title="红黑树  B  B+树"
+                      data-blogtitle="donggei 的个人博客"
+                      data-url="https://blog.donggei.top/articles/2023/11/14/1699951773941.html"
+                      data-avatar="https://b3logfile.com/avatar/1699945842626_1699952075889.png?imageView2/1/w/128/h/128/interlace/0/q/100">
+                    WeChat
+                    <span class="qrcode"></span>
+                </span>
+            </span>
+            <span class="post__arrow">
+                    <a href="https://blog.donggei.top/articles/2023/11/14/1699946312113.html" rel="prev"
+                       class="vditor-tooltipped__n vditor-tooltipped"
+                       pjax-title="java 函数式编程"
+                       aria-label="旧一篇: java 函数式编程">←</a>
+
+                    <a href="https://blog.donggei.top/articles/2023/11/14/1699951852050.html" rel="next"
+                       class="vditor-tooltipped__n vditor-tooltipped"
+                       pjax-title="java面经总结"
+                       aria-label="新一篇: java面经总结">→</a>
+                <a href="javascript:Util.goTop()" class="vditor-tooltipped__n vditor-tooltipped"
+                   aria-label="移动到顶部">↑</a>
+                <a href="javascript:Util.goBottom()" class="vditor-tooltipped__n vditor-tooltipped"
+                   aria-label="移动到底部">↓</a>
+            </span>
+        </div>
+    </div>
+    
+</main>
+<footer class="footer">
+    <div class="ft__center">
+    <a href="https://ld246.com/member/donggei"
+       aria-label="https://ld246.com/member/donggei"
+       class="vditor-tooltipped__n vditor-tooltipped  user__site"
+       target="_blank" rel="noopener nofollow">
+        <svg viewBox="0 0 32 32" width="100%" height="100%">
+            <path fill="#d23f31" style="fill: var(--color1, #d23f31)" d="M5.787 17.226h17.033l5.954 9.528c0.47 0.752 0.003 1.361-1.042 1.361h-15.141z"></path>
+            <path d="M10.74 3.927h17.033c1.045 0 1.512 0.609 1.042 1.361l-5.954 9.528h-19.872l6.379-10.209c0.235-0.376 0.849-0.681 1.372-0.681z"></path>
+            <path d="M2.953 17.226h2.839l6.804 10.889h-1.892c-0.523 0-1.137-0.305-1.372-0.681z"></path>
+        </svg>
+    </a>
+
+
+    </div>
+    <nav class="footer__nav mobile__none">
+        <a class="ft__link" rel="alternate" href="https://blog.donggei.top/rss.xml" rel="section">RSS</a>
+    </nav>
+    <div class="footer__border mobile__none"></div>
+    <div class="wrapper fn__flex">
+        <div class="fn__flex-1 mobile__none">
+            <div class="ft__fade">donggei - 记录精彩的程序人生</div>
+            <br>
+                Open Source, Open Mind, <br/>Open Sight, Open Future!
+
+<!-- 公告栏可使用 HTML、JavaScript，比如可以在此加入第三方统计 js -->
+        </div>
+
+
+        <div class="fn__flex-1 footer__copyright">
+            <a class="ft__link" href="https://blog.donggei.top/archives.html">
+                6
+                文章
+            </a>
+           <br>
+            <span data-uvstaturl="https://blog.donggei.top">0</span> <span class="ft-gray">浏览</span>
+ <br>
+            &copy; 2023
+            <a class="ft__link" href="https://blog.donggei.top">donggei 的个人博客</a>
+            
+        </div>
+    </div>
+</footer>
+<script>
+  var Label = {
+    speech: true,
+    servePath: "https://blog.donggei.top",
+    staticServePath: "https://blog.donggei.top",
+    luteAvailable: false,
+    hljsStyle: 'github',
+    langLabel: "zh_CN",
+    version: "4.4.0",
+    staticSite: true,
+    showCodeBlockLn: false,
+    articleId: "1699951773941",
+  }
+</script>
+<script type="text/javascript" src="https://blog.donggei.top/skins/Pinghsu/js/headroom.min.js"></script>
+<script type="text/javascript"
+        src="https://blog.donggei.top/skins/Pinghsu/js/common.min.js?1699950652748"
+        charset="utf-8"></script>
+
+
+
+<script type="text/javascript">
+    Util.addScript('https://blog.donggei.top/js/page.min.js?1699950652748', 'soloPageScript')
+    var page = new Page({
+        "commentContentCannotEmptyLabel": "评论不能为空",
+        "oId": "1699951773941",
+        "blogHost": "https://blog.donggei.top",
+        "randomArticles1Label": "随机阅读：",
+        "externalRelevantArticles1Label": "站外相关阅读："
+    });
+    $(document).ready(function () {
+        page.load();
+    page.tips.externalRelevantArticlesDisplayCount = "0";
+    page.loadRandomArticles('<h3>RECOMMEND POSTS</h3>');
+    page.loadRelevantArticles('1699951773941', '<h3>RELEVANT POSTS</h3>');
+Skin.initArticle()
+    });
+</script>
+
+</body>
+</html>
+
+<!-- Generated by Latke (https://github.com/88250/latke) in 14ms, 2023/11/14 16:57:23 -->
