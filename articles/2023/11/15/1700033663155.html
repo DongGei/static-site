@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/><meta name="theme-color" content="#3b3e43"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"/><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="format-detection" content="telephone=no"/><title>超级经典之-超卖问题，避免一人多单，限流策略，隐藏url ，图片验证码，单用户频次限制，数据库缓存双写一致性 - donggei 的个人博客</title><meta name="description" content="JVM锁 DB加锁 Java分布式锁总结 超卖问题，避免一人多单，限流策略，隐藏url ，图片验证码，单用户频次限制，数据库缓存双写一致性"/><meta property="og:description" content="JVM锁 DB加锁 Java分布式锁总结 超卖问题，避免一人多单，限流策略，隐藏url ，图片验证码，单用户频次限制，数据库缓存双写一致性"/>    <meta name="keywords" content="Java,博客,开源"/><link rel="dns-prefetch" href="https://blog.donggei.top"/><link rel="dns-prefetch" href="https://unpkg.com"/><link rel="preconnect" href="https://blog.donggei.top"><link rel="icon" type="image/png" href="https://b3log.org/images/brand/solo-128.png"/><link rel="apple-touch-icon" href="https://b3log.org/images/brand/solo-128.png"><link rel="shortcut icon" type="image/x-icon" href="https://b3log.org/images/brand/solo-128.png"><meta name="copyright" content="B3log"/><meta http-equiv="Window-target" content="_top"/><meta property="og:locale" content="zh_CN"/><meta property="og:title" content="超级经典之-超卖问题，避免一人多单，限流策略，隐藏url ，图片验证码，单用户频次限制，数据库缓存双写一致性 - donggei 的个人博客"/><meta property="og:site_name" content="donggei 的个人博客"/><meta property="og:url"      content="https://blog.donggei.top/articles/2023/11/15/1700033663155.html?"/><meta property="og:image" content="https://b3log.org/images/brand/solo-128.png"/><link rel="search" type="application/opensearchdescription+xml" title="超级经典之-超卖问题，避免一人多单，限流策略，隐藏url ，图片验证码，单用户频次限制，数据库缓存双写一致性 - donggei 的个人博客" href="/opensearch.xml"><link href="https://blog.donggei.top/rss.xml" title="RSS" type="application/rss+xml" rel="alternate"/><link rel="manifest" href="https://blog.donggei.top/manifest.json">        <link rel="canonical" href="https://blog.donggei.top/articles/2023/11/15/1700033663155.html">        <link rel="stylesheet"
+              href="https://blog.donggei.top/skins/Pinghsu/css/base.css?1700031209428"/>
+            <link rel="prev" title="怎么保证数据唯一性" href="https://blog.donggei.top/articles/2023/11/15/1700033502345.html">
+            <link rel="next" title="团队表 -多级团队设计" href="https://blog.donggei.top/articles/2023/11/15/1700033761710.html">
+    <script src="https://unpkg.com/vditor@3.8.15/dist/js/icons/ant.js" async="" id="vditorIconScript"></script></head>
+<body>
+<header class="header">
+    <div class="wrapper">
+        <a href="https://blog.donggei.top" rel="start" class="header__logo">
+            <img src="https://b3logfile.com/avatar/1699945842626_1699952075889.png?imageView2/1/w/128/h/128/interlace/0/q/100" alt="donggei 的个人博客"/>
+            donggei 的个人博客
+        </a>
+
+        <nav class="header__nav mobile__none">
+            <a href="https://blog.donggei.top/tags.html" rel="section">
+                Tags
+            </a>
+            <a href="https://blog.donggei.top/archives.html">
+                Archives
+            </a>
+            <a rel="archive" href="https://blog.donggei.top/links.html">
+                Links
+            </a>
+        </nav>
+
+        <div class="header__bar fn__none" onclick="$(this).next().slideToggle()">
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+                <path fill="#444" d="M0 3h20v2h-20v-2zM0 9h20v2h-20v-2zM0 15h20v2h-20v-2z"></path>
+            </svg>
+        </div>
+        <main class="header__menu fn__none">
+            <ul>
+                    <li>
+                        <a href="https://blog.donggei.top/tags/daily" target="_self" rel="section">
+                            日常
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.donggei.top/" target="_blank" rel="section">
+                            个人主页
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://blog.csdn.net/beginnerdzz" target="_blank" rel="section">
+                            CSDN(更新早)
+                        </a>
+                    </li>
+                <li>
+                    <a href="https://blog.donggei.top/tags.html" rel="section">
+                        Tags
+                    </a>
+                </li>
+                <li>
+                    <a href="https://blog.donggei.top/archives.html">
+                        Archives
+                    </a>
+                </li>
+                <li>
+                    <a rel="archive" href="https://blog.donggei.top/links.html">
+                        Links
+                    </a>
+                </li>
+                <li>
+                    <a rel="alternate" href="https://blog.donggei.top/rss.xml" rel="section">
+                        RSS
+                    </a>
+                </li>
+            </ul>
+        </main>
+    </div>
+</header>
+<main id="pjax" class="fn__flex-1">
+    
+    <div class="post wrapper wrapper--miner">
+        <h2 class="item__title">
+            <a rel="bookmark" href="https://blog.donggei.top/articles/2023/11/15/1700033663155.html">
+                超级经典之-超卖问题，避免一人多单，限流策略，隐藏url ，图片验证码，单用户频次限制，数据库缓存双写一致性
+            </a>
+        </h2>
+        <div class="ft__fade item__meta">
+                Published on
+            <time>
+                Nov 15, 2023
+            </time>
+            with <span data-uvstaturl="https://blog.donggei.top/articles/2023/11/15/1700033663155.html">0</span> views
+                and <a href="#b3logsolocomments"><span data-uvstatcmt="1700033663155">0</span> comments</a>
+        </div>
+        <div class="item__tags">
+                <a rel="tag" class="tag tag--0" href="https://blog.donggei.top/tags/%E5%AE%9E%E8%B7%B5">
+                    <b># 实践</b>
+                </a>
+                <a rel="tag" class="tag tag--1" href="https://blog.donggei.top/tags/%E9%9D%A2%E7%BB%8F">
+                    <b># 面经</b>
+                </a>
+        </div>
+        <div class="vditor-reset">
+            <p><img src="https://b3logfile.com/bing/20190228.jpg?imageView2/1/w/960/h/540/interlace/1/q/100" alt=""></p>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-3870652419307640130-eZu3Cbw.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20230808161000360"></p>
+<pre><code>log.info("===[开始调用原始下单接口~]===");
+ &nbsp; &nbsp; &nbsp; &nbsp;//参数校验
+ &nbsp; &nbsp; &nbsp; &nbsp;log.info("===[校验用户信息及商品信息]===");
+ &nbsp; &nbsp; &nbsp; &nbsp;BaseResponse paramValidRes = validateParam(req.getProductId(), req.getUserId());
+ &nbsp; &nbsp; &nbsp; &nbsp;if (paramValidRes.getCode() != 0) {
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;return paramValidRes;
+ &nbsp; &nbsp; &nbsp;  }
+ &nbsp; &nbsp; &nbsp; &nbsp;log.info("===[校验参数是否合法][通过]===");
+
+ &nbsp; &nbsp; &nbsp; &nbsp;log.info("===[校验 用户是否重复下单]===");
+ &nbsp; &nbsp; &nbsp; &nbsp;SeckillOrder param = new SeckillOrder();
+ &nbsp; &nbsp; &nbsp; &nbsp;param.setProductId(req.getProductId());
+ &nbsp; &nbsp; &nbsp; &nbsp;param.setUserId(req.getUserId());
+ &nbsp; &nbsp; &nbsp; &nbsp;int repeatCount = seckillOrderDao.count(param);
+ &nbsp; &nbsp; &nbsp; &nbsp;if (repeatCount &gt; 0) {
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;log.error("===[该用户重复下单！]===");
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;return BaseResponse.error(ErrorMessage.REPEAT_ORDER_ERROR);
+ &nbsp; &nbsp; &nbsp;  }
+ &nbsp; &nbsp; &nbsp; &nbsp;log.info("===[校验 用户是否重复下单][通过校验]===");
+
+
+ &nbsp; &nbsp; &nbsp; &nbsp;Long productId = req.getProductId();
+ &nbsp; &nbsp; &nbsp; &nbsp;Long userId = req.getUserId();
+ &nbsp; &nbsp; &nbsp; &nbsp;SeckillProducts product = seckillProductsDao.selectByPrimaryKey(productId);
+ &nbsp; &nbsp; &nbsp; &nbsp;Date date = new Date();
+ &nbsp; &nbsp; &nbsp; &nbsp;// 扣减库存
+ &nbsp; &nbsp; &nbsp; &nbsp;log.info("===[开始扣减库存]===");
+ &nbsp; &nbsp; &nbsp; &nbsp;product.setSaled(product.getSaled() + 1);
+ &nbsp; &nbsp; &nbsp; &nbsp;seckillProductsDao.updateByPrimaryKeySelective(product);
+ &nbsp; &nbsp; &nbsp; &nbsp;log.info("===[扣减库存][成功]===");
+ &nbsp; &nbsp; &nbsp; &nbsp;// 创建订单
+ &nbsp; &nbsp; &nbsp; &nbsp;log.info("===[开始创建订单]===");
+ &nbsp; &nbsp; &nbsp; &nbsp;SeckillOrder order = new SeckillOrder();
+ &nbsp; &nbsp; &nbsp; &nbsp;order.setProductId(productId);
+ &nbsp; &nbsp; &nbsp; &nbsp;order.setProductName(product.getName());
+ &nbsp; &nbsp; &nbsp; &nbsp;order.setUserId(userId);
+ &nbsp; &nbsp; &nbsp; &nbsp;order.setCreateTime(date);
+ &nbsp; &nbsp; &nbsp; &nbsp;seckillOrderDao.insert(order);
+ &nbsp; &nbsp; &nbsp; &nbsp;log.info("===[创建订单][成功]===");
+ &nbsp; &nbsp; &nbsp; &nbsp;return BaseResponse.OK;
+</code></pre>
+<p><strong>先查库存  再校验  再下单（减库存和创建订单）</strong></p>
+<h3 id="toc_h3_0">一.超卖问题</h3>
+<p><strong>存在****超卖问题</strong>。订单数量大于库存量，</p>
+<p><strong>原因是在可能同时查库存，然后减库存的时候根据查的减一去update的</strong></p>
+<p><strong>问题的本质就是==select和update之前 有没有其他线程更新数据==</strong></p>
+<p><strong>解决方法：</strong></p>
+<h4 id="toc_h4_1">1.JVM锁</h4>
+<p><strong>在controller层加synchronized</strong></p>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-7732118040201289151-yVqVg1a.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20230810155454597"></p>
+<pre><code>    /**
+         * 秒杀下单（避免超卖问题——JVM锁）
+         */
+        @RequestMapping(value = "/synchronized/order")
+        public synchronized BaseResponse synchronizedOrder(@Valid @RequestBody BaseRequest&lt;SeckillReq&gt; request) {
+            CommonWebUser user = WebUserUtil.getLoginUser();
+            if (Objects.isNull(user)) {
+                return BaseResponse.error(ErrorMessage.LOGIN_ERROR);
+            }
+            SeckillReq req = request.getData();
+            req.setUserId(user.getId());
+            return seckillService.sOrder(req);
+        }
+</code></pre>
+<p><strong>问题的本质就是==select和update之前 有没有其他线程更新数据==</strong></p>
+<p><strong>不能加在service层的原因：</strong></p>
+<p><strong>service如果加了synchronized  @Transactional 相当于aop操作，下图</strong></p>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-2793931685074175819-7N7x8a7.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20230811175406996"></p>
+<p><strong>线程一还没有提交，线程二可以就获得锁了，线程二select的可能是线程一之前的（因为线程一还没提交）</strong></p>
+<h5 id="toc_h5_2">jvm锁存在问题</h5>
+<p><strong>1.jvm锁的性能</strong></p>
+<p><strong>2.集群下的jvm锁 锁的是的单个节点</strong></p>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-2888922976781428071-rM7JGDS.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20230810161151739"></p>
+<p><strong>单个节点的顺序可以保证，但是其他节点有可能也在期间更新了数据</strong></p>
+<h4 id="toc_h4_3">2.DB加锁</h4>
+<h5 id="toc_h5_4">悲观锁</h5>
+<pre><code>事务@Transactional +
+</code></pre>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-16820434212121896830-Ta3WqUd.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20220731202258380"></p>
+<h5 id="toc_h5_5">乐观锁</h5>
+<pre><code>事务@Transactional +
+</code></pre>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-10865218674494671199-S3cVGtZ.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20220731210429498"></p>
+<p><strong>update语句天然是当前读的一种形式</strong></p>
+<p><strong>注意：</strong></p>
+<p><strong>如果for update没有命中索引会锁表。</strong></p>
+<p><strong>补充一点，update更新语句和for update机制一样，没有命中索引，同样会锁每一行记录，（不是锁表，也能说是锁表）。</strong></p>
+<h4 id="toc_h4_6">3.Java分布式锁总结</h4>
+<p><strong>分布式锁应该具有以下几个特征：</strong></p>
+<ul>
+<li><strong>互斥性：锁的目的是获取资源的使用权，所以只让一个竞争者持有锁，这一点要尽可能保证；</strong></li>
+<li><strong>安全性：避免死锁情况发生。当一个竞争者在持有锁期间内，由于意外崩溃而导致未能主动解锁，其持有的锁也能够被正常释放，并保证后续其它竞争者也能加锁；</strong></li>
+<li><strong>对称性：同一个锁，加锁和解锁必须是同一个竞争者。不能把其他竞争者持有的锁给释放了，这又称为锁的可重入性。</strong></li>
+<li><strong>可靠性：需要有一定程度的异常处理能力、容灾能力。</strong></li>
+</ul>
+<h5 id="toc_h5_7">基于数据库实现分布式锁</h5>
+<pre><code>1、加锁
+当我们需要给某个资源添加锁的时候，就插入一条数据
+INSERT INTO database_lock(resource, description) VALUES (1, ‘lock’);
+resource字段是唯一索引，多个请求请求添加同一条数据，那么其他的就会报错。
+
+2、 释放锁
+释放锁时，删除当前条数据
+DELETE FROM database_lock WHERE resource=1;
+然后其他资源就可以再次添加去获取这个锁了。
+</code></pre>
+<p><strong>上面这种简单的实现有以下几个问题：</strong></p>
+<ol>
+<li><strong>这把锁强依赖数据库的可用性，数据库是一个单点，一旦数据库挂掉，会导致业务系统不可用。</strong></li>
+<li><strong>这把锁没有失效时间，一旦解锁操作失败，就会导致锁记录一直在数据库中，其他线程无法再获得到锁。</strong></li>
+<li><strong>这把锁只能是非阻塞的，因为数据的insert操作，一旦插入失败就会直接报错。没有获得锁的线程并不会进入排队队列，要想再次获得锁就要再次触发获得锁操作。</strong></li>
+<li><strong>这把锁是非重入的，同一个线程在没有释放锁之前无法再次获得该锁。因为数据中数据已经存在了。</strong></li>
+</ol>
+<p><strong>当然，我们也可以有其他方式解决上面的问题。</strong></p>
+<ul>
+<li><strong>数据库是单点？搞两个数据库，数据之前双向同步。一旦挂掉快速切换到备库上。</strong></li>
+<li><strong>没有失效时间？只要做一个定时任务，每隔一定时间把数据库中的超时数据清理一遍。</strong></li>
+<li><strong>非阻塞的？搞一个while循环，直到insert成功再返回成功。</strong></li>
+<li><strong>非重入的？在数据库表中加个字段，记录当前获得锁的机器的主机信息和线程信息，那么下次再获取锁的时候先查询数据库，如果当前机器的主机信息和线程信息在数据库可以查到的话，直接把锁分配给他就可以了。</strong></li>
+</ul>
+<h5 id="toc_h5_8">Redis分布式锁实现</h5>
+<p><strong>setnx key value</strong></p>
+<p><strong>如果key不存在，则会将key设置为value，并返回1；如果key存在，不会有任务影响，返回0。</strong></p>
+<p><strong>基于这个特性，我们就可以用setnx实现加锁的目的：通过setnx加锁，加锁之后其他服务无法加锁，用完之后，再通过delete解锁。</strong></p>
+<pre><code>    // 1.先抢占锁
+    Boolean lock = redisTemplate.opsForValue().setIfAbsent("lock", "123");
+     // 2.在 10s 以后，自动清理 lock
+    setIfAbsent("lock", "123", 10, TimeUnit.SECONDS);
+    if (lock) {
+      // 2.抢占成功，执行业务
+      redisTemplate.expire("lock", 10, TimeUnit.SECONDS);
+      Object object = doSomeThing();
+      // 3.解锁
+      redisTemplate.delete("lock");
+      return object;
+    } else {
+      // 4.休眠一段时间
+      sleep(100);
+      // 5.抢占失败，等待锁释放
+      return doSomethingsByRedisDistributedLock();
+    }
+</code></pre>
+<p><strong>存在的问题和优化</strong></p>
+<ol>
+<li><strong>需要设置过期时间</strong></li>
+<li><strong>需要解决在过期时间内没有执行完成的情况，（相当于锁释放了，但是业务还在执行）</strong></li>
+</ol>
+<p><strong>详细：</strong></p>
+<p><strong>1.支持过期时间</strong></p>
+<p>**   // 2.在 10s 以后，自动清理 lock**<br>
+**    setIfAbsent("lock", "123", 10, TimeUnit.SECONDS);**</p>
+<p><strong>2.我们来试想一下如下场景：服务A获取了锁，由于业务流程比较长，或者网络延迟、GC卡顿等原因，导致锁过期，而业务还会继续进行。这时候，业务B已经拿到了锁，准备去执行，这个时候服务A恢复过来并做完了业务，就会释放锁，而B却还在继续执行。</strong></p>
+<pre><code>    // 1.生成唯一 id
+    String uuid = UUID.randomUUID().toString();
+    // 2. 抢占锁
+    Boolean lock = redisTemplate.opsForValue().setIfAbsent("lock", uuid, 10, TimeUnit.SECONDS);
+    if(lock) {
+        System.out.println("抢占成功：" + uuid);
+        // 3.抢占成功，执行业务
+            Object object = doSomeThing();
+        // 4.获取当前锁的值
+        String lockValue = redisTemplate.opsForValue().get("lock");
+        // 5.如果锁的值和设置的值相等，则清理自己的锁
+        if(uuid.equals(lockValue)) {
+            System.out.println("清理锁：" + lockValue);
+            redisTemplate.delete("lock");
+        }
+        return object;
+    } else {
+        System.out.println("抢占失败，等待锁释放");
+        // 4.休眠一段时间
+        sleep(100);
+        // 5.抢占失败，等待锁释放
+        return doSomethingsByRedisDistributedLock();
+    }
+</code></pre>
+<p><strong>==解决问题二的方法一：==</strong></p>
+<p><strong>加上owner，只解锁自己加的锁（没有完全解决问题二，还是可能多个业务代码同时跑）</strong></p>
+<p><strong>我们来试想一下如下场景：服务A获取了锁，由于业务流程比较长，或者网络延迟、GC卡顿等原因，导致锁过期，而业务还会继续进行。这时候，业务B已经拿到了锁，准备去执行，这个时候服务A恢复过来并做完了业务，就会释放锁，而B却还在继续执行。</strong></p>
+<p><strong>在真实的分布式场景中，可能存在几十个竞争者，那么上述情况发生概率就很高，导致同一份资源频繁被不同竞争者同时访问，分布式锁也就失去了意义。</strong></p>
+<p><strong>基于这个场景，我们可以发现，问题关键在于，竞争者可以释放其他人的锁。那么在异常情况下，就会出现问题，所以我们可以进一步给出解决方案：分布式锁需要满足谁申请谁释放原则，不能释放别人的锁，也就是说，分布式锁，是要有归属的。</strong></p>
+<p><strong>引入Lua</strong></p>
+<p><strong>加入owner后的版本可以称得上是完善了吗？还有没有什么隐患呢？</strong></p>
+<p><strong>小编也不卖关子了，到这一步其实还存在一个小问题，我们完整的流程是竞争者获取锁执行任务，执行完毕后检查锁是不是自己的，最后进行释放。</strong></p>
+<p><strong>流程一梳理，你们肯定明白了，执行完毕后，检查锁，再释放，这些操作不是原子化的。</strong></p>
+<p><strong>可能锁获取时还是自己的，删除时却已经是别人的了。这可怎么办呢？</strong></p>
+<p>**Redis可没有直接提供这种场景原子化的操作啊。遇事不要慌，仔细想一想，Redis是不是还有个特性，专门整合原子操作，对，就是它——**<strong>Lua</strong>。</p>
+<p><strong>Redis➕Lua，可以说是专门为解决原子问题而生。</strong></p>
+<p><strong>有了Lua的特性，Redis才真正在分布式锁、秒杀等场景，有了用武之地，下面便是改造之后的流程：</strong></p>
+<p><strong>redis中的脚本：</strong></p>
+<pre><code>if redis.call("get",KEYS[1]) == ARGV[1]then    return redis.call("del",KEYS[1])else    return 0end
+</code></pre>
+<p><strong>分两步执行这段脚本：先定义脚本；用 redisTemplate.execute 方法执行脚本。</strong></p>
+<pre><code>// 脚本解锁String script = "if redis.call('get',KEYS[1]) == ARGV[1] then return redis.call('del',KEYS[1]) else return 0 end";redisTemplate.execute(new DefaultRedisScript&lt;Long&gt;(script, Long.class), Arrays.asList("lock"), uuid);
+</code></pre>
+<p><strong>上面的代码中，KEYS[1] 对应</strong><code>lock</code>，ARGV[1] 对应 <code>uuid</code>，含义就是如果 lock 的 value 等于 uuid 则删除 lock。</p>
+<p><strong>这段 Redis 脚本是由 Redis 内嵌的 Lua 环境执行的，所以又称作 Lua 脚本。</strong></p>
+<p><strong>==解决问题二的方法二：==</strong></p>
+<p><strong>Redisson （Redis SDK客户端）</strong></p>
+<p><strong>这里还会有一个问题，就是Redis分布式锁无法自动续期，比如，一个锁设置了1分钟超时释放，如果拿到这个锁的线程在一分钟内没有执行完毕，那么这个锁就会被其他线程拿到，可能会导致严重的线上问题。</strong></p>
+<p><strong>在Redisson（Redis SDK客户端）中，就已经帮我们实现了这个功能，这个自动续时的我们称其为”看门狗”。</strong></p>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-16406671570937863870-r6fM87u.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="img"></p>
+<p><strong>Redisson提供了一个监控锁的看门狗，它的作用是在Redisson实例被关闭前，不断的延长锁的有效期，也就是说，如果一个拿到锁的线程一直没有完成逻辑，那么看门狗会帮助线程不断的延长锁超时时间，锁不会因为超时而被释放。</strong></p>
+<h5 id="toc_h5_9">可靠性如何保证</h5>
+<p>**其实到了这一步，分布式锁的前三个特性：**<strong>对称性、安全性、互斥性</strong>，就满足了。可以说是一个可用的分布式锁了，能满足大多数场景的需要。</p>
+<p><strong>分布式锁的四大特性还剩下可靠性没有解决。</strong></p>
+<p><strong>针对一些异常场景，包括Redis挂掉了、业务执行时间过长、网络波动等情况：：redis集群</strong></p>
+<h5 id="toc_h5_10">zookeeper ，MQ</h5>
+<h3 id="toc_h3_11">二.避免一人多单</h3>
+<p><strong>快照读，挡不住：</strong></p>
+<pre><code> 		SeckillOrder param = new SeckillOrder();
+        param.setProductId(req.getProductId());
+        param.setUserId(req.getUserId());
+        int repeatCount = seckillOrderDao.count(param);
+        if (repeatCount &gt; 0) {
+            log.error("===[该用户重复下单！]===");
+            return BaseResponse.error(ErrorMessage.REPEAT_ORDER_ERROR);
+        }
+</code></pre>
+<h4 id="toc_h4_12">1.数据库悲观锁+MVCC</h4>
+<p><strong>实际上 不是悲观锁来实现的</strong></p>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-3198236512722169325-mpeabzk.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20220801232308985"></p>
+<p><strong>在RR隔离级别下 一致性视图的创建是在事务的第一条查询语句</strong>**(当前讨论)**</p>
+<p><strong>在RC隔离级别下 一致性视图的创建是每一条sql语句</strong></p>
+<p><strong>在加锁后，停止了B事务的视图创建，在A事务视图创建后再进行了事务的创建，因此查询到的就是最新的数据</strong></p>
+<pre><code> private BaseResponse validateParamPessimistic(Long productId, Long userId) {
+        //悲观锁，利用selectForUpdate方法锁定记录，并获得最新的SeckillProducts记录
+        SeckillProducts product = seckillProductsDao.selectForUpdate(productId);
+        if (product == null) {
+            log.error("===[产品不存在！]===");
+            return BaseResponse.error(ErrorMessage.SYS_ERROR);
+        }
+
+        if (product.getStartBuyTime().getTime() &gt; System.currentTimeMillis()) {
+            log.error("===[秒杀还未开始！]===");
+            return BaseResponse.error(ErrorMessage.SECKILL_NOT_START);
+        }
+
+        if (product.getSaled() &gt;= product.getCount()) {
+            log.error("===[库存不足！]===");
+            return BaseResponse.error(ErrorMessage.STOCK_NOT_ENOUGH);
+        }
+        return BaseResponse.OK;
+    }
+-----------------------------------
+BaseResponse paramValidRes = validateParamPessimistic(req.getProductId(), req.getUserId());
+if (paramValidRes.getCode() != 0) {
+    return paramValidRes;
+}
+log.info("===[校验][通过]===");
+
+log.info("===[校验 用户是否重复下单]===");
+SeckillOrder param = new SeckillOrder();
+param.setProductId(req.getProductId());
+param.setUserId(req.getUserId());
+int repeatCount = seckillOrderDao.count(param);
+if (repeatCount &gt; 0) {
+    log.error("===[该用户重复下单！]===");
+    return BaseResponse.error(ErrorMessage.REPEAT_ORDER_ERROR);
+}
+-------------------------------
+</code></pre>
+<h4 id="toc_h4_13">2.唯一索引+redis缓存</h4>
+<p>**订单表 设置 联合唯一索引 **</p>
+<p><strong>数据库抛出异常后 回滚事务</strong></p>
+<p><strong>优化：插入成功后 把已经购买的用户放入redis的set中。抢购时先看set里有没有这个用户</strong></p>
+<p><strong>每一个商品有一个set</strong></p>
+<h3 id="toc_h3_14">三.限流策略</h3>
+<p><strong>秒杀系统面临的最大挑战就是如何要保证在流量突增的情况下，仍然保证系统的稳定性</strong></p>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-2859080794908570223-P4ohO9B.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20230815155122595"></p>
+<h4 id="toc_h4_15">1.基于合法性限流</h4>
+<p><strong>先看一下低层限流又是合法性限流，为了更好的解决这个问题，我们先需要看一下到底什么是合法性限流？</strong></p>
+<p><strong>合法性限流指的是仅仅限制那些合法的用户请求能够抵达到秒杀服务器，而将一些非法的请求全部进行拦截掉。那因此这里就需要注意了，在请求合法性限流以前，就得先知道哪些请求是合法的，哪些是非法的。</strong></p>
+<p><strong>举一些非法的例子。比如在秒杀活动期间，那实际参与秒杀活动的用户可能是人，也可能是机器人，并且还可能存在同一用户反复购买同一件商品的行为，也是我们说的刷单行为。</strong></p>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-5453603440939992-TtGwOwf.webp?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="img"></p>
+<p><strong>方案：</strong></p>
+<ol>
+<li><strong>验证码</strong><br>
+<strong>比如说，如果非法请求的发起者是机器人，那么最容易想到的方法就是使用验证码。并且验证码还有一个作用，它可以拉长用户的访问时间（防止一直点）。</strong></li>
+<li><strong>通过 IP 的方式</strong><br>
+<strong>如果通过网络技术监测到了某个 IP（可以是在局域网内）下的下单频率在毫秒级别，或者反复购买同一件商品，那么就能断定下单的是机器人或者是不合法的用户，这样我们就可以将这个 IP 加到黑名单之中，从而减少不合法的流量。</strong></li>
+</ol>
+<h4 id="toc_h4_16">2.基于负载限流</h4>
+<p><strong>先看一下负载限流的理论基础是什么？一个是集群，一个是网络 7 层模型。</strong></p>
+<p><strong>我们在搭建集群时经常会用到一些工具，比如说 Nginx 和 LVS，那这些都可以用于负载限流。</strong></p>
+<h5 id="toc_h5_17">基于软件实现限流</h5>
+<p><strong>假设经过了第 1 层合法性限流以后，还剩 33 万的请求，如果通过集群搭建了三台服务器，那么每台服务器也就只需要承载 11 万的请求量了，那这样也能降低请求的并发量。</strong></p>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-992056965128491522-VFqJMLv.webp?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="img"></p>
+<p><strong>但是根据网络 7 层模型，Nginx 处于第 7 层。那除此以外，在网络 7 层模型之中的其他层也可以进行负载。</strong></p>
+<p><strong>其他层也行，一般我们就使用Nginx就行了</strong></p>
+<h4 id="toc_h4_18">3.基于服务限流</h4>
+<h5 id="toc_h5_19">Tomcat最大连接</h5>
+<p><strong>那这个其实就是我们马上要讲的第 3 层限流优势，服务限流。</strong></p>
+<p><strong>首先我们可以通过 Web 服务器本身进行限流，比方说 Tomcat 是一款比较熟悉的 Web 服务器，如果连接 Tomcat 的数量太多，就可能造成 Tomcat 的不稳定，那该怎么办呢？</strong></p>
+<p><strong>我们可以把 Tomcat 的最大链接数，设置为一个合理的值，比方说我们可以设置单 Tomcat 的最大链接数只为 300，那如果超过 300 的链接请求就会被 Tomcat 的无条件拒绝，那这样就可以保证tomcat的稳定性了。</strong></p>
+<h5 id="toc_h5_20">基于算法实现限流------应用限流</h5>
+<p><strong>漏桶算法</strong></p>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-5665098130704244966-wAt3lZU.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20201111165102705"></p>
+<ul>
+<li><strong>漏桶算法多使用队列实现，服务的请求会存到队列中，服务的提供方则按照固定的速率从队列中取出请求并执行，过多的请求则放在队列中排队或直接拒绝。</strong></li>
+<li><strong>漏桶算法的缺陷也很明显</strong>**，当短时间内有大量的突发请求时，即便此时服务器没有任何负载，每个请求也都得在队列中等待一段时间才能被响应。**</li>
+</ul>
+<p><strong>令牌桶算法</strong></p>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-94842402734592112-f5U6Yq9.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20201111165138063"></p>
+<ol>
+<li><strong>令牌以固定速率生成。</strong></li>
+<li><strong>生成的令牌放入令牌桶中存放，如果令牌桶满了则多余的令牌会直接丢弃，当请求到达时，会尝试从令牌桶中取令牌，取到了令牌的请求可以执行。</strong></li>
+<li><strong>如果桶空了，那么尝试取令牌的请求会被直接丢弃。</strong></li>
+</ol>
+<ul>
+<li><strong>令牌桶算法既能够将所有的请求平均分布到时间区间内，又能接受服务器能够承受范围内的突发请求，因此是目前使用较为广泛的一种限流算法。</strong></li>
+</ul>
+<p><strong>如果你要互相类比的话，令牌桶是允许爆发流出，而漏桶是允许爆发流入。</strong></p>
+<p><strong>Guava是Google开源的Java工具类，里面包罗万象，也提供了限流工具类RateLimiter，该类里面实现了令牌桶算法。</strong></p>
+<p><strong>我们先来看一下代码：</strong></p>
+<p><strong>代码中，</strong><code>RateLimiter rateLimiter = RateLimiter.create(10);</code>在Service中作为全局变量声明，意味着初始化了令牌桶类，每秒放行5个请求。</p>
+<p><strong>SeckillServiceImpl.java</strong></p>
+<pre><code>    @Service
+    @Slf4j
+    public class SeckillServiceImpl implements SeckillService {
+        ....
+        // Guava令牌桶：每秒放行5个请求
+        RateLimiter rateLimiter = RateLimiter.create(5);
+        ....
+        @Override
+        @Transactional(rollbackFor = Exception.class)
+        public BaseResponse orderV1(SeckillReq req) throws Exception {
+            log.info("===[开始调用下单接口（应用限流）]===");
+            /**
+             *  增加应用限流
+             *  阻塞式 &amp; 非阻塞式
+             */
+            log.info("===[开始经过限流程序]===");
+            //  阻塞式获取令牌
+    //        log.info("===[令牌桶限流:等待时间{}]===", rateLimiter.acquire());
+            //  非阻塞式获取令牌
+            if (!rateLimiter.tryAcquire(1000, TimeUnit.MILLISECONDS)) {
+                log.error("你被限流了！直接返回失败！");
+                return BaseResponse.error(ErrorMessage.SECKILL_RATE_LIMIT_ERROR);
+            }
+            log.info("===[限流程序][通过]===");
+            //校验用户信息、商品信息、库存信息
+            log.info("===[校验用户信息、商品信息、库存信息]===");
+            BaseResponse paramValidRes = validateParam(req.getProductId(), req.getUserId());
+            if (paramValidRes.getCode() != 0) {
+                return paramValidRes;
+            }
+            log.info("===[校验][通过]===");
+            //下单（乐观锁）
+            return createOptimisticOrder(req.getProductId(), req.getUserId());
+        }
+        ....
+    }
+</code></pre>
+<p><strong>在代码中，可以看到有两种使用方法：</strong></p>
+<ul>
+<li><strong>阻塞式获取令牌：请求进来后，若令牌桶里没有足够的令牌，就在这里阻塞住，等待令牌的发放。</strong></li>
+<li>**非阻塞式获取令牌：请求进来后，若令牌桶里没有足够的令牌，会尝试等待设置好的时间（这里写了1000ms），其会自动判断在1000ms后，这个请求能不能拿到令牌，如果不能拿到，**<strong>直接返回抢购失败</strong>。如果timeout设置为0，则等于阻塞时获取令牌。</li>
+</ul>
+<h5 id="toc_h5_21">Nginx+Lua-----应用限流</h5>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-12310020802529389775-xi4UI0A.webp?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="img"></p>
+<p><strong>主要的作用就是在****打到web服务器之前，在反代服务器上 进行限流</strong> 保证web服务器是安全的，性能是足够的</p>
+<p><strong>在请求量特别大的时候使用，小访问量没必要</strong></p>
+<p><strong>OpenResty</strong></p>
+<ul>
+<li><strong>点击查看</strong><a href="https://openresty.org/cn/" target="_blank">官网</a></li>
+<li><strong>概念：</strong><br>
+<strong>OpenResty是一个基于Nginx与Lua的高性能Web平台，其内部集成了大量精良的Lua库、第三方模块以及大多数的依赖项。用于方便地搭建能够处理超高并发、扩展性极高的动态Web应用、Web服务和动态网关。</strong></li>
+<li><strong>工作原理：</strong><br>
+<strong>OpenResty通过汇聚各种设计精良的Nginx模块（主要由OpenResty团队自主开发)，从而将Nginx有效地变成一个强大的通用Web应用平台。这样，Web开发人员和系统工程师可以使用Lua脚本语言调动Nginx支持的各种C以及Lua模块，快速构造出足以胜任10K乃至1000K以上单机并发连接的高性能Web应用系统。</strong></li>
+<li><strong>目标:</strong><br>
+<strong>OpenResty的目标是让你的Web服务直接跑在Nginx服务内部，充分利用Nginx的非阻塞I/O模型，不仅仅对HTTP客户端请求,甚至于对远程后端诸如MySQL、PostgreSQL、Memcached 以及Redis等都进行一致的高性能响应。</strong></li>
+</ul>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-15411339403457268946-2zy3Jri.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20220811220415350"></p>
+<pre><code>    -------------------------- 定义json -------------------------------------
+    -- 引入 cjson 模块，操作json数据
+    local cjson = require "cjson"
+    local cjson_req = cjson.new()
+    local ret_object = {["code"] = 999, ["message"] = "很遗憾，手慢了，没抢到",["data"] = null}
+    ret_json = cjson_req.encode(ret_object)
+    -------------------------- 漏桶限流 -------------------------------------
+    -- 引入 nginx-lua 限流模块
+    local limit_req = require "resty.limit.req"
+    -- 每秒立即处理的请求数
+    local rate = 50
+    -- 漏桶的最大容量
+    local capacity = 1000
+    -- 限制请求在每秒 rate 次以下并且并发请求每秒 capacity 次
+    -- 也就是延迟处理每秒 rate 次以上 capacity 次以内的请求
+    -- 每秒超过 rate+capacity 次的请求会直接 reject 拒绝掉
+    -- my_limit_req_store 为共享内存区域名称
+    local lim, err = limit_req.new("my_limit_req_store", rate, capacity)
+    if not lim then
+        ngx.log(ngx.ERR, "failed to instantiate a resty.limit.req object: ", err)
+        return ngx.exit(500)
+    end
+    -- 每个请求，都获取客户端的IP来作为限制的 key
+    local key = ngx.var.binary_remote_addr
+    -- 获取每个请求的等待时长，这个时长是通过 resty.limit.req 模块计算出来的
+    local delay, err = lim:incoming(key, true)
+    -- 大于 capacity 以外的就溢出
+    if not delay then
+        if err == "rejected" then
+            return ngx.exit(403)
+        end
+        ngx.log(ngx.ERR, "failed to limit req: ", err)
+        return ngx.exit(500)
+    end
+    -- 如果等待时长超过10s，直接返回超时
+    if (delay &gt; 10) then
+        ngx.say(ret_json)
+        return
+    end
+    -------------------------- 实现redis乐观锁 -------------------------------------
+    -- 设置关闭redis的函数，在redis使用完后调用它
+    local function close_redis(redis_instance)
+        if not redis_instance then
+            return
+        end
+        local ok, err = redis_instance:close()
+        if not ok then
+            ngx.log(ngx.ERR, "close redis error: ", err)
+            return
+        end
+    end
+    -- 引入 redis 模块
+    local redis = require("resty.redis");
+    -- 创建一个redis对象实例
+    local redis_instance = redis:new()
+    -- 设置超时时间，单位毫秒
+    redis_instance:set_timeout(1000)
+    -- 建立连接
+    local host = "39.98.55.177"
+    local port = 6379
+    local pass = ""
+    -- 尝试连接到redis服务器正在侦听的远程主机和端口
+    local ok, err = redis_instance:connect(host, port)
+    if not ok then
+        ngx.log(ngx.ERR, "connect redis error: ", err)
+        return close_redis(redis_instance);
+    end
+    -- Redis身份验证
+    local auth, err = redis_instance:auth(pass);
+    if not auth then
+        ngx.log(ngx.ERR, "redis failed to authenticate: ", err)
+        return close_redis(redis_instance);
+    end
+    -- 获取请求参数
+    local request_method = ngx.var.request_method
+    local headers = ngx.req.get_headers()
+    local token = headers["token"]
+    local args, param ,data
+    if request_method == "GET" then
+        args = ngx.req.get_uri_args()
+    elseif request_method == "POST" then
+        ngx.req.read_body()
+        args = ngx.req.get_post_args()
+        data=ngx.req.get_body_data()
+    end
+    local t=cjson.decode(data);
+    local pid =t.data.productId;
+    if pid == "" or pid == nil then
+        ngx.log(ngx.ERR,"商品id不能为空")
+        return ngx.exit(500)
+    end
+    -- redis解析token
+    local uinfoRC = redis_instance:get(token)
+    if uinfoRC == "" or uinfoRC == nil then
+        ngx.log(ngx.ERR,"token校验失败")
+        return ngx.exit(401)
+    end
+    local uinfo=cjson.decode(cjson.decode(uinfoRC))
+    local uid = uinfo.id
+    if uid == "" or uid == nil then
+        ngx.log(ngx.ERR,"token解析失败")
+        return ngx.exit(500)   
+    end
+    -- 从redis中取出当前请求商品sku的库存
+    local redis_key = "sk:sc:"..pid
+    redis_instance:watch(redis_key)
+    local stock = tonumber(redis_instance:get(redis_key))
+    -- 实现redis乐观锁
+    if (stock &gt; 0) then
+        redis_instance:multi()
+        redis_instance:decr(redis_key)
+        local ans = redis_instance:exec()
+        if (tostring(ans) == "userdata: NULL") then
+            ngx.log(ngx.ERR,"触发乐观锁机制，秒杀失败！")
+            return ngx.say(ret_json)
+        end
+    else
+        ngx.log(ngx.ERR,"库存不足！")
+        return ngx.say(ret_json)
+    end
+    -- 抢购成功，进入下单流程
+    -- 注意：这行代码前面不能执行 ngx.say()
+    ngx.exec("/create_order")
+</code></pre>
+<hr>
+<p><strong>扩展：</strong></p>
+<p><strong>Nginx 负载均衡有4种方案配置</strong></p>
+<blockquote>
+<ol>
+<li><strong>轮询</strong><br>
+<strong>轮询即Round Robin，根据Nginx配置文件中的顺序，依次把客户端的Web请求分发到不同的后端服务器上。</strong></li>
+<li><strong>最少连接 least_conn;</strong><br>
+<strong>Web请求会被转发到连接数最少的服务器上。</strong></li>
+<li><strong>IP地址哈希 ip_hash;</strong><br>
+<strong>前述的两种负载均衡方案中，同一客户端连续的Web请求可能会被分发到不同的后端服务器进行处理，因此如果涉及到会话Session，那么会话会比较复杂。常见的是基于数据库的会话持久化。要克服上面的难题，可以使用基于IP地址哈希的负载均衡方案。这样的话，同一客户端连续的Web请求都会被分发到同一服务器进行处理。</strong></li>
+<li><strong>基于权重weight</strong><br>
+<strong>基于权重的负载均衡即Weighted Load Balancing，这种方式下，我们可以配置Nginx把请求更多地分发到高配置的后端服务器上，把相对较少的请求分发到低配服务器。</strong></li>
+</ol>
+</blockquote>
+<h5 id="toc_h5_22">基于消息队列实现限流</h5>
+<p><strong>而如果使用消息队列就可以很好地解决这种问题。那消息队列本质是一种缓冲区，当 10 万请求到来时，消息队列可以将这 10 万请求临时存储，然后三个子系统再分别根据自己的性能，分别去消息队列中针对性的去拉取特定数量的请求。</strong></p>
+<h5 id="toc_h5_23">缓存限流</h5>
+<p><strong>限流的本质是为了不断地削减请求的数量，而缓存的作用是为了减少用户请求服务端的数量，因此缓存也可以作为限流的一种实现方案。</strong></p>
+<p><strong>静态缓存实现限流</strong>：对于 HTML 这种体积比较小的代码，我们可以直接将其缓存在浏览器之中，但是如果体积较大的图片，我们最好将它们缓存的 Nginx，或者通过  Nginx 转发在 OSS 等于服务器之中，而如果是视频等一些体积特别大的静态资源，也可以将它缓存在 CDN 中，利用 CDN  区域部署就近访问的特点来提高用户的访问速度。</p>
+<p><strong>动态缓存实现限流</strong>：那对于动态缓存，一般先建议缓存在本地的服务器之中，如果本地服务器的缓存失效，我们再缓存到由 Redis 组成的远程集群之中，进行二次的查询。也就是说我们可以搭建本地缓存以及二远程缓存组成的二级结构，进行动态请求的缓存。</p>
+<h4 id="toc_h4_24">4.基于监控限流</h4>
+<p><strong>那最后我们再来看一下监控限流。我们知道 CPU、内存、并发量等都是衡量系统稳定性的重要指标，如果他们的使用频率过高，也可能造成系统的不稳定。</strong></p>
+<p>**因此我们也可以建议创建一些线程，专门用于监控这些指标。比方说我们可以建立一个线程，专门用于监控 CPU 的利用率，如果 CPU 利用率达到了极限，**<strong>就可以临时性地采取服务降级或拒绝策略。</strong></p>
+<p><strong>那这里说的服务降级实际上与精兵简政的思想类似，它指的是当系统资源不足时，我们就可以把查看三个月以前的历史订单、历史评论等一些非核心的服务临时关闭，从而为系统节约出一部分的资源来。</strong></p>
+<p><strong>那在采用服务降级或拒绝策略一段时间之后，CPU 等资源利用率就会恢复到正常状态，那之后我们就可以重新接收并处理新的请求了。</strong></p>
+<h4 id="toc_h4_25">5.分布式限流</h4>
+<h5 id="toc_h5_26">Redis+Lua实现</h5>
+<p><strong>因为Redis是单线程模型，能确保限流服务是线程安全的。</strong></p>
+<p><strong>lua脚本</strong></p>
+<pre><code>    local times = redis.call('incr', KEYS[1]) --设置key(KEY[1])并加1
+    if times == 1 then
+        redis.call('expire', KEYS[1], ARGV[1]) --设置超时时间
+    end
+    if times &gt; tonumber(ARGV[2]) then --限流大小
+        return 0
+    end
+    return 1
+</code></pre>
+<pre><code>    @Service
+    @Slf4j
+    public class SeckillServiceImpl implements SeckillService {
+
+        @Override
+        @Transactional(rollbackFor = Exception.class)
+        public BaseResponse orderV1(SeckillReq req) throws Exception {
+            log.info("===[开始调用下单接口（应用限流）]===");
+            log.info("===[开始经过限流程序]===");
+              //分布式限流
+            try {
+                if (!distrubuteLimit.exec()) {
+                    log.info("你被分布式锁限流了！直接返回失败！");
+                    return BaseResponse.error(ErrorMessage.SECKILL_RATE_LIMIT_ERROR);
+                }
+            } catch (IOException e) {
+                log.error("===[分布式限流程序发生异常！]===", e);
+                return BaseResponse.error(ErrorMessage.SECKILL_FAILED);
+            }
+            log.info("===[限流程序][通过]===");
+            //校验用户信息、商品信息、库存信息
+            log.info("===[校验用户信息、商品信息、库存信息]===");
+            BaseResponse paramValidRes = validateParam(req.getProductId(), req.getUserId());
+            if (paramValidRes.getCode() != 0) {
+                return paramValidRes;
+            }
+            log.info("===[校验][通过]===");
+            //下单（乐观锁）
+            return createOptimisticOrder(req.getProductId(), req.getUserId());
+        }
+        ....
+    }
+</code></pre>
+<pre><code>    /**
+     * 分布式限流工具
+     *
+     * @author: han
+     * @since: 2020-11-12 16:01
+     **/
+    @Component
+    public class DistrubuteLimit {
+        @Autowired
+        private RedisTemplate&lt;String, Object&gt; redisTemplate;
+        private DefaultRedisScript&lt;Long&gt; getRedisScript;
+        private static final String LIMIT_LUA = "local times = redis.call('incr', KEYS[1])\n" +
+                "if times == 1 then\n" +
+                "    redis.call('expire', KEYS[1], ARGV[1])\n" +
+                "end\n" +
+                "if times &gt; tonumber(ARGV[2]) then\n" +
+                "    return 0\n" +
+                "end\n" +
+                "return 1";
+        @PostConstruct
+        public void init() {
+            getRedisScript = new DefaultRedisScript&lt;Long&gt;();
+            getRedisScript.setResultType(Long.class);
+            getRedisScript.setScriptText(LIMIT_LUA);
+        }
+        public boolean exec() throws IOException {
+            List&lt;String&gt; keyList = new ArrayList();
+            String key = "ip:" + System.currentTimeMillis() / 1000; //此处将当前时间戳取秒数
+            //String key = "ip:" + 1; //此处硬编码时间，保证请求都是在同一秒内发起
+            keyList.add(key);
+            //限流是每秒6个
+            return redisTemplate.execute(getRedisScript, keyList, 3000, 6) == 1 ? true : false;
+        }
+    }
+</code></pre>
+<h3 id="toc_h3_27">四.隐藏url ，图片验证码，单用户频次限制</h3>
+<p><strong>隐藏url</strong></p>
+<p><strong>过早暴露接口容易被抓住</strong></p>
+<p><strong>加一个接口，获取****验证码接口</strong>，先拿到验证码K（用户和商品id+其他加密生成V放到redis）才能调用<strong>秒杀接口</strong>，秒杀接口根据这个验证码去redis对比，不一致不通过。</p>
+<ul>
+<li>**每次点击秒杀按钮，先从服务器获取一个秒杀验证值（**<strong>接口内判断是否到秒杀时间</strong>）。</li>
+<li><strong>Redis以缓存用户ID和商品ID为Key，秒杀地址为Value缓存验证值</strong></li>
+<li><strong>用户请求秒杀商品的时候，要带上秒杀验证值进行校验。</strong></li>
+</ul>
+<p><strong>可以防住的是直接请求接口的人，但是只要他们把脚本写复杂一点，先去请求一个验证值，再立刻请求抢购，也是能够抢购成功的。但是在秒杀没有开始的时候 是不会暴露真正接口的</strong></p>
+<pre><code>代码梳理：
+我们拿到用户id和商品id后，会检查商品和用户信息是否在表中存在，并且会验证现在的时间。
+在这样的条件过滤下，才会给出hash值。并且将Hash值写入了Redis中，缓存60秒（1分钟），如果用户拿到这个hash值一分钟内没下单，则需要重新获取hash值。
+下面又到了动小脑筋的时间了，想一下，这个hash值，如果每次都按照商品+用户的信息来md5，是不是不太安全呢。毕竟用户id并不一定是用户不知道的（就比如我这种用自增id存储的，肯定不安全），而商品id，万一也泄露了出去，那么坏蛋们如果再知到我们是简单的md5，那直接就把hash算出来了！
+在代码里，我给hash值加了个前缀，也就是一个salt（盐），相当于给这个固定的字符串撒了一把盐，这个盐是Constant.VALIDATE_CODE_SALT，写死在了代码里。这样黑产只要不猜到这个盐，就没办法算出来hash值。
+这也只是一种例子，实际中，你可以把盐放在其他地方， 并且不断变化，或者结合时间戳，这样就算自己的程序员也没法知道hash值的原本字符串是什么了。
+用户在前台拿到了验证值后，点击下单按钮，前端携带着验证值，即可进行下单操作。
+然后真正的秒杀接口：
+    秒杀是否开始
+    用户信息和产品信息是否合法
+    验证值（第一个接口拿的）
+    库存
+</code></pre>
+<p><strong>图片验证码</strong></p>
+<p><strong>在每次点击秒杀按钮 先通过图片验证 尽量防止机刷</strong></p>
+<pre><code>&lt;groupId&gt;com.github.penggle&lt;/groupId&gt;
+ &lt;artifactId&gt;kaptcha&lt;/artifactId&gt;
+</code></pre>
+<p><strong>后端给前端图片和imageID,然后把这个imageID的imageCode放到redis</strong></p>
+<p><strong>前端请求过来验证验证码：imageID和用户输入的imageCode，</strong></p>
+<p><strong>对比redis的imageCode和用户输入的imageCode</strong></p>
+<p><strong>单用户频次限制</strong></p>
+<p><strong>5秒不超过10次</strong></p>
+<pre><code>//单用户访问频次限制
+String visitKey = String.format(Constant.redisKey.SECKILL_USER_VISIT, productId, userId);
+long visitCount = redisUtil.incr(visitKey, 1L);
+redisUtil.expire(visitKey, 5);
+//if (visitCount &gt; Constant.VISIT_LIMIT) {
+if (visitCount &gt; 10) {  
+    return BaseResponse.error(ErrorMessage.SECKILL_USER_VISIT_LIMIT_ERROR);
+}
+</code></pre>
+<p><strong>注意：redisUtil.expire(visitKey, 5);  不是在第一次访问，每次访问都会加时间，这样的效果就是如果有人一直调，那次数也不会清零，就一直不让他访问。</strong></p>
+<p><strong>如果redisUtil.expire(visitKey, 5);  只在visitKey=1的时候加，那逻辑就是如果有人一直调 5秒后他就能访问通了。</strong></p>
+<h3 id="toc_h3_28">五.数据库缓存双写一致性</h3>
+<p>** 两个操作：删除缓存 更新数据**</p>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-9802158940891161587-ZXHqIYp.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="image-20230904100503622"></p>
+<p><strong>在高并发下存在安全性问题，最后会导致数据库和缓存的不一致，</strong></p>
+<p><strong>说白了就是 缓存是读db然后写，缓存读的是旧的，然后数据库写了新的，缓存写的还是旧的。</strong></p>
+<p><strong>先更新数据库 再删除缓存 好一点 发生错误的概率小</strong></p>
+<p><strong>上图右边 1比2快，所以说23很难插到 1 4之间，发生的概率比较小</strong></p>
+<p><strong>另外的话可以使用缓存延迟双删，做到BASE理论中说的****最终一致性</strong></p>
+<p>**最终一致性的解决思路，主要是针对上面两种双写策略（**<strong>先删缓存，再更新数据库/先更新数据库，再删缓存</strong>）导致的脏数据问题，进行相应的处理，来保证最终一致性。</p>
+<p><strong>那么延时双删怎么解决这个问题呢？</strong></p>
+<blockquote>
+<ol>
+<li><strong>先淘汰缓存</strong></li>
+<li><strong>再写数据库</strong></li>
+<li><strong>休眠1秒，再次淘汰缓存</strong></li>
+</ol>
+<p><strong>这么做，可以将1秒内所造成的缓存脏数据，再次删除。1秒的这个时间是根据</strong></p>
+</blockquote>
+<p><strong>删缓存失败了怎么办：重试机制</strong></p>
+<p><strong>还有一个问题没有考虑到，那就是删除缓存的操作，失败了怎么办？比如延时双删的时候，第二次缓存删除失败了，那不还是没有清除脏数据吗？</strong></p>
+<p><strong>解决方案就是再加上一个重试机制，保证删除缓存成功。</strong> 重试机制可以使用MQ去实现</p>
+                <div>
+                    <hr>
+
+标题：超级经典之-超卖问题，避免一人多单，限流策略，隐藏url ，图片验证码，单用户频次限制，数据库缓存双写一致性<br>
+作者：<a href="https://blog.donggei.top" target="_blank">donggei</a><br>
+地址：<a href="https://blog.donggei.top/articles/2023/11/15/1700033663155.html" target="_blank">https://blog.donggei.top/articles/2023/11/15/1700033663155.html</a><br>
+
+<!-- 签名档内可使用 HTML、JavaScript -->
+<br>
+                </div>
+        </div>
+    </div>
+    <div class="post__toc">
+<ul class="article__toc">
+        <li class="toc__h3">
+            <a href="#toc_h3_0">一.超卖问题</a>
+        </li>
+        <li class="toc__h4">
+            <a href="#toc_h4_1">1.JVM锁</a>
+        </li>
+        <li class="toc__h5">
+            <a href="#toc_h5_2">jvm锁存在问题</a>
+        </li>
+        <li class="toc__h4">
+            <a href="#toc_h4_3">2.DB加锁</a>
+        </li>
+        <li class="toc__h5">
+            <a href="#toc_h5_4">悲观锁</a>
+        </li>
+        <li class="toc__h5">
+            <a href="#toc_h5_5">乐观锁</a>
+        </li>
+        <li class="toc__h4">
+            <a href="#toc_h4_6">3.Java分布式锁总结</a>
+        </li>
+        <li class="toc__h5">
+            <a href="#toc_h5_7">基于数据库实现分布式锁</a>
+        </li>
+        <li class="toc__h5">
+            <a href="#toc_h5_8">Redis分布式锁实现</a>
+        </li>
+        <li class="toc__h5">
+            <a href="#toc_h5_9">可靠性如何保证</a>
+        </li>
+        <li class="toc__h5">
+            <a href="#toc_h5_10">zookeeper ，MQ</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_11">二.避免一人多单</a>
+        </li>
+        <li class="toc__h4">
+            <a href="#toc_h4_12">1.数据库悲观锁+MVCC</a>
+        </li>
+        <li class="toc__h4">
+            <a href="#toc_h4_13">2.唯一索引+redis缓存</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_14">三.限流策略</a>
+        </li>
+        <li class="toc__h4">
+            <a href="#toc_h4_15">1.基于合法性限流</a>
+        </li>
+        <li class="toc__h4">
+            <a href="#toc_h4_16">2.基于负载限流</a>
+        </li>
+        <li class="toc__h5">
+            <a href="#toc_h5_17">基于软件实现限流</a>
+        </li>
+        <li class="toc__h4">
+            <a href="#toc_h4_18">3.基于服务限流</a>
+        </li>
+        <li class="toc__h5">
+            <a href="#toc_h5_19">Tomcat最大连接</a>
+        </li>
+        <li class="toc__h5">
+            <a href="#toc_h5_20">基于算法实现限流------应用限流</a>
+        </li>
+        <li class="toc__h5">
+            <a href="#toc_h5_21">Nginx+Lua-----应用限流</a>
+        </li>
+        <li class="toc__h5">
+            <a href="#toc_h5_22">基于消息队列实现限流</a>
+        </li>
+        <li class="toc__h5">
+            <a href="#toc_h5_23">缓存限流</a>
+        </li>
+        <li class="toc__h4">
+            <a href="#toc_h4_24">4.基于监控限流</a>
+        </li>
+        <li class="toc__h4">
+            <a href="#toc_h4_25">5.分布式限流</a>
+        </li>
+        <li class="toc__h5">
+            <a href="#toc_h5_26">Redis+Lua实现</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_27">四.隐藏url ，图片验证码，单用户频次限制</a>
+        </li>
+        <li class="toc__h3">
+            <a href="#toc_h3_28">五.数据库缓存双写一致性</a>
+        </li>
+</ul>    </div>
+    <div class="body--gray post__gray">
+        <div class="wrapper comment">
+                <div id="gitalk-container" style="padding: 30px 0;"></div>
+                <div id="b3logsolocomments"></div>
+                <div id="vcomment" style="padding: 30px 0;" data-name="donggei" data-postId="1700033663155"></div>
+
+            <div class="post__list fn__flex">
+                <div class="fn__flex-1">
+                    <div id="externalRelevantArticles"></div>
+                </div>
+                <div class="post__list-mid fn__flex-1">
+                    <div id="randomArticles"></div>
+                </div>
+                <div class="fn__flex-1">
+                    <div id="relevantArticles"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="post__fix">
+        <div class="wrapper">
+            <span class="post__share mobile__none">
+                Share
+                <span class="tag tag--4" data-type="weibo">WeiBo</span>
+                <span class="tag tag--5" data-type="twitter">Twitter</span>
+                <span class="tag tag--6" data-type="qqz">QZone</span>
+                <span class="post__code tag tag--7"
+                      data-type="wechat"
+                      data-title="超级经典之-超卖问题，避免一人多单，限流策略，隐藏url ，图片验证码，单用户频次限制，数据库缓存双写一致性"
+                      data-blogtitle="donggei 的个人博客"
+                      data-url="https://blog.donggei.top/articles/2023/11/15/1700033663155.html"
+                      data-avatar="https://b3logfile.com/avatar/1699945842626_1699952075889.png?imageView2/1/w/128/h/128/interlace/0/q/100">
+                    WeChat
+                    <span class="qrcode"></span>
+                </span>
+            </span>
+            <span class="post__arrow">
+                    <a href="https://blog.donggei.top/articles/2023/11/15/1700033502345.html" rel="prev"
+                       class="vditor-tooltipped__n vditor-tooltipped"
+                       pjax-title="怎么保证数据唯一性"
+                       aria-label="旧一篇: 怎么保证数据唯一性">←</a>
+
+                    <a href="https://blog.donggei.top/articles/2023/11/15/1700033761710.html" rel="next"
+                       class="vditor-tooltipped__n vditor-tooltipped"
+                       pjax-title="团队表 -多级团队设计"
+                       aria-label="新一篇: 团队表 -多级团队设计">→</a>
+                <a href="javascript:Util.goTop()" class="vditor-tooltipped__n vditor-tooltipped"
+                   aria-label="移动到顶部">↑</a>
+                <a href="javascript:Util.goBottom()" class="vditor-tooltipped__n vditor-tooltipped"
+                   aria-label="移动到底部">↓</a>
+            </span>
+        </div>
+    </div>
+    
+</main>
+<footer class="footer">
+    <div class="ft__center">
+    <a href="https://ld246.com/member/donggei"
+       aria-label="https://ld246.com/member/donggei"
+       class="vditor-tooltipped__n vditor-tooltipped  user__site"
+       target="_blank" rel="noopener nofollow">
+        <svg viewBox="0 0 32 32" width="100%" height="100%">
+            <path fill="#d23f31" style="fill: var(--color1, #d23f31)" d="M5.787 17.226h17.033l5.954 9.528c0.47 0.752 0.003 1.361-1.042 1.361h-15.141z"></path>
+            <path d="M10.74 3.927h17.033c1.045 0 1.512 0.609 1.042 1.361l-5.954 9.528h-19.872l6.379-10.209c0.235-0.376 0.849-0.681 1.372-0.681z"></path>
+            <path d="M2.953 17.226h2.839l6.804 10.889h-1.892c-0.523 0-1.137-0.305-1.372-0.681z"></path>
+        </svg>
+    </a>
+
+        <a href="https://github.com/DongGei"
+           aria-label="https://github.com/DongGei"
+           class="vditor-tooltipped__n vditor-tooltipped  user__site"
+           target="_blank" rel="noopener nofollow">
+            <svg viewBox="0 0 32 32" width="100%" height="100%">
+                <path d="M16 0.331c-8.836 0-16 7.163-16 16 0 7.069 4.585 13.067 10.942 15.182 0.8 0.148 1.094-0.347 1.094-0.77 0-0.381-0.015-1.642-0.022-2.979-4.452 0.968-5.391-1.888-5.391-1.888-0.728-1.849-1.776-2.341-1.776-2.341-1.452-0.993 0.11-0.973 0.11-0.973 1.606 0.113 2.452 1.649 2.452 1.649 1.427 2.446 3.743 1.739 4.656 1.33 0.143-1.034 0.558-1.74 1.016-2.14-3.554-0.404-7.29-1.777-7.29-7.907 0-1.747 0.625-3.174 1.649-4.295-0.166-0.403-0.714-2.030 0.155-4.234 0 0 1.344-0.43 4.401 1.64 1.276-0.355 2.645-0.532 4.005-0.539 1.359 0.006 2.729 0.184 4.008 0.539 3.054-2.070 4.395-1.64 4.395-1.64 0.871 2.204 0.323 3.831 0.157 4.234 1.026 1.12 1.647 2.548 1.647 4.295 0 6.145-3.743 7.498-7.306 7.895 0.574 0.497 1.085 1.47 1.085 2.963 0 2.141-0.019 3.864-0.019 4.391 0 0.426 0.288 0.925 1.099 0.768 6.354-2.118 10.933-8.113 10.933-15.18 0-8.837-7.164-16-16-16z"></path>
+            </svg>
+        </a>
+
+        <a href="https://www.zhihu.com/people/ziz"
+           aria-label="https://www.zhihu.com/people/ziz"
+           target="_blank"
+           class="vditor-tooltipped__n vditor-tooltipped  user__site" rel="noopener nofollow">
+            <svg viewBox="0 0 32 32" width="100%" height="100%">
+                <path d="M32 26.67c0 2.931-2.382 5.33-5.33 5.33h-21.339c-2.948 0-5.33-2.382-5.33-5.33v-21.339c0-2.948 2.382-5.33 5.33-5.33h21.339c2.948 0 5.33 2.382 5.33 5.33v21.339zM12.358 17.191h4.713c0-1.114-0.531-1.748-0.531-1.748h-4.079c0.103-2.005 0.189-4.576 0.223-5.536h3.874s-0.017-1.645-0.463-1.645h-6.822s0.411-2.142 0.96-3.085c0 0-2.040-0.12-2.742 2.605-0.686 2.725-1.731 4.354-1.851 4.662s0.6 0.137 0.891 0c0.309-0.137 1.663-0.617 2.057-2.537h2.108c0.034 1.2 0.12 4.885 0.086 5.536h-4.336c-0.6 0.446-0.823 1.748-0.823 1.748h4.971c-0.206 1.371-0.566 3.137-1.080 4.062-0.806 1.491-1.234 2.828-4.131 5.176 0 0-0.48 0.36 0.994 0.223 1.474-0.12 2.845-0.514 3.839-2.434 0.514-0.994 1.011-2.28 1.423-3.565l4.079 4.713s0.548-1.268 0.137-2.657l-3.034-3.394-1.028 0.754c0.291-0.994 0.497-1.988 0.548-2.845 0.017 0.017 0.017 0 0.017-0.034zM18.048 7.936v16.3h1.714l0.703 1.954 2.965-1.954h3.754v-16.3h-9.136zM25.401 22.487h-1.937l-2.434 1.611-0.566-1.611h-0.6v-12.735h5.553v12.735h-0.017z"></path>
+            </svg>
+        </a>
+        <a href="tencent://message/?uin=2645981073"
+           aria-label="2645981073"
+           target="_blank"
+           class="vditor-tooltipped__n vditor-tooltipped  user__site" rel="noopener nofollow">
+            <svg viewBox="0 0 32 32" width="100%" height="100%">
+                <path d="M4.821 14.393c-0.125-0.304-0.143-0.607-0.143-0.929 0-0.5 0.321-1.304 0.625-1.679-0.018-0.464 0.179-1.411 0.536-1.714 0-3.304 2.554-7.464 5.536-8.893 1.839-0.875 3.768-1.179 5.786-1.179 1.571 0 3.286 0.375 4.75 0.982 4.196 1.768 5.143 5.054 6.036 9.25l0.018 0.089c0.518 0.786 0.982 1.714 0.982 2.679 0 0.482-0.321 0.964-0.321 1.393 0 0.036 0.107 0.179 0.125 0.214 1.536 2.268 2.929 4.732 2.929 7.554 0 0.625-0.339 2.804-1.339 2.804-0.696 0-1.464-1.696-1.714-2.161-0.018-0.018-0.036-0.018-0.054-0.018l-0.089 0.071c-0.571 1.482-1.196 2.875-2.357 3.982 1.018 0.982 2.661 0.893 2.964 2.589-0.089 0.196-0.054 0.411-0.196 0.607-1.018 1.536-3.75 1.732-5.393 1.732-2.179 0-3.946-0.571-6-1.179-0.429-0.125-1.071-0.054-1.536-0.107-1.089 1.196-3.75 1.518-5.286 1.518-1.357 0-6.607-0.089-6.607-2.411 0-1 0.214-1.286 0.911-1.929 0.554-0.107 0.964-0.411 1.607-0.446 0.089 0 0.161-0.018 0.25-0.036 0.018-0.018 0.036-0.018 0.036-0.071l-0.036-0.054c-1.232-0.286-2.964-3.393-3.232-4.679l-0.089-0.054c-0.125 0-0.179 0.268-0.214 0.357-0.393 0.911-1.321 1.893-2.357 2h-0.018c-0.143 0-0.089-0.143-0.196-0.179-0.25-0.589-0.411-1.125-0.411-1.786 0-3.571 1.714-6.214 4.5-8.321z"></path>
+            </svg>
+        </a>
+    </div>
+    <nav class="footer__nav mobile__none">
+            <a class="ft__link" href="https://blog.donggei.top/tags/daily" target="_self" rel="section">
+                日常
+            </a>
+            <a class="ft__link" href="https://www.donggei.top/" target="_blank" rel="section">
+                个人主页
+            </a>
+            <a class="ft__link" href="https://blog.csdn.net/beginnerdzz" target="_blank" rel="section">
+                CSDN(更新早)
+            </a>
+        <a class="ft__link" rel="alternate" href="https://blog.donggei.top/rss.xml" rel="section">RSS</a>
+    </nav>
+    <div class="footer__border mobile__none"></div>
+    <div class="wrapper fn__flex">
+        <div class="fn__flex-1 mobile__none">
+            <div class="ft__fade">donggei - 藏器于身，不患无此时 </div>
+            <br>
+                
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?4a65454c1d3be24651aed5fbf3c9e47b";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<h2>致知于行</h2>
+<!-- 公告栏可使用 HTML、JavaScript，比如可以在此加入第三方统计 js -->
+        </div>
+
+            <div class="footer__mid fn__flex-1 mobile__none">
+                <div class="ft__fade">分类</div>
+                <br>
+                    <a href="https://blog.donggei.top/category/life"
+                       aria-label="2 文章"
+                       class="ft__link ft__nowrap vditor-tooltipped vditor-tooltipped__n">
+                        daily</a> &nbsp; &nbsp;
+            </div>
+
+        <div class="fn__flex-1 footer__copyright">
+            <a class="ft__link" href="https://blog.donggei.top/archives.html">
+                17
+                文章
+            </a>
+           <br>
+            <span data-uvstaturl="https://blog.donggei.top">0</span> <span class="ft-gray">浏览</span>
+ <br>
+            &copy; 2023
+            <a class="ft__link" href="https://blog.donggei.top">donggei 的个人博客</a>
+            
+        </div>
+    </div>
+</footer>
+<script>
+  var Label = {
+    speech: true,
+    servePath: "https://blog.donggei.top",
+    staticServePath: "https://blog.donggei.top",
+    luteAvailable: false,
+    hljsStyle: 'github',
+    langLabel: "zh_CN",
+    version: "4.4.0",
+    staticSite: true,
+    showCodeBlockLn: false,
+    articleId: "1700033663155",
+  }
+</script>
+<script type="text/javascript" src="https://blog.donggei.top/skins/Pinghsu/js/headroom.min.js"></script>
+<script type="text/javascript"
+        src="https://blog.donggei.top/skins/Pinghsu/js/common.min.js?1700031209428"
+        charset="utf-8"></script>
+
+
+
+<script type="text/javascript">
+    Util.addScript('https://blog.donggei.top/js/page.min.js?1700031209428', 'soloPageScript')
+    var page = new Page({
+        "commentContentCannotEmptyLabel": "评论不能为空",
+        "oId": "1700033663155",
+        "blogHost": "https://blog.donggei.top",
+        "randomArticles1Label": "随机阅读：",
+        "externalRelevantArticles1Label": "站外相关阅读："
+    });
+    $(document).ready(function () {
+        page.load();
+    page.tips.externalRelevantArticlesDisplayCount = "0";
+    page.loadRandomArticles('<h3>RECOMMEND POSTS</h3>');
+    page.loadRelevantArticles('1700033663155', '<h3>RELEVANT POSTS</h3>');
+Skin.initArticle()
+    });
+</script>
+
+</body>
+</html>
+
+<!-- Generated by Latke (https://github.com/88250/latke) in 24ms, 2023/11/15 15:55:57 -->

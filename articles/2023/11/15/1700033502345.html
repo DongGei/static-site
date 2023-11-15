@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/><meta name="theme-color" content="#3b3e43"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"/><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="format-detection" content="telephone=no"/><title>怎么保证数据唯一性 - donggei 的个人博客</title><meta name="description" content="悲观锁 unique索引"/><meta property="og:description" content="悲观锁 unique索引"/>    <meta name="keywords" content="Java,博客,开源"/><link rel="dns-prefetch" href="https://blog.donggei.top"/><link rel="dns-prefetch" href="https://unpkg.com"/><link rel="preconnect" href="https://blog.donggei.top"><link rel="icon" type="image/png" href="https://b3log.org/images/brand/solo-128.png"/><link rel="apple-touch-icon" href="https://b3log.org/images/brand/solo-128.png"><link rel="shortcut icon" type="image/x-icon" href="https://b3log.org/images/brand/solo-128.png"><meta name="copyright" content="B3log"/><meta http-equiv="Window-target" content="_top"/><meta property="og:locale" content="zh_CN"/><meta property="og:title" content="怎么保证数据唯一性 - donggei 的个人博客"/><meta property="og:site_name" content="donggei 的个人博客"/><meta property="og:url"      content="https://blog.donggei.top/articles/2023/11/15/1700033502345.html?"/><meta property="og:image" content="https://b3log.org/images/brand/solo-128.png"/><link rel="search" type="application/opensearchdescription+xml" title="怎么保证数据唯一性 - donggei 的个人博客" href="/opensearch.xml"><link href="https://blog.donggei.top/rss.xml" title="RSS" type="application/rss+xml" rel="alternate"/><link rel="manifest" href="https://blog.donggei.top/manifest.json">        <link rel="canonical" href="https://blog.donggei.top/articles/2023/11/15/1700033502345.html">        <link rel="stylesheet"
+              href="https://blog.donggei.top/skins/Pinghsu/css/base.css?1700031209428"/>
+            <link rel="prev" title="elasticsearch基础" href="https://blog.donggei.top/articles/2023/11/14/1699960138443.html">
+            <link rel="next" title="超级经典之-超卖问题，避免一人多单，限流策略，隐藏url ，图片验证码，单用户频次限制，数据库缓存双写一致性" href="https://blog.donggei.top/articles/2023/11/15/1700033663155.html">
+    <script src="https://unpkg.com/vditor@3.8.15/dist/js/icons/ant.js" async="" id="vditorIconScript"></script></head>
+<body>
+<header class="header">
+    <div class="wrapper">
+        <a href="https://blog.donggei.top" rel="start" class="header__logo">
+            <img src="https://b3logfile.com/avatar/1699945842626_1699952075889.png?imageView2/1/w/128/h/128/interlace/0/q/100" alt="donggei 的个人博客"/>
+            donggei 的个人博客
+        </a>
+
+        <nav class="header__nav mobile__none">
+            <a href="https://blog.donggei.top/tags.html" rel="section">
+                Tags
+            </a>
+            <a href="https://blog.donggei.top/archives.html">
+                Archives
+            </a>
+            <a rel="archive" href="https://blog.donggei.top/links.html">
+                Links
+            </a>
+        </nav>
+
+        <div class="header__bar fn__none" onclick="$(this).next().slideToggle()">
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+                <path fill="#444" d="M0 3h20v2h-20v-2zM0 9h20v2h-20v-2zM0 15h20v2h-20v-2z"></path>
+            </svg>
+        </div>
+        <main class="header__menu fn__none">
+            <ul>
+                    <li>
+                        <a href="https://blog.donggei.top/tags/daily" target="_self" rel="section">
+                            日常
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.donggei.top/" target="_blank" rel="section">
+                            个人主页
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://blog.csdn.net/beginnerdzz" target="_blank" rel="section">
+                            CSDN(更新早)
+                        </a>
+                    </li>
+                <li>
+                    <a href="https://blog.donggei.top/tags.html" rel="section">
+                        Tags
+                    </a>
+                </li>
+                <li>
+                    <a href="https://blog.donggei.top/archives.html">
+                        Archives
+                    </a>
+                </li>
+                <li>
+                    <a rel="archive" href="https://blog.donggei.top/links.html">
+                        Links
+                    </a>
+                </li>
+                <li>
+                    <a rel="alternate" href="https://blog.donggei.top/rss.xml" rel="section">
+                        RSS
+                    </a>
+                </li>
+            </ul>
+        </main>
+    </div>
+</header>
+<main id="pjax" class="fn__flex-1">
+    
+    <div class="post wrapper wrapper--miner">
+        <h2 class="item__title">
+            <a rel="bookmark" href="https://blog.donggei.top/articles/2023/11/15/1700033502345.html">
+                怎么保证数据唯一性
+            </a>
+        </h2>
+        <div class="ft__fade item__meta">
+                Updated on
+            <time>
+                Nov 15, 2023
+            </time>
+            with <span data-uvstaturl="https://blog.donggei.top/articles/2023/11/15/1700033502345.html">0</span> views
+                and <a href="#b3logsolocomments"><span data-uvstatcmt="1700033502345">0</span> comments</a>
+        </div>
+        <div class="item__tags">
+                <a rel="tag" class="tag tag--0" href="https://blog.donggei.top/tags/%E9%9D%A2%E7%BB%8F">
+                    <b># 面经</b>
+                </a>
+                <a rel="tag" class="tag tag--1" href="https://blog.donggei.top/tags/%E5%AE%9E%E8%B7%B5">
+                    <b># 实践</b>
+                </a>
+        </div>
+        <div class="vditor-reset">
+            <p><img src="https://b3logfile.com/bing/20190731.jpg?imageView2/1/w/960/h/540/interlace/1/q/100" alt=""></p>
+<h3 id="toc_h3_0">注册时保证数据唯一性</h3>
+<p><strong>高并发下的注册或者新增核心是保证不重复，即相同的数据不插入两条，一般情况下注册使用频次都不会特别高，这种情况下悲观锁是一种解决方案。</strong></p>
+<h4 id="toc_h4_1">悲观锁</h4>
+<p><strong>先加锁 再插入</strong></p>
+<pre><code>2、本例中，采用如下的方法添加普通索引：alter table `user_regist_info` add index `index_phone`(`phone`);
+</code></pre>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-1971839536784509485-ljsssLt.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="img"></p>
+<pre><code> &nbsp;  上面的for update查询办法
+ &nbsp; &nbsp; &nbsp; &nbsp;&lt;select id="fetchByPhoneForUpdate" resultMap="UserRegistInfo"&gt;
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  SELECT
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&lt;include refid="Base_Column_List"/&gt;
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  from user_regist_info
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  WHERE
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  phone = #{phone} FOR UPDATE;
+ &nbsp; &nbsp; &nbsp; &nbsp;&lt;/select&gt;
+ &nbsp;  insert的添加方法，id是自增主键，插入后要获得，所以用下面的selectKey方法，并且用After方式获取
+ &nbsp; &nbsp; &nbsp; &nbsp;&lt;insert id="insert" parameterType="com.bmw.seed.model.UserRegistInfo"&gt;
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  INSERT INTO user_regist_info
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  (
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  id,
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  phone,
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  password,
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  create_time,
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  update_time
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  )
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  VALUES
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  (
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  #{id},
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  #{phone},
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  #{password},
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  #{createTime},
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  #{updateTime}
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  )
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&lt;selectKey keyProperty="id" resultType="Long" order="AFTER"&gt;
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  select LAST_INSERT_ID()
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&lt;/selectKey&gt;
+ &nbsp; &nbsp; &nbsp; &nbsp;&lt;/insert&gt;
+</code></pre>
+<p><strong>使用的FOR UPDATE加锁，如果没有这个手机号，根据已存在的记录，把这个区间内的数据加上锁</strong></p>
+<p><strong>如果phone没有索引呢 加表锁, 所以说在要在phone上加索引</strong></p>
+<p><strong>思考：</strong><code>gpt:总之，在使用</code>FOR UPDATE<code>进行查询时，如果查询条件指定了一个不存在的数据，并且没有适用于查询条件的索引，MySQL 的行为可能是在整个表上应用一个表级别的共享锁，或者不应用任何锁定。</code></p>
+<h4 id="toc_h4_2">unique索引</h4>
+<p><strong>唯一索引的思路很简单，数据库保证了只能插入一份，第2份插入的时候会报错。</strong></p>
+<p><strong>使用数据库的唯一索引，就是不允许某些字段重复，如果重复数据库就会抛出一个异常出来，这样就知道那些数据重复了，直接把这个异常忽略掉就可以，这样就可以实现非重复插入。</strong></p>
+<ul>
+<li><strong>能使用unique索引就使用唯一索引，性能比悲观锁要好很多，因为没有事务</strong></li>
+<li><strong>虽然好用但有些场景没有办法实现，这个时候就只能使用悲观锁了，例如：表已经存在很久，里面有无法删除的历史数据，没法创建唯一性索引</strong></li>
+<li><strong>实际使用要根据场景与需求确定</strong></li>
+</ul>
+<pre><code>alter table &nbsp;`user_regist_info` ADD UNIQUE `unique_index_phone`(`phone`);
+</code></pre>
+<p><img src="https://b3logfile.com/file/2023/11/solo-fetchupload-18419830643701609042-9rUfRUc.png?imageView2/2/w/1280/format/jpg/interlace/1/q/100" alt="img"></p>
+<p><strong>核心在异常的捕获 处理了重复问题</strong></p>
+<h4 id="toc_h4_3">为什么不使用其他？</h4>
+<p><strong>类似唯一新增的场景有很多，例如：用户注册，新增商品等等，一般首先选择unique唯一索引，然后不能用唯一索引的时候使用悲观锁，一般不建议使用其他方案，以下分别说明。</strong></p>
+<p><strong>以下只是开阔思路，面试的时候面试官不问切记不要扩散，只回答唯一索引和悲观锁即可。</strong></p>
+<p><strong>乐观锁</strong>：</p>
+<p><strong>悲观锁即使没有数据可以锁区间，但是乐观锁一般是版本号（通用），插入这种环境不好i使用</strong></p>
+<p><strong>悲观锁主要是保证insert新增的唯一,也可以加锁后进行update,悲观锁必须在事务中;乐观锁主要是已有数据的update</strong></p>
+<hr>
+<p><strong>如果新增频次很高，例如每秒都有好几万并发（注册新增这类功能实际上不可能这样，这样的并发每天就有亿级新增用户了，老板得乐疯了），怎么解决呢？【备注：这个只是开阔思路，实际项目中很少有这种场景】</strong><br>
+<strong>解决办法：</strong></p>
+<ul>
+<li><strong>使用队列异步写入，其实很多高并发问题都可以通过缓存和队列去解决。</strong></li>
+</ul>
+                <div>
+                    <hr>
+
+标题：怎么保证数据唯一性<br>
+作者：<a href="https://blog.donggei.top" target="_blank">donggei</a><br>
+地址：<a href="https://blog.donggei.top/articles/2023/11/15/1700033502345.html" target="_blank">https://blog.donggei.top/articles/2023/11/15/1700033502345.html</a><br>
+
+<!-- 签名档内可使用 HTML、JavaScript -->
+<br>
+                </div>
+        </div>
+    </div>
+    <div class="post__toc">
+<ul class="article__toc">
+        <li class="toc__h3">
+            <a href="#toc_h3_0">注册时保证数据唯一性</a>
+        </li>
+        <li class="toc__h4">
+            <a href="#toc_h4_1">悲观锁</a>
+        </li>
+        <li class="toc__h4">
+            <a href="#toc_h4_2">unique索引</a>
+        </li>
+        <li class="toc__h4">
+            <a href="#toc_h4_3">为什么不使用其他？</a>
+        </li>
+</ul>    </div>
+    <div class="body--gray post__gray">
+        <div class="wrapper comment">
+                <div id="gitalk-container" style="padding: 30px 0;"></div>
+                <div id="b3logsolocomments"></div>
+                <div id="vcomment" style="padding: 30px 0;" data-name="donggei" data-postId="1700033502345"></div>
+
+            <div class="post__list fn__flex">
+                <div class="fn__flex-1">
+                    <div id="externalRelevantArticles"></div>
+                </div>
+                <div class="post__list-mid fn__flex-1">
+                    <div id="randomArticles"></div>
+                </div>
+                <div class="fn__flex-1">
+                    <div id="relevantArticles"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="post__fix">
+        <div class="wrapper">
+            <span class="post__share mobile__none">
+                Share
+                <span class="tag tag--4" data-type="weibo">WeiBo</span>
+                <span class="tag tag--5" data-type="twitter">Twitter</span>
+                <span class="tag tag--6" data-type="qqz">QZone</span>
+                <span class="post__code tag tag--7"
+                      data-type="wechat"
+                      data-title="怎么保证数据唯一性"
+                      data-blogtitle="donggei 的个人博客"
+                      data-url="https://blog.donggei.top/articles/2023/11/15/1700033502345.html"
+                      data-avatar="https://b3logfile.com/avatar/1699945842626_1699952075889.png?imageView2/1/w/128/h/128/interlace/0/q/100">
+                    WeChat
+                    <span class="qrcode"></span>
+                </span>
+            </span>
+            <span class="post__arrow">
+                    <a href="https://blog.donggei.top/articles/2023/11/14/1699960138443.html" rel="prev"
+                       class="vditor-tooltipped__n vditor-tooltipped"
+                       pjax-title="elasticsearch基础"
+                       aria-label="旧一篇: elasticsearch基础">←</a>
+
+                    <a href="https://blog.donggei.top/articles/2023/11/15/1700033663155.html" rel="next"
+                       class="vditor-tooltipped__n vditor-tooltipped"
+                       pjax-title="超级经典之-超卖问题，避免一人多单，限流策略，隐藏url ，图片验证码，单用户频次限制，数据库缓存双写一致性"
+                       aria-label="新一篇: 超级经典之-超卖问题，避免一人多单，限流策略，隐藏url ，图片验证码，单用户频次限制，数据库缓存双写一致性">→</a>
+                <a href="javascript:Util.goTop()" class="vditor-tooltipped__n vditor-tooltipped"
+                   aria-label="移动到顶部">↑</a>
+                <a href="javascript:Util.goBottom()" class="vditor-tooltipped__n vditor-tooltipped"
+                   aria-label="移动到底部">↓</a>
+            </span>
+        </div>
+    </div>
+    
+</main>
+<footer class="footer">
+    <div class="ft__center">
+    <a href="https://ld246.com/member/donggei"
+       aria-label="https://ld246.com/member/donggei"
+       class="vditor-tooltipped__n vditor-tooltipped  user__site"
+       target="_blank" rel="noopener nofollow">
+        <svg viewBox="0 0 32 32" width="100%" height="100%">
+            <path fill="#d23f31" style="fill: var(--color1, #d23f31)" d="M5.787 17.226h17.033l5.954 9.528c0.47 0.752 0.003 1.361-1.042 1.361h-15.141z"></path>
+            <path d="M10.74 3.927h17.033c1.045 0 1.512 0.609 1.042 1.361l-5.954 9.528h-19.872l6.379-10.209c0.235-0.376 0.849-0.681 1.372-0.681z"></path>
+            <path d="M2.953 17.226h2.839l6.804 10.889h-1.892c-0.523 0-1.137-0.305-1.372-0.681z"></path>
+        </svg>
+    </a>
+
+        <a href="https://github.com/DongGei"
+           aria-label="https://github.com/DongGei"
+           class="vditor-tooltipped__n vditor-tooltipped  user__site"
+           target="_blank" rel="noopener nofollow">
+            <svg viewBox="0 0 32 32" width="100%" height="100%">
+                <path d="M16 0.331c-8.836 0-16 7.163-16 16 0 7.069 4.585 13.067 10.942 15.182 0.8 0.148 1.094-0.347 1.094-0.77 0-0.381-0.015-1.642-0.022-2.979-4.452 0.968-5.391-1.888-5.391-1.888-0.728-1.849-1.776-2.341-1.776-2.341-1.452-0.993 0.11-0.973 0.11-0.973 1.606 0.113 2.452 1.649 2.452 1.649 1.427 2.446 3.743 1.739 4.656 1.33 0.143-1.034 0.558-1.74 1.016-2.14-3.554-0.404-7.29-1.777-7.29-7.907 0-1.747 0.625-3.174 1.649-4.295-0.166-0.403-0.714-2.030 0.155-4.234 0 0 1.344-0.43 4.401 1.64 1.276-0.355 2.645-0.532 4.005-0.539 1.359 0.006 2.729 0.184 4.008 0.539 3.054-2.070 4.395-1.64 4.395-1.64 0.871 2.204 0.323 3.831 0.157 4.234 1.026 1.12 1.647 2.548 1.647 4.295 0 6.145-3.743 7.498-7.306 7.895 0.574 0.497 1.085 1.47 1.085 2.963 0 2.141-0.019 3.864-0.019 4.391 0 0.426 0.288 0.925 1.099 0.768 6.354-2.118 10.933-8.113 10.933-15.18 0-8.837-7.164-16-16-16z"></path>
+            </svg>
+        </a>
+
+        <a href="https://www.zhihu.com/people/ziz"
+           aria-label="https://www.zhihu.com/people/ziz"
+           target="_blank"
+           class="vditor-tooltipped__n vditor-tooltipped  user__site" rel="noopener nofollow">
+            <svg viewBox="0 0 32 32" width="100%" height="100%">
+                <path d="M32 26.67c0 2.931-2.382 5.33-5.33 5.33h-21.339c-2.948 0-5.33-2.382-5.33-5.33v-21.339c0-2.948 2.382-5.33 5.33-5.33h21.339c2.948 0 5.33 2.382 5.33 5.33v21.339zM12.358 17.191h4.713c0-1.114-0.531-1.748-0.531-1.748h-4.079c0.103-2.005 0.189-4.576 0.223-5.536h3.874s-0.017-1.645-0.463-1.645h-6.822s0.411-2.142 0.96-3.085c0 0-2.040-0.12-2.742 2.605-0.686 2.725-1.731 4.354-1.851 4.662s0.6 0.137 0.891 0c0.309-0.137 1.663-0.617 2.057-2.537h2.108c0.034 1.2 0.12 4.885 0.086 5.536h-4.336c-0.6 0.446-0.823 1.748-0.823 1.748h4.971c-0.206 1.371-0.566 3.137-1.080 4.062-0.806 1.491-1.234 2.828-4.131 5.176 0 0-0.48 0.36 0.994 0.223 1.474-0.12 2.845-0.514 3.839-2.434 0.514-0.994 1.011-2.28 1.423-3.565l4.079 4.713s0.548-1.268 0.137-2.657l-3.034-3.394-1.028 0.754c0.291-0.994 0.497-1.988 0.548-2.845 0.017 0.017 0.017 0 0.017-0.034zM18.048 7.936v16.3h1.714l0.703 1.954 2.965-1.954h3.754v-16.3h-9.136zM25.401 22.487h-1.937l-2.434 1.611-0.566-1.611h-0.6v-12.735h5.553v12.735h-0.017z"></path>
+            </svg>
+        </a>
+        <a href="tencent://message/?uin=2645981073"
+           aria-label="2645981073"
+           target="_blank"
+           class="vditor-tooltipped__n vditor-tooltipped  user__site" rel="noopener nofollow">
+            <svg viewBox="0 0 32 32" width="100%" height="100%">
+                <path d="M4.821 14.393c-0.125-0.304-0.143-0.607-0.143-0.929 0-0.5 0.321-1.304 0.625-1.679-0.018-0.464 0.179-1.411 0.536-1.714 0-3.304 2.554-7.464 5.536-8.893 1.839-0.875 3.768-1.179 5.786-1.179 1.571 0 3.286 0.375 4.75 0.982 4.196 1.768 5.143 5.054 6.036 9.25l0.018 0.089c0.518 0.786 0.982 1.714 0.982 2.679 0 0.482-0.321 0.964-0.321 1.393 0 0.036 0.107 0.179 0.125 0.214 1.536 2.268 2.929 4.732 2.929 7.554 0 0.625-0.339 2.804-1.339 2.804-0.696 0-1.464-1.696-1.714-2.161-0.018-0.018-0.036-0.018-0.054-0.018l-0.089 0.071c-0.571 1.482-1.196 2.875-2.357 3.982 1.018 0.982 2.661 0.893 2.964 2.589-0.089 0.196-0.054 0.411-0.196 0.607-1.018 1.536-3.75 1.732-5.393 1.732-2.179 0-3.946-0.571-6-1.179-0.429-0.125-1.071-0.054-1.536-0.107-1.089 1.196-3.75 1.518-5.286 1.518-1.357 0-6.607-0.089-6.607-2.411 0-1 0.214-1.286 0.911-1.929 0.554-0.107 0.964-0.411 1.607-0.446 0.089 0 0.161-0.018 0.25-0.036 0.018-0.018 0.036-0.018 0.036-0.071l-0.036-0.054c-1.232-0.286-2.964-3.393-3.232-4.679l-0.089-0.054c-0.125 0-0.179 0.268-0.214 0.357-0.393 0.911-1.321 1.893-2.357 2h-0.018c-0.143 0-0.089-0.143-0.196-0.179-0.25-0.589-0.411-1.125-0.411-1.786 0-3.571 1.714-6.214 4.5-8.321z"></path>
+            </svg>
+        </a>
+    </div>
+    <nav class="footer__nav mobile__none">
+            <a class="ft__link" href="https://blog.donggei.top/tags/daily" target="_self" rel="section">
+                日常
+            </a>
+            <a class="ft__link" href="https://www.donggei.top/" target="_blank" rel="section">
+                个人主页
+            </a>
+            <a class="ft__link" href="https://blog.csdn.net/beginnerdzz" target="_blank" rel="section">
+                CSDN(更新早)
+            </a>
+        <a class="ft__link" rel="alternate" href="https://blog.donggei.top/rss.xml" rel="section">RSS</a>
+    </nav>
+    <div class="footer__border mobile__none"></div>
+    <div class="wrapper fn__flex">
+        <div class="fn__flex-1 mobile__none">
+            <div class="ft__fade">donggei - 藏器于身，不患无此时 </div>
+            <br>
+                
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?4a65454c1d3be24651aed5fbf3c9e47b";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<h2>致知于行</h2>
+<!-- 公告栏可使用 HTML、JavaScript，比如可以在此加入第三方统计 js -->
+        </div>
+
+            <div class="footer__mid fn__flex-1 mobile__none">
+                <div class="ft__fade">分类</div>
+                <br>
+                    <a href="https://blog.donggei.top/category/life"
+                       aria-label="2 文章"
+                       class="ft__link ft__nowrap vditor-tooltipped vditor-tooltipped__n">
+                        daily</a> &nbsp; &nbsp;
+            </div>
+
+        <div class="fn__flex-1 footer__copyright">
+            <a class="ft__link" href="https://blog.donggei.top/archives.html">
+                17
+                文章
+            </a>
+           <br>
+            <span data-uvstaturl="https://blog.donggei.top">0</span> <span class="ft-gray">浏览</span>
+ <br>
+            &copy; 2023
+            <a class="ft__link" href="https://blog.donggei.top">donggei 的个人博客</a>
+            
+        </div>
+    </div>
+</footer>
+<script>
+  var Label = {
+    speech: true,
+    servePath: "https://blog.donggei.top",
+    staticServePath: "https://blog.donggei.top",
+    luteAvailable: false,
+    hljsStyle: 'github',
+    langLabel: "zh_CN",
+    version: "4.4.0",
+    staticSite: true,
+    showCodeBlockLn: false,
+    articleId: "1700033502345",
+  }
+</script>
+<script type="text/javascript" src="https://blog.donggei.top/skins/Pinghsu/js/headroom.min.js"></script>
+<script type="text/javascript"
+        src="https://blog.donggei.top/skins/Pinghsu/js/common.min.js?1700031209428"
+        charset="utf-8"></script>
+
+
+
+<script type="text/javascript">
+    Util.addScript('https://blog.donggei.top/js/page.min.js?1700031209428', 'soloPageScript')
+    var page = new Page({
+        "commentContentCannotEmptyLabel": "评论不能为空",
+        "oId": "1700033502345",
+        "blogHost": "https://blog.donggei.top",
+        "randomArticles1Label": "随机阅读：",
+        "externalRelevantArticles1Label": "站外相关阅读："
+    });
+    $(document).ready(function () {
+        page.load();
+    page.tips.externalRelevantArticlesDisplayCount = "0";
+    page.loadRandomArticles('<h3>RECOMMEND POSTS</h3>');
+    page.loadRelevantArticles('1700033502345', '<h3>RELEVANT POSTS</h3>');
+Skin.initArticle()
+    });
+</script>
+
+</body>
+</html>
+
+<!-- Generated by Latke (https://github.com/88250/latke) in 25ms, 2023/11/15 15:55:57 -->

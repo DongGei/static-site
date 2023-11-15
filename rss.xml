@@ -6,8 +6,73 @@
     <atom:link href="https://blog.donggei.top/rss.xml" rel="self" type="application/rss+xml"/>
     <description>藏器于身，不患无此时 </description>
     <generator>Solo, v4.4.0, https://b3log.org/solo</generator>
-    <lastBuildDate>Tue, 14 Nov 2023 19:29:28 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 15 Nov 2023 15:55:57 +0800</lastBuildDate>
     <language>zh-cn</language>
+    <item>
+      <title>今天时间戳从17开始咯（摘抄）</title>
+      <link>https://blog.donggei.top/articles/2023/11/15/1700034001708.html</link>
+      <description/>
+      <author>donggei</author>
+      <guid>https://blog.donggei.top/articles/2023/11/15/1700034001708.html</guid>
+      <category>daily</category>
+      <category>摘抄</category>
+      <pubDate>Wed, 15 Nov 2023 15:40:01 +0800</pubDate>
+    </item>
+    <item>
+      <title>spring给静态成员注入 你试过吗?</title>
+      <link>https://blog.donggei.top/articles/2023/11/15/1700033835081.html</link>
+      <description/>
+      <author>donggei</author>
+      <guid>https://blog.donggei.top/articles/2023/11/15/1700033835081.html</guid>
+      <category>实践</category>
+      <pubDate>Wed, 15 Nov 2023 15:37:15 +0800</pubDate>
+    </item>
+    <item>
+      <title>老项目迁移方法</title>
+      <link>https://blog.donggei.top/articles/2023/11/15/1700033784334.html</link>
+      <description/>
+      <author>donggei</author>
+      <guid>https://blog.donggei.top/articles/2023/11/15/1700033784334.html</guid>
+      <category>实践</category>
+      <pubDate>Wed, 15 Nov 2023 15:36:24 +0800</pubDate>
+    </item>
+    <item>
+      <title>团队表 -多级团队设计</title>
+      <link>https://blog.donggei.top/articles/2023/11/15/1700033761710.html</link>
+      <description/>
+      <author>donggei</author>
+      <guid>https://blog.donggei.top/articles/2023/11/15/1700033761710.html</guid>
+      <category>实践</category>
+      <pubDate>Wed, 15 Nov 2023 15:36:01 +0800</pubDate>
+    </item>
+    <item>
+      <title>超级经典之-超卖问题，避免一人多单，限流策略，隐藏url ，图片验证码，单用户频次限制，数据库缓存双写一致性</title>
+      <link>https://blog.donggei.top/articles/2023/11/15/1700033663155.html</link>
+      <description>
+        <![CDATA[<p>JVM锁</p>
+<p>DB加锁</p>
+<p>Java分布式锁总结</p>
+<p>超卖问题，避免一人多单，限流策略，隐藏url ，图片验证码，单用户频次限制，数据库缓存双写一致性</p>]]>
+      </description>
+      <author>donggei</author>
+      <guid>https://blog.donggei.top/articles/2023/11/15/1700033663155.html</guid>
+      <category>实践</category>
+      <category>面经</category>
+      <pubDate>Wed, 15 Nov 2023 15:34:23 +0800</pubDate>
+    </item>
+    <item>
+      <title>怎么保证数据唯一性</title>
+      <link>https://blog.donggei.top/articles/2023/11/15/1700033502345.html</link>
+      <description>
+        <![CDATA[<p>悲观锁</p>
+<p>unique索引</p>]]>
+      </description>
+      <author>donggei</author>
+      <guid>https://blog.donggei.top/articles/2023/11/15/1700033502345.html</guid>
+      <category>面经</category>
+      <category>实践</category>
+      <pubDate>Wed, 15 Nov 2023 15:32:04 +0800</pubDate>
+    </item>
     <item>
       <title>java集合（进阶）</title>
       <link>https://blog.donggei.top/articles/2023/11/14/1699959935349.html</link>
@@ -42,72 +107,9 @@
       <description/>
       <author>donggei</author>
       <guid>https://blog.donggei.top/articles/2023/11/14/1699959970120.html</guid>
-      <category>java</category>
       <category>java基础</category>
+      <category>java</category>
       <pubDate>Tue, 14 Nov 2023 19:06:10 +0800</pubDate>
-    </item>
-    <item>
-      <title>java垃圾回收机制</title>
-      <link>https://blog.donggei.top/articles/2023/11/14/1699959882168.html</link>
-      <description/>
-      <author>donggei</author>
-      <guid>https://blog.donggei.top/articles/2023/11/14/1699959882168.html</guid>
-      <category>java</category>
-      <category>垃圾回收</category>
-      <pubDate>Tue, 14 Nov 2023 19:04:42 +0800</pubDate>
-    </item>
-    <item>
-      <title>日常</title>
-      <link>https://blog.donggei.top/articles/2023/11/14/1699954930162.html</link>
-      <description/>
-      <author>donggei</author>
-      <guid>https://blog.donggei.top/articles/2023/11/14/1699954930162.html</guid>
-      <category>daily</category>
-      <pubDate>Tue, 14 Nov 2023 19:02:32 +0800</pubDate>
-    </item>
-    <item>
-      <title>java多线程</title>
-      <link>https://blog.donggei.top/articles/2023/11/14/1699951927724.html</link>
-      <description/>
-      <author>donggei</author>
-      <guid>https://blog.donggei.top/articles/2023/11/14/1699951927724.html</guid>
-      <category>java</category>
-      <category>多线程</category>
-      <pubDate>Tue, 14 Nov 2023 16:52:07 +0800</pubDate>
-    </item>
-    <item>
-      <title>HashMap相关的一系列问题</title>
-      <link>https://blog.donggei.top/articles/2023/11/14/1699951902323.html</link>
-      <description>
-        <![CDATA[<p>HashMap相关的一系列问题</p>]]>
-      </description>
-      <author>donggei</author>
-      <guid>https://blog.donggei.top/articles/2023/11/14/1699951902323.html</guid>
-      <category>java</category>
-      <pubDate>Tue, 14 Nov 2023 16:51:42 +0800</pubDate>
-    </item>
-    <item>
-      <title>java面经总结</title>
-      <link>https://blog.donggei.top/articles/2023/11/14/1699951852050.html</link>
-      <description/>
-      <author>donggei</author>
-      <guid>https://blog.donggei.top/articles/2023/11/14/1699951852050.html</guid>
-      <category>面经</category>
-      <category>java</category>
-      <category>基础</category>
-      <pubDate>Tue, 14 Nov 2023 16:50:52 +0800</pubDate>
-    </item>
-    <item>
-      <title>红黑树  B  B+树</title>
-      <link>https://blog.donggei.top/articles/2023/11/14/1699951773941.html</link>
-      <description>
-        <![CDATA[<p>红黑树  B  B+树  --&gt;演化进程</p>]]>
-      </description>
-      <author>donggei</author>
-      <guid>https://blog.donggei.top/articles/2023/11/14/1699951773941.html</guid>
-      <category>算法</category>
-      <category>数据结构</category>
-      <pubDate>Tue, 14 Nov 2023 16:49:34 +0800</pubDate>
     </item>
   </channel>
 </rss>
